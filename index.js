@@ -1,3 +1,3 @@
 const fs = require('fs');
-
-console.log("HALLO")
+const mineflayer = require('mineflayer');
+console.log(mineflayer)
