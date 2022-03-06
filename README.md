@@ -1,4 +1,7 @@
-# GuildBot
-Farman udělá
+# UHG Guild BOT
 
-also version 3.0 inc? POG
+      ■■■■■■■■■■[✿UltimateHypixelGuild✿]■■■■■■■■■■
+
+Guild BOT of the Hypixel Guild UltimateHypixelGuild [✿UHG✿]
+
+`Version 3.0`
