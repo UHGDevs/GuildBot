@@ -13,12 +13,26 @@ class Login {
     this.dc = {client: dc}
     this.mc = {client: mc}
     this.test = {server:mctest}
-    this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
+    this.settings = {}
+    this.mongo = require("./utils/mongodb.js")
+    this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
   }
 
   reload(reload=[]) {
-    if (!reload.length || reload.includes("settings")) {
+    if (reload.includes("settings") || !reload.length) {
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
+    }
+    if (reload.includes("guild") || reload.includes("mongo") || !reload.length) {
+      this.data.guild = this.mongo.get("stats", "guild")
+    }
+    if (reload.includes("verify") || reload.includes("mongo") || !reload.length) {
+      this.data.verify = this.mongo.get("general", "verify")
+    }
+    if (reload.includes("stats") || reload.includes("mongo") || !reload.length) {
+      this.data.stats = this.mongo.get("stats", "stats")
+    }
+    if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
+      this.data.stats = this.mongo.get("general", "uhg")
     }
   }
 
@@ -28,9 +42,14 @@ class Login {
       .replace(/§|¡±/g, '�')
       .replace(/�[0-9A-FK-OR]/gi, '')
   }
+
+  delay(ms) {new Promise(res => setTimeout(res, ms))}
+
+
 }
 
 let { dc, mc, mctest } = "UHG"
+
 
 if (config.discord === true) {
   dc = new Client({
@@ -87,11 +106,15 @@ if (config.test === true && config.minecraft !== true) {
 }
 
 let uhg = new Login(dc, mc, mctest)
+uhg.reload()
 
 let utils = fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js"))
 console.log(`${utils.length} utils prepared`.brightGreen)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
+
+setInterval(function () {uhg.reload(["mongo"])}, 30000);
+
 
 if (uhg.mc.client) {
   require("./minecraft/handler.js") (uhg)

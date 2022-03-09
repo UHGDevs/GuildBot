@@ -3,11 +3,6 @@ const mongo = new MongoClient(process.env.db);
 //console.log(mongo)
 mongo.connect()
 
-mongo.on('ready', function () {
-    //limbo()
-    console.info('Joined server')
-  })
-
 
 exports.get = async function(db="stats", col="stats", query={}) {
   try {
@@ -45,7 +40,7 @@ exports.update = update
 async function update (db="stats", col="stats", query={}, novy={}, con=true) {
   try {
     if (!novy||!query) return false
-    let update = {$set:novy} 
+    let update = {$set:novy}
     const database = mongo.db(db);
     const collection = database.collection(col);
     let result = await collection.updateOne(query, update)
@@ -57,6 +52,7 @@ async function update (db="stats", col="stats", query={}, novy={}, con=true) {
 }
 
 exports.get = async function(db="stats", col="stats", query={}) {
+  if (!mongo.topology) await new Promise(res => setTimeout(res, 2000))
   try {
     const database = mongo.db(db);
     const collection = database.collection(col);
@@ -79,4 +75,3 @@ exports.delete = async function(db="stats", col="stats", query={}) {
     console.log(e)
   }
 }
-
