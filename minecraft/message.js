@@ -14,8 +14,48 @@ module.exports = async (uhg, packet) => {
   if (!pmsg.msg) return { msg: false }
   if (pmsg.msg.startsWith("-")) pmsg.msg = pmsg.msg.replace(/-/g, "").trim()
   pmsg.msg = pmsg.msg.replace(/\s+/g, ' ').trim()
-  console.log(pmsg.msg)
+  
+  //["Guild", ">", "jmenonnona:", "zprava"]
+  let content = pmsg.msg.split(" ")
 
+  let again = true;
+  for (let a=0; a<7; a++) {
+    if (!Array.isArray(content)) break
+    else if (!content.length) content = pmsg.msg 
+    else if (content[0] == "UHGuild") content.shift()
+    else if (content[0].match(/To|Guild|From|Party|Officer/) && content[1] && content[1].startsWith(">") && content[2] && !content[2].startsWith("[") && !content[2].endsWith("]") && again == true) {
+      //if the guild member is non
+      if (content.length > 1) content.splice(0, 0, content.splice(2, 1)[0]);
+      pmsg.username = content[0].replace(":", "")
+      content.shift()
+      again = false;
+    }
+    else if (content[0].match(/To|Guild|From|Party|Officer/)) { pmsg.channel=content[0]
+      content.shift()}
+    else if (content[0].startsWith(">")) content.shift()
+    else if (a<4 && content[0].startsWith("[") && content[0].endsWith("]")) {
+      pmsg.rank = content[0]
+      content.shift()
+      pmsg.username = content[0].replace(":", "")
+    }
+    else if (content[0].startsWith("[") && content[0].endsWith(":")) {
+      content.shift()
+    }
+    else if (content[0] == "Name:" && content[1] == "UltimateHypixelGuild") {
+      content[0].replace(":", "")
+      content.shift()
+    }
+    else if (a < 7 && content[0].endsWith(pmsg.username + ":") || a < 7 && content.length > 1 && content[1].startsWith("[") && content[1].endsWith("]:")) { /*username = content[0].replace(":", "")*/
+    content.shift()}
+    else if (a < 3 && (content[1]=="joined"||content[1]=="joined."||content[1]=="left."||pmsg.msg.includes("was kicked from the guild by") || pmsg.msg.includes("has requested to join the Guild!"))) { pmsg.username = content[0]
+    content.shift()}
+    else {
+      content = content.join(" ")
+      break
+      }
+  }
+  pmsg.content = content
+  console.log(pmsg.content)
 
   /*let a = {
     msg: msg || null,
