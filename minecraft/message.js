@@ -56,6 +56,60 @@ module.exports = async (uhg, packet) => {
   }
   pmsg.content = content
   console.log(pmsg.content)
+  console.log(pmsg)
+
+  if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
+  if (pmsg.msg.startsWith("You have joined ")&&pmsg.msg.endsWith(`'s party!`)) {
+    let t = pmsg.msg.replace("You have joined ", "").split(" ")
+    if (t[0].includes("[")) {
+      pmsg.rank = t[0]
+      pmsg.username = t[1].replace("'s", "")
+    } else pmsg.username = t[0].replace("'s", "")
+  } else if (pmsg.msg.startsWith("---") && pmsg.msg.includes("has invited you to join their party!")) {
+    let t = pmsg.msg.replace(/-/g, "").substring(1).slpit(" ")
+    if (t[0].includes("[")) {
+      pmsg.rank = t[0]
+      pmsg.username = t[1]
+    } else pmsg.username = t[0]
+  } else if (pmsg.msg.includes(" has requested to join the Guild!")) {
+    t = msg.split(" has requested to join the Guild!")[0].split(" ")
+    pmsg.channel = "Officer"
+    pmsg.command = "getjoined"
+    if (t[0].includes("[")) {
+      pmsg.rank = t[0]
+      pmsg.username = t[1]
+    } else pmsg.username = t[0]
+  }
+
+  if (pmsg.rank && pmsg.rank == "[MVP++]") pmsg.pluscolor = pmsg.non.split("++")[0].slice(-2)
+  if (pmsg.rank && pmsg.rank == "[MVP+]") pmsg.pluscolor = pmsg.non.split("+")[0].slice(-2)
+  if (pmsg.channel == "Guild" && pmsg.content.startsWith("!") || pmsg.channel=="Officer" && pmsg.content.startsWith("!")) {
+    pmsg.command = pmsg.content.substring(1).split(" ")[0]
+    pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
+    pmsg.args = pmsg.content.split(pmsg.command)
+    pmsg.args.shift()
+    pmsg.args = pmsg.args.filter(n=>!n.startsWith("["))
+    pmsg.args = pmsg.args.join(pmsg.command).trim()
+  }
+
+  
+  if (pmsg.channel == "From" && pmsg.verify) {
+    if (pmsg.command && pmsg.command.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
+    else pmsg.command = pmsg.content.split(" ")[0]
+    pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
+    pmsg.args = content.split(pmsg.command)
+    pmsg.args.shift()
+    pmsg.args = pmsg.args.join(pmsg.command).trim()
+  }
+/*
+  for (let i=0;i<data.members.length;i++) {
+    if (username==data.members[i].username) {
+      verify = true
+      grank = data.members[i].guildrank
+      uuid = data.members[i].uuid
+      id = data.members[i].id
+    }
+  }/*
 
   /*let a = {
     msg: msg || null,
