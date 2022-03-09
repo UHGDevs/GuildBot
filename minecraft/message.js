@@ -1,4 +1,4 @@
-module.exports = async (uhg, message) => {
-  console.log(message)
+module.exports = async (uhg, packet) => {
+  console.log(packet)
 
 }

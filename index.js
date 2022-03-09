@@ -84,10 +84,10 @@ let uhg = new login(dc, mc, mctest)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
-if (uhg.mc) {
+if (uhg.mc.client) {
   require("./minecraft/handler.js") (uhg)
 }
-if (uhg.dc) {
+if (uhg.dc.client) {
   require("./discord/handler.js") (uhg)
   uhg.dc.client.login(process.env.token);
 }
