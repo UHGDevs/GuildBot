@@ -55,8 +55,7 @@ module.exports = async (uhg, packet) => {
       }
   }
   pmsg.content = content
-  console.log(pmsg.content)
-  console.log(pmsg)
+
 
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
   if (pmsg.msg.startsWith("You have joined ")&&pmsg.msg.endsWith(`'s party!`)) {
@@ -101,6 +100,10 @@ module.exports = async (uhg, packet) => {
     pmsg.args.shift()
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
+
+  console.log(pmsg.content)
+  console.log(pmsg)
+
 /*
   for (let i=0;i<data.members.length;i++) {
     if (username==data.members[i].username) {
