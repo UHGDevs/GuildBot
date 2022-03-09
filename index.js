@@ -72,11 +72,11 @@ if (config.test === true && config.minecraft !== true) {
       'max-entities': 100,
       version: '1.16.1',
    });
-   mc = minecraft.createClient({
-    host: "localhost",
-    port: 25565,
-    username: "Technoblade",
-    version: "1.16.1",
+  mc = minecraft.createClient({
+   host: "localhost",
+   port: 25565,
+   username: "Technoblade",
+   version: "1.16.1",
   });
 }
 
@@ -84,8 +84,10 @@ let uhg = new login(dc, mc, mctest)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
-
-if (dc) {
+if (uhg.mc) {
+  require("./minecraft/handler.js") (uhg)
+}
+if (uhg.dc) {
   require("./discord/handler.js") (uhg)
   uhg.dc.client.login(process.env.token);
 }
