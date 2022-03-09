@@ -17,32 +17,29 @@ class Login {
     this.mongo = require("./utils/mongodb.js")
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
   }
-
-  reload(reload=[]) {
+  async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
     }
     if (reload.includes("guild") || reload.includes("mongo") || !reload.length) {
-      this.data.guild = this.mongo.get("stats", "guild")
+      this.data.guild = await this.mongo.get("stats", "guild")
     }
     if (reload.includes("verify") || reload.includes("mongo") || !reload.length) {
-      this.data.verify = this.mongo.get("general", "verify")
+      this.data.verify = await this.mongo.get("general", "verify")
     }
     if (reload.includes("stats") || reload.includes("mongo") || !reload.length) {
-      this.data.stats = this.mongo.get("stats", "stats")
+      this.data.stats = await this.mongo.get("stats", "stats")
     }
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
-      this.data.stats = this.mongo.get("general", "uhg")
+      this.data.stats = await this.mongo.get("general", "uhg")
     }
   }
-
   clear(message) {
     return message
       .replace(/✫|✪|⚝/g, '?')
       .replace(/§|¡±/g, '�')
       .replace(/�[0-9A-FK-OR]/gi, '')
   }
-
   delay(ms) {new Promise(res => setTimeout(res, ms))}
 
 

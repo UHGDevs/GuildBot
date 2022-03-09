@@ -4,7 +4,7 @@ module.exports = async (uhg, packet) => {
   if (message.extra) {
     let msgs = []
     for (let i=0; i<message.extra.length;i++) msgs.push(message.extra[i].text)
-    
+
     pmsg.extra = uhg.clear(msgs.join("")) || null
     pmsg.non = msgs.join("") || null
     console.log(pmsg.non)
@@ -12,17 +12,17 @@ module.exports = async (uhg, packet) => {
 
   if (message.text && pmsg.extra) pmsg.msg = uhg.clear(message.text) + pmsg.extra
   else pmsg.msg = pmsg.extra||uhg.clear(message.text)||null
-  if (!pmsg.msg) return { msg: false }
+  if (!pmsg.msg || pmsg.msg=="Technoblade joined the game.") return { msg: false }
   if (pmsg.msg.startsWith("-")) pmsg.msg = pmsg.msg.replace(/-/g, "").trim()
   pmsg.msg = pmsg.msg.replace(/\s+/g, ' ').trim()
-  
+
   //["Guild", ">", "jmenonnona:", "zprava"]
   let content = pmsg.msg.split(" ")
 
   let again = true;
   for (let a=0; a<7; a++) {
     if (!Array.isArray(content)) break
-    else if (!content.length) content = pmsg.msg 
+    else if (!content.length) content = pmsg.msg
     else if (content[0] == "UHGuild") content.shift()
     else if (content[0].match(/To|Guild|From|Party|Officer/) && content[1] && content[1].startsWith(">") && content[2] && !content[2].startsWith("[") && !content[2].endsWith("]") && again == true) {
       //if the guild member is non
@@ -56,6 +56,25 @@ module.exports = async (uhg, packet) => {
       }
   }
   pmsg.content = content
+
+
+    let data = uhg.data.guild
+    if (pmsg.username && data.length) {
+      data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
+      for (let i=0;i<data.members.length;i++) {
+        if (pmsg.username==data.members[i].name) {
+          pmsg.uuid = data.members[i].uuid
+          let verified = uhg.data.uhg
+          if (!verified.length) verified = await  uhg.mongo.get("general", "uhg")
+          verified = verified.filter(ver=>ver.username==pmsg.username)
+          if (!verified.length) break
+          verified = verified[0]
+          pmsg.verify = true
+          pmsg.grank = verified.guildrank
+          pmsg.id = verified._id
+        }
+      }
+    }
 
 
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
@@ -92,8 +111,8 @@ module.exports = async (uhg, packet) => {
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
 
-  
-  if (pmsg.channel == "From"/* && pmsg.verify*/) {
+
+  if (pmsg.channel == "From" && pmsg.verify) {
     if (pmsg.command && pmsg.command.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
     else pmsg.command = pmsg.content.split(" ")[0]
     pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
@@ -104,16 +123,6 @@ module.exports = async (uhg, packet) => {
 
   console.log(pmsg.content)
   console.log(pmsg)
-
-/*
-  for (let i=0;i<data.members.length;i++) {
-    if (username==data.members[i].username) {
-      verify = true
-      grank = data.members[i].guildrank
-      uuid = data.members[i].uuid
-      id = data.members[i].id
-    }
-  }/*
 
   /*let a = {
     msg: msg || null,
