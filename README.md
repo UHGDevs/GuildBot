@@ -10,3 +10,5 @@ Guild BOT of the Hypixel Guild UltimateHypixelGuild [✿UHG✿]
 
 - [x] Start
 - [ ] Finish
+
+[#--------------------] %5 done

@@ -9,7 +9,7 @@ dotenv.config();
 
 const config = require('./settings/config.json');
 
-class login {
+class Login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc}
     this.mc = {client: mc}
@@ -80,7 +80,7 @@ if (config.test === true && config.minecraft !== true) {
   });
 }
 
-let uhg = new login(dc, mc, mctest)
+let uhg = new Login(dc, mc, mctest)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
