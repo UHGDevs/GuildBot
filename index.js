@@ -1,5 +1,4 @@
 const fs = require('fs');
-const mineflayer = require('mineflayer');
 const minecraft = require('minecraft-protocol');
 const colors = require("colors");
 const { Client, Intents, Collection, Util, WebhookClient, MessageEmbed } = require('discord.js');
@@ -90,8 +89,7 @@ if (config.test === true && config.minecraft !== true) {
 let uhg = new Login(dc, mc, mctest)
 
 let utils = fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js"))
-utils.forEach(f => require(`./utils/${f}`)(uhg))
-console.log(utils.length+" utils loaded".bold.brightGreen)
+console.log(`${utils.length} utils prepared`.brightGreen)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
