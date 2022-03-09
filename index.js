@@ -22,7 +22,7 @@ class Login {
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
     }
   }
-  
+
   clear(message) {
     return message
       .replace(/✫|✪|⚝/g, '?')
@@ -88,6 +88,8 @@ if (config.test === true && config.minecraft !== true) {
 }
 
 let uhg = new Login(dc, mc, mctest)
+
+fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js")).forEach(f => require(`./utils/${f}`)(uhg)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
