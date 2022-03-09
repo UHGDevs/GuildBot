@@ -13,7 +13,7 @@ class login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc}
     this.mc = {client: mc}
-    this.mctest = {server:mctest.server, client: mctest.mc}
+    this.test = {server:mctest}
     this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
   }
 
@@ -43,17 +43,42 @@ if (config.minecraft === true) {
   });
 }
 
-if (config.test === true) {
-  let testclient = minecraft.createClient({
+if (config.test === true && config.minecraft !== true) {
+  const squid = require('flying-squid');
+  mctest = squid.createMCServer({
+      motd: 'A Minecraft Server \nRunning flying-squid',
+      port: 25565,
+      'max-players': 10,
+      'online-mode': false,
+      logging: false,
+      gameMode: 1,
+      difficulty: 1,
+      worldFolder: undefined,
+      generation: {
+         name: 'diamond_square',
+         options: {
+            worldHeight: 80
+         },
+      },
+      kickTimeout: 10000,
+      plugins: {},
+      modpe: false,
+      'view-distance': 2,
+      'player-list-text': {
+         header: { text: 'aaaaaaaa' },
+         footer: { text: 'Test server' },
+      },
+      'everybody-op': true,
+      'max-entities': 100,
+      version: '1.16.1',
+   });
+   mc = minecraft.createClient({
     host: "localhost",
-    //host: "mc.hypixel.net",
-    username: "dasfhvas",
-    //username: process.env.email,
-    //password: process.env.password,
-    //auth: 'microsoft'
+    port: 25565,
+    username: "Technoblade",
+    version: "1.16.1",
   });
-  mctest = {server:null, mc: testclient}
-} else mctest = {}
+}
 
 let uhg = new login(dc, mc, mctest)
 
