@@ -22,6 +22,13 @@ class Login {
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
     }
   }
+  
+  clear(message) {
+    return message
+      .replace(/✫|✪|⚝/g, '?')
+      .replace(/§|¡±/g, '�')
+      .replace(/�[0-9A-FK-OR]/gi, '')
+  }
 }
 
 let { dc, mc, mctest } = "UHG"
