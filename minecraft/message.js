@@ -7,6 +7,7 @@ module.exports = async (uhg, packet) => {
     
     pmsg.extra = uhg.clear(msgs.join("")) || null
     pmsg.non = msgs.join("") || null
+    console.log(pmsg.non)
   } else pmsg.extra = null
 
   if (message.text && pmsg.extra) pmsg.msg = uhg.clear(message.text) + pmsg.extra
@@ -92,7 +93,7 @@ module.exports = async (uhg, packet) => {
   }
 
   
-  if (pmsg.channel == "From" && pmsg.verify) {
+  if (pmsg.channel == "From"/* && pmsg.verify*/) {
     if (pmsg.command && pmsg.command.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
     else pmsg.command = pmsg.content.split(" ")[0]
     pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
