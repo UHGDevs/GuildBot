@@ -89,7 +89,9 @@ if (config.test === true && config.minecraft !== true) {
 
 let uhg = new Login(dc, mc, mctest)
 
-fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js")).forEach(f => require(`./utils/${f}`)(uhg)
+let utils = fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js"))
+utils.forEach(f => require(`./utils/${f}`)(uhg))
+console.log(utils.length+" utils loaded".bold.brightGreen)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
