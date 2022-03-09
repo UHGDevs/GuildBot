@@ -80,7 +80,7 @@ if (config.test === true && config.minecraft !== true) {
       difficulty: 1,
       worldFolder: undefined,
       generation: {
-         name: 'diamond_square',
+         name: 'superflat',
          options: {
             worldHeight: 80
          },
