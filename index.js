@@ -10,22 +10,21 @@ dotenv.config();
 const config = require('./settings/config.json');
 
 class login {
-  constructor(dc, mc) {
+  constructor(dc, mc, mctest) {
     this.dc = {client: dc}
     this.mc = {client: mc}
+    this.mctest = {server:mctest.server, client: mctest.mc}
     this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
   }
 
-  reload(reload="all") {
-    if (reload == "settings" || reload == "all") {
+  reload(reload=[]) {
+    if (!reload.length || reload.includes("settings")) {
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
     }
   }
-
-
 }
 
-let { dc, mc } = "UHG"
+let { dc, mc, mctest } = "UHG"
 
 if (config.discord === true) {
   dc = new Client({
@@ -33,7 +32,6 @@ if (config.discord === true) {
     intents: [Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS],
   });
 }
-
 if (config.minecraft === true) {
   mc = minecraft.createClient({
     host: "play.survival-games.cz",
@@ -45,25 +43,24 @@ if (config.minecraft === true) {
   });
 }
 
-let uhg = new login(dc, mc)
+if (config.test === true) {
+  let testclient = minecraft.createClient({
+    host: "localhost",
+    //host: "mc.hypixel.net",
+    username: "dasfhvas",
+    //username: process.env.email,
+    //password: process.env.password,
+    //auth: 'microsoft'
+  });
+  mctest = {server:null, mc: testclient}
+} else mctest = {}
 
-setInterval(function () {
-  console.log(uhg.settings)
-  uhg.reload()
-}, 5000);
+let uhg = new login(dc, mc, mctest)
+
+fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
 
 if (dc) {
-  uhg.dc.client.on('ready', () => {
-    console.log(`Discord Bot is online!`.bold.brightGreen)
-    console.log(`${uhg.dc.client.user.tag}`.bold.brightGreen)
-  	uhg.dc.client.user.setActivity(' Guild Chat', { type: 'WATCHING' });
-  });
-  uhg.dc.client.on('error', (e) => {
-    console.log(String(e).red.dim);
-  });
-
-
-
+  require("./discord/handler.js") (uhg)
   uhg.dc.client.login(process.env.token);
 }

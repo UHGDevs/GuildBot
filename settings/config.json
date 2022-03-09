@@ -1,4 +1,5 @@
 {
-  "discord": false,
-  "minecraft": true
+  "discord": true,
+  "minecraft": true,
+  "test": false
 }
