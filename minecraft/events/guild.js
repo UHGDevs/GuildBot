@@ -4,6 +4,10 @@ module.exports = async (uhg, pmsg) => {
   else await bridge.info(uhg, pmsg)
 
   if (!pmsg.command) return
-  await bridge.send(uhg, pmsg.command + " - command comming soon (Its going to be here)") //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
+  let command = uhg.mc.commands.get(pmsg.command)
+  if(!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(pmsg.command.toLowerCase()));
+  let res = "nic"
+  if (command) res = await command.run(uhg, pmsg);
+  await bridge.send(uhg, res) //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
 
 }

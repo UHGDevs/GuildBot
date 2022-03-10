@@ -2,7 +2,6 @@ const fs = require("fs");
 
 module.exports = (uhg) => {
     try {
-      return
         let amount = 0;
         const commands = fs.readdirSync(`minecraft/commands/`).filter((file) => file.endsWith(".js"));
 
@@ -15,7 +14,7 @@ module.exports = (uhg) => {
                   console.log(file, `error -> missing a help.name, or help.name is not a string.`.brightRed);
                   continue;
               }
-              if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach((alias) => client.mcaliases.set(alias, pull.name));
+              if (pull.aliases && Array.isArray(pull.aliases)) pull.aliases.forEach((alias) => uhg.mc.aliases.set(alias, pull.name));
           }
         console.log(`${amount} Minecraft Commands`.brightGreen);
     } catch (e) {

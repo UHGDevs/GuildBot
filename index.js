@@ -11,7 +11,7 @@ const config = require('./settings/config.json');
 class Login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc}
-    this.mc = {client: mc}
+    this.mc = {client: mc, commands: new Collection(), aliases: new Collection()}
     this.test = {server:mctest}
     this.settings = {}
     this.mongo = require("./utils/mongodb.js")
@@ -41,6 +41,10 @@ class Login {
       .replace(/�[0-9A-FK-OR]/gi, '')
   }
   delay(ms) {new Promise(res => setTimeout(res, ms))}
+
+  f(number) {
+    return number
+  }
 
 
 }
@@ -115,6 +119,7 @@ setInterval(function () {uhg.reload(["mongo"])}, 30000);
 
 if (uhg.mc.client) {
   require("./minecraft/handler.js") (uhg)
+  require("./minecraft/commands.js") (uhg)
 }
 if (uhg.dc.client) {
   require("./discord/handler.js") (uhg)
