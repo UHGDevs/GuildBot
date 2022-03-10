@@ -7,7 +7,8 @@ module.exports = async (uhg, message) => {
   let content = message.content.replace(".", "")
 
   if (content == "cmd") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !online Honzu`)
-  if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > The_AntiFrost_SK§f [Elite]: necham drakov`);
+  if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > §a[VIP§6+§a] The_AntiFrost_SK§f [Elite]: necham drakov`);
   if (content == "pchat") await uhg.test.server.broadcast(`§2Party > §a[VIP§6+§a] The_AntiFrost_SK§f: necham drakov`);
   if (content == "msg") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: !online Honzu`)
+  if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
 }
