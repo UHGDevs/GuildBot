@@ -10,7 +10,7 @@ Guild BOT of the Hypixel Guild UltimateHypixelGuild [✿UHG✿]
 
 - [x] Start
 - [ ] Discord bot
-- [x] \(optional) Lunch
+- [x] Have a lunch \(optional)
 - [ ] Minecraft bot
 - [ ] Finish
 
