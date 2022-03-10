@@ -1,5 +1,5 @@
 /* Export Functions */
-module.exports.getApi = getApi;
+//module.exports.getApi = getApi;
 
 /* Import Functions & Packages */
 const fetch = require('node-fetch');
@@ -16,7 +16,7 @@ const delCodes = (message) => message
 
 
 /* Function getAPI */
-async function getApi(input, call=["mojang", "key", "hypixel"], skyblocki=[]){
+module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) => {
   /* Empty dictionary */
   let api = {};
   let uuid = input;

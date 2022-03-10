@@ -6,7 +6,7 @@ module.exports = async (uhg, pmsg) => {
   if (!pmsg.command) return
   let command = uhg.mc.commands.get(pmsg.command)
   if(!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(pmsg.command.toLowerCase()));
-  let res = "nic"
+  let res = "Neznámý command"
   if (command) res = await command.run(uhg, pmsg);
   await bridge.send(uhg, res) //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
 

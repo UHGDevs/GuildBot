@@ -2,6 +2,7 @@ const fs = require('fs');
 const minecraft = require('minecraft-protocol');
 const colors = require("colors");
 const { Client, Intents, Collection, Util, WebhookClient, MessageEmbed } = require('discord.js');
+const Functions = require('./utils/functions.js')
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -16,6 +17,7 @@ class Login {
     this.settings = {}
     this.mongo = require("./utils/mongodb.js")
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
+    this.func = new Functions()
   }
   async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {
@@ -33,17 +35,6 @@ class Login {
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
       this.data.stats = await this.mongo.get("general", "uhg")
     }
-  }
-  clear(message) {
-    return message
-      .replace(/✫|✪|⚝/g, '?')
-      .replace(/§|¡±/g, '�')
-      .replace(/�[0-9A-FK-OR]/gi, '')
-  }
-  delay(ms) {new Promise(res => setTimeout(res, ms))}
-
-  f(number) {
-    return number
   }
 
 

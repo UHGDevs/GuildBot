@@ -6,12 +6,12 @@ module.exports = async (uhg, packet) => {
     let msgs = []
     for (let i=0; i<message.extra.length;i++) msgs.push(message.extra[i].text)
 
-    pmsg.extra = uhg.clear(msgs.join("")) || null
+    pmsg.extra = uhg.func.clear(msgs.join("")) || null
     pmsg.non = msgs.join("") || null
   } else pmsg.extra = null
 
-  if (message.text && pmsg.extra) pmsg.msg = uhg.clear(message.text) + pmsg.extra
-  else pmsg.msg = pmsg.extra||uhg.clear(message.text)||null
+  if (message.text && pmsg.extra) pmsg.msg = uhg.func.clear(message.text) + pmsg.extra
+  else pmsg.msg = pmsg.extra||uhg.func.clear(message.text)||null
   if (!pmsg.msg) return { msg: false }
   if (pmsg.msg.startsWith("-")) pmsg.msg = pmsg.msg.replace(/-/g, "").trim()
   pmsg.msg = pmsg.msg.replace(/\s+/g, ' ').trim()
