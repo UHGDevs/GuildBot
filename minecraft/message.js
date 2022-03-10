@@ -7,12 +7,11 @@ module.exports = async (uhg, packet) => {
 
     pmsg.extra = uhg.clear(msgs.join("")) || null
     pmsg.non = msgs.join("") || null
-    console.log(pmsg.non)
   } else pmsg.extra = null
 
   if (message.text && pmsg.extra) pmsg.msg = uhg.clear(message.text) + pmsg.extra
   else pmsg.msg = pmsg.extra||uhg.clear(message.text)||null
-  if (!pmsg.msg || pmsg.msg=="Technoblade joined the game.") return { msg: false }
+  if (!pmsg.msg) return { msg: false }
   if (pmsg.msg.startsWith("-")) pmsg.msg = pmsg.msg.replace(/-/g, "").trim()
   pmsg.msg = pmsg.msg.replace(/\s+/g, ' ').trim()
 
@@ -56,16 +55,17 @@ module.exports = async (uhg, packet) => {
       }
   }
   pmsg.content = content
+  if (!pmsg.channel) return pmsg
 
 
-    let data = uhg.data.guild
-    if (pmsg.username && data.length) {
+    let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
+    if (pmsg.username) {
       data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
       for (let i=0;i<data.members.length;i++) {
         if (pmsg.username==data.members[i].name) {
           pmsg.uuid = data.members[i].uuid
-          let verified = uhg.data.uhg
-          if (!verified.length) verified = await  uhg.mongo.get("general", "uhg")
+          let verified = uhg.data.uhg || await uhg.mongo.get("general", "uhg")
+          if (!verified.length) verified = await uhg.mongo.get("general", "uhg")
           verified = verified.filter(ver=>ver.username==pmsg.username)
           if (!verified.length) break
           verified = verified[0]
@@ -76,7 +76,7 @@ module.exports = async (uhg, packet) => {
       }
     }
 
-
+  if (typeof pmsg.content != 'string') console.log("\n\n\nSTRING\n\n\n")
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
   if (pmsg.msg.startsWith("You have joined ")&&pmsg.msg.endsWith(`'s party!`)) {
     let t = pmsg.msg.replace("You have joined ", "").split(" ")
@@ -121,6 +121,7 @@ module.exports = async (uhg, packet) => {
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
 
+  await uhg.dc.channels.botjs.send(pmsg.username + ": " +pmsg.content)
   console.log(pmsg.content)
   console.log(pmsg)
 
