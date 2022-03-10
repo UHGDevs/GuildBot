@@ -1,7 +1,9 @@
 const fs = require("fs");
-
+const { Collection } = require('discord.js');
 module.exports = (uhg) => {
     try {
+        uhg.mc.commands = new Collection()
+        uhg.mc.aliases = new Collection()
         let amount = 0;
         const commands = fs.readdirSync(`minecraft/commands/`).filter((file) => file.endsWith(".js"));
 

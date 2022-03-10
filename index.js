@@ -11,7 +11,7 @@ const config = require('./settings/config.json');
 class Login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc}
-    this.mc = {client: mc, commands: new Collection(), aliases: new Collection()}
+    this.mc = {client: mc}
     this.test = {server:mctest}
     this.settings = {}
     this.mongo = require("./utils/mongodb.js")
