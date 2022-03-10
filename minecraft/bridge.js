@@ -1,5 +1,6 @@
 exports.chat = async function (uhg, pmsg) {
-  await uhg.dc.channels.botjs.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " " + pmsg.username + ": " +pmsg.content).trim())
+  let msg = await pings(pmsg.content, uhg)
+  await uhg.dc.channels.botjs.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " " + pmsg.username + ": " +msg).trim())
   return
 }
 
@@ -15,6 +16,27 @@ exports.send = async function (uhg, msg) {
   await uhg.dc.channels.botjs.send(semoji + msg)
   return
 }
+
+
+
+async function pings(message, uhg) {
+  let data = uhg.data.uhg
+  if (!data.length) data = await uhg.mongo.get("general", "verify")
+  let mentions = []
+  let msg = message
+  if (msg.includes("<@&")) msg = msg.replace(/<@&/gi, "")
+  if (msg.includes("@")) for (let n=0; n<msg.split(" ").length;n++) if (msg.split(" ")[n].match(/@.*/)) mentions.push(msg.split(" ")[n].substring(1))
+  mentions.forEach(men =>{
+    console.log(men)
+    console.log(men.toLowerCase())
+    let user = data.filter(n=>n.nickname.toLowerCase() == men.toLowerCase())
+    if (!user.length) return
+    msg = msg.replace(`@${men}`, `<@${user[0]._id}>`)
+  })
+  // if (mentions.length) for (let m=0; m<mentions.length;m++) for (let i=0;i<data.length;i++) if (mentions[m] == data.members[i].username.toLowerCase()) msg = msg.replace(`@${mentions[m]}`, `<@${data.members[i].id}>`)
+  return msg
+}
+
 
 function getEmoji(client, emoji, barva="c") {
   let emojis = []

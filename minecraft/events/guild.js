@@ -4,6 +4,6 @@ module.exports = async (uhg, pmsg) => {
   else await bridge.info(uhg, pmsg)
 
   if (!pmsg.command) return
-  await bridge.send(uhg, pmsg.command + " - command comming soon") //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
+  await bridge.send(uhg, pmsg.command + " - command comming soon (Its going to be here)") //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
 
 }
