@@ -11,6 +11,15 @@ module.exports = class Functions {
     if (!Number(number)) return number
     return Number(number).toLocaleString('en', {minimumFractionDigits: 0, maximumFractionDigits: max})
   }
+  r(n){
+    try {o = Number(n)} catch (e) {return n}
+    d = String(n).length
+    p = Math.pow
+    d = p(10,d)
+    i=7
+    while(i)(s=p(10,i--*3))<=n&&(n=Math.floor(Math.round(n*d/s)/d)+"kMGTPE"[i])
+    return n
+  }
 
   // Arena Brawl
   getArena(setup) {

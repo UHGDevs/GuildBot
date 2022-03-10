@@ -8,6 +8,7 @@ module.exports = (uhg) => {
         const commands = fs.readdirSync(`minecraft/commands/`).filter((file) => file.endsWith(".js"));
 
         for (let file of commands) {
+            try { delete require.cache[require.resolve(`./commands/${file}`)] } catch (e) {}
             let pull = require(`./commands/${file}`);
             if (pull.name) {
                   uhg.mc.commands.set(pull.name, pull);
