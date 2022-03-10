@@ -1,11 +1,10 @@
- const { readdirSync } = require("fs");
 const fs = require("fs");
 
 module.exports = (uhg) => {
     try {
       return
         let amount = 0;
-        const commands = readdirSync(`minecraft/commands/`).filter((file) => file.endsWith(".js"));
+        const commands = fs.readdirSync(`minecraft/commands/`).filter((file) => file.endsWith(".js"));
 
         for (let file of commands) {
             let pull = require(`./commands/${file}`);

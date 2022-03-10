@@ -1,3 +1,4 @@
+const fs = require('fs');
 module.exports = async (uhg, packet) => {
   const pmsg = {}
   let message = JSON.parse(packet.message);
@@ -120,8 +121,9 @@ module.exports = async (uhg, packet) => {
     pmsg.args.shift()
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
-
-  if (pmsg.channel === "Guild") require("./events/guildchat.js")(uhg, pmsg)
+  let events = fs.readdirSync(`minecraft/events/`).filter((file) => file.endsWith(".js"))
+  events = events.filter(event => event.split(".")[0] == pmsg.channel.toLowerCase())
+  if (events.length) require(`./events/${events[0]}`)(uhg, pmsg)
 
   /*let a = {
     msg: msg || null,
