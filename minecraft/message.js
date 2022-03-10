@@ -102,6 +102,7 @@ module.exports = async (uhg, packet) => {
 
   if (pmsg.rank && pmsg.rank == "[MVP++]") pmsg.pluscolor = pmsg.non.split("++")[0].slice(-2)
   if (pmsg.rank && pmsg.rank == "[MVP+]") pmsg.pluscolor = pmsg.non.split("+")[0].slice(-2)
+
   if (pmsg.channel == "Guild" && pmsg.content.startsWith("!") || pmsg.channel=="Officer" && pmsg.content.startsWith("!")) {
     pmsg.command = pmsg.content.substring(1).split(" ")[0]
     pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
