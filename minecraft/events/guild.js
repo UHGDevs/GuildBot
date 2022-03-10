@@ -1,6 +1,7 @@
 module.exports = async (uhg, pmsg) => {
+  if (pmsg.username) await uhg.dc.channels.botjs.send(((pmsg.rank||"") + " " + pmsg.username + ": " +pmsg.content).trim())
+  else await uhg.dc.channels.botjs.send(pmsg.msg)
 
-  console.log(`Guild Chat > ${pmsg.username}: ${pmsg.content}`)
+  if (pmsg.command) await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
 
-  await uhg.dc.channels.botjs.send(pmsg.username + ": " +pmsg.content)
 }

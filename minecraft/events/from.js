@@ -1,6 +1,6 @@
 module.exports = async (uhg, pmsg) => {
-
-  console.log(`From ${pmsg.username} > ${pmsg.content}`)
-
-  await uhg.dc.channels.botjs.send("From " + pmsg.username + ": " +pmsg.content)
+  console.log(pmsg)
+  if (!pmsg.command) return "neni command"
+  console.log(pmsg.command)
+  uhg.dc.channels.botjs.send(`${pmsg.command} - command coming soon`)
 }

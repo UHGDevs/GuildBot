@@ -83,7 +83,7 @@ module.exports = async (uhg, packet) => {
   }
 
   let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
-  if (pmsg.username && data.isArray) {
+  if (pmsg.username && data.length) {
     data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
     for (let i=0;i<data.members.length;i++) {
       if (pmsg.username==data.members[i].name) {
@@ -114,7 +114,7 @@ module.exports = async (uhg, packet) => {
 
 
   if (pmsg.channel == "From" && pmsg.verify) {
-    if (pmsg.command && pmsg.command.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
+    if (pmsg.content.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
     else pmsg.command = pmsg.content.split(" ")[0]
     pmsg.nickname = pmsg.content.split(" ")[1] || pmsg.username || null
     pmsg.args = content.split(pmsg.command)
