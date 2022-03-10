@@ -23,7 +23,7 @@ module.exports = {
       let mage = profil.magelvl || 0
       let archer = profil.archerlvl || 0
       let tank = profil.tanklvl || 0
-      let berserk = profil.tanklvl || 0
+      let berserk = profil.berserklvl || 0
       let classavg = profil.classavg || 0
       let message = `Class: [${uhg.func.f(classavg)} CA] **${api.username}** - H: ${healer}, M: ${mage}, B: ${berserk}, A: ${archer}, T: ${tank} (${cata} Cata)`
       return message

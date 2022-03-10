@@ -1,5 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js')
+const constants = require('../src/skyblockconstants')
 
 const delay = ms => new Promise(res => setTimeout(res, ms))
 
@@ -422,59 +423,59 @@ function getArena(setup) {
 //   return result
 // }
 
-// function getLevelByXp(xp, type, levelCap) {
-//     let xpTable;
-//     switch (type) {
-//       case 'runecrafting':
-//         xpTable = constants.runecrafting_xp;
-//         break;
-//       case 'dungeons':
-//         xpTable = constants.dungeon_xp;
-//         break;
-//       default:
-//         xpTable = constants.leveling_xp;
-//     }
-//     let maxLevel = Math.max(...Object.keys(xpTable));
-//     if (constants.skills_cap[type] > maxLevel) {
-//       xpTable = Object.assign(constants.xp_past_50, xpTable);
-//       maxLevel = typeof levelCap === 'number' ?
-//         maxLevel + levelCap :
-//         Math.max(...Object.keys(xpTable));
-//     }
-//     if (isNaN(xp)) {
-//       return {
-//         xp: 0,
-//         level: 0,
-//         maxLevel,
-//         xpCurrent: 0,
-//         xpForNext: xpTable[1],
-//         progress: 0
-//       };
-//     }
-//     let xpTotal = 0;
-//     let level = 0;
-//     let xpForNext = 0;
-//     for (let x = 1; x <= maxLevel; x++) {
-//       xpTotal += xpTable[x];
-//       if (xpTotal > xp) {
-//         xpTotal -= xpTable[x];
-//         break;
-//       } else {
-//         level = x;
-//       }
-//     }
-//     const xpCurrent = Math.floor(xp - xpTotal);
-//     if (level < maxLevel) xpForNext = Math.ceil(xpTable[level + 1]);
-//     const progress = Math.floor((Math.max(0, Math.min(xpCurrent / xpForNext, 1))) * 100);
-//     return level /* {
-//       xp,
-//       level,
-//       maxLevel,
-//       xpCurrent,
-//       xpForNext,
-//       progress
-//     }; */
-// }
+function getLevelByXp(xp, type, levelCap) {
+    let xpTable;
+    switch (type) {
+      case 'runecrafting':
+        xpTable = constants.runecrafting_xp;
+        break;
+      case 'dungeons':
+        xpTable = constants.dungeon_xp;
+        break;
+      default:
+        xpTable = constants.leveling_xp;
+    }
+    let maxLevel = Math.max(...Object.keys(xpTable));
+    if (constants.skills_cap[type] > maxLevel) {
+      xpTable = Object.assign(constants.xp_past_50, xpTable);
+      maxLevel = typeof levelCap === 'number' ?
+        maxLevel + levelCap :
+        Math.max(...Object.keys(xpTable));
+    }
+    if (isNaN(xp)) {
+      return {
+        xp: 0,
+        level: 0,
+        maxLevel,
+        xpCurrent: 0,
+        xpForNext: xpTable[1],
+        progress: 0
+      };
+    }
+    let xpTotal = 0;
+    let level = 0;
+    let xpForNext = 0;
+    for (let x = 1; x <= maxLevel; x++) {
+      xpTotal += xpTable[x];
+      if (xpTotal > xp) {
+        xpTotal -= xpTable[x];
+        break;
+      } else {
+        level = x;
+      }
+    }
+    const xpCurrent = Math.floor(xp - xpTotal);
+    if (level < maxLevel) xpForNext = Math.ceil(xpTable[level + 1]);
+    const progress = Math.floor((Math.max(0, Math.min(xpCurrent / xpForNext, 1))) * 100);
+    return level /* {
+      xp,
+      level,
+      maxLevel,
+      xpCurrent,
+      xpForNext,
+      progress
+    }; */
+}
 
 //[0, 1, 2, 3, 4, 5]
 function array_move(arr, old_index, new_index) {
@@ -488,9 +489,9 @@ function array_move(arr, old_index, new_index) {
     return arr; // for testing
 };
 
-function getLevelByXp (xp) {
+/*function getLevelByXp (xp) {
   return 0
-}
+}*/
 module.exports = {
   ratio,
   nwLevel,
