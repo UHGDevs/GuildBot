@@ -230,7 +230,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         highestpos: swposition[swhighestpos] || null,
       }
     }
-    console.log(api.hypixel.stats.skywars.ranked.highestpos)
+    //console.log(api.hypixel.stats.skywars.ranked.highestpos)
     api.hypixel.stats.bedwars = {
       level: getBwLevel(bedwars.Experience),
       levelformatted: `[${Math.floor(getBwLevel(bedwars.Experience))}☆]`,
@@ -925,9 +925,9 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         if (main) purse = main.coin_purse
         if (banking) bank = banking.balance
         if (!banking) apioff = true
-        console.log(purse)
-        console.log(bank)
-        console.log(profilname)
+        //console.log(purse)
+        //console.log(bank)
+        //console.log(profilname)
 
        api.skyblock.main[profilname] = {
          purse: purse,
@@ -948,9 +948,9 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
           mithril = (mining.powder_mithril || 0)+(mining.powder_spent_mithril || 0)
           gemstone = (mining.powder_gemstone || 0)+(mining.powder_spent_gemstone || 0)
         }
-        console.log(mithril)
-        console.log(gemstone)
-        console.log(profilname)
+        //console.log(mithril)
+        //console.log(gemstone)
+        //console.log(profilname)
 
        api.skyblock.mining[profilname] = {
          sum: mithril+gemstone,
