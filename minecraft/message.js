@@ -57,25 +57,6 @@ module.exports = async (uhg, packet) => {
   pmsg.content = content
   if (!pmsg.channel) return pmsg
 
-
-    let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
-    if (pmsg.username) {
-      data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
-      for (let i=0;i<data.members.length;i++) {
-        if (pmsg.username==data.members[i].name) {
-          pmsg.uuid = data.members[i].uuid
-          let verified = uhg.data.uhg || await uhg.mongo.get("general", "uhg")
-          if (!verified.length) verified = await uhg.mongo.get("general", "uhg")
-          verified = verified.filter(ver=>ver.username==pmsg.username)
-          if (!verified.length) break
-          verified = verified[0]
-          pmsg.verify = true
-          pmsg.grank = verified.guildrank
-          pmsg.id = verified._id
-        }
-      }
-    }
-
   if (typeof pmsg.content != 'string') console.log("\n\n\nSTRING\n\n\n")
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
   if (pmsg.msg.startsWith("You have joined ")&&pmsg.msg.endsWith(`'s party!`)) {
@@ -100,6 +81,24 @@ module.exports = async (uhg, packet) => {
     } else pmsg.username = t[0]
   }
 
+  let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
+  if (pmsg.username && data.isArray) {
+    data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
+    for (let i=0;i<data.members.length;i++) {
+      if (pmsg.username==data.members[i].name) {
+        pmsg.uuid = data.members[i].uuid
+        let verified = uhg.data.uhg || await uhg.mongo.get("general", "uhg")
+        if (!verified.length) verified = await uhg.mongo.get("general", "uhg")
+        verified = verified.filter(ver=>ver.username==pmsg.username)
+        if (!verified.length) break
+        verified = verified[0]
+        pmsg.verify = true
+        pmsg.grank = verified.guildrank
+        pmsg.id = verified._id
+      }
+    }
+  }
+
   if (pmsg.rank && pmsg.rank == "[MVP++]") pmsg.pluscolor = pmsg.non.split("++")[0].slice(-2)
   if (pmsg.rank && pmsg.rank == "[MVP+]") pmsg.pluscolor = pmsg.non.split("+")[0].slice(-2)
 
@@ -122,9 +121,7 @@ module.exports = async (uhg, packet) => {
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
 
-  await uhg.dc.channels.botjs.send(pmsg.username + ": " +pmsg.content)
-  console.log(pmsg.content)
-  console.log(pmsg)
+  if (pmsg.channel === "Guild") require("./events/guildchat.js")(uhg, pmsg)
 
   /*let a = {
     msg: msg || null,
