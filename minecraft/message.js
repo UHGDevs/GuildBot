@@ -112,7 +112,6 @@ module.exports = async (uhg, packet) => {
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
 
-
   if (pmsg.channel == "From" && pmsg.verify) {
     if (pmsg.content.startsWith("!")) pmsg.command = pmsg.content.substring(1).split(" ")[0]
     else pmsg.command = pmsg.content.split(" ")[0]
