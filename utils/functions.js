@@ -1,3 +1,5 @@
+const constants = require('../src/skyblockconstants')
+
 module.exports = class Functions {
   constructor() {
     this.getApi = require("./api")
