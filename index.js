@@ -107,6 +107,8 @@ fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
 setInterval(function () {uhg.reload(["mongo"])}, 30000);
 
+exports.uhg = () => { return uhg }
+
 
 if (uhg.mc.client) {
   require("./minecraft/handler.js") (uhg)

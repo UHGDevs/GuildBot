@@ -3,20 +3,29 @@
 
 /* Import Functions & Packages */
 const fetch = require('node-fetch');
-const { f, getSwLevel, nwLevel, getRank, getOnline, getRankedPosition, ratio, toTime, getSwExpLeft, getBwLevel, getCataLvl, romanize, getPlusColor, getSlayerLvl, getLevelByXp, t } = require("./func");
 /* Api Keys */
 const api_key = process.env.api_key;
 const api_key_2 = process.env.api_key_2;
 
-/* --�-- Random Function --�-- */
-/* Delete Minecraft Color Codes */
-const delCodes = (message) => message
-  .replace(/§|¡±/g, '�')
-  .replace(/�[0-9A-FK-OR]/gi, '')
-
-
 /* Function getAPI */
 module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) => {
+  const uhg = await require("../index.js").uhg()
+  const f = uhg.func.f
+  const getSwLevel = uhg.func.getSwLevel
+  const nwLevel = uhg.func.getNwLevel
+  const getRank = uhg.func.getRank
+  const getOnline = uhg.func.getOnline
+  const getRankedPosition = uhg.func.getRankedPosition
+  const ratio = uhg.func.ratio
+  const toTime = uhg.func.toTime
+  const getSwExpLeft = uhg.func.getSwExpLeft
+  const getBwLevel = uhg.func.getBwLevel
+  const getCataLvl = uhg.func.getCataLvl
+  const romanize = uhg.func.romanize
+  const getPlusColor = uhg.func.getPlusColor
+  const getSlayerLvl = uhg.func.getSlayerLvl
+  const getLevelByXp = uhg.func.getLevelByXp
+
   /* Empty dictionary */
   let api = {};
   let uuid = input;
@@ -142,7 +151,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
     }
     api.hypixel.stats.skywars = {
-      levelformatted: delCodes(skywars.levelFormatted || "1⋆"),
+      levelformatted: uhg.func.clear(skywars.levelFormatted || "1⋆"),
       level: getSwLevel(skywars.skywars_experience || 0),
       coins: skywars.coins || 0,
       souls: skywars.souls || 0,
@@ -152,7 +161,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       tokens: skywars.cosmetic_tokens || 0,
       opals: skywars.opals || 0,
       expmilestone: getSwExpLeft(skywars.skywars_experience || 0),
-      playtime: t(skywars.time_played, "s" || 0),
+      playtime: (skywars.time_played || 0)/1000,
       overall: {
         wins: skywars.wins || 0,
         losses: skywars.losses || 0,
@@ -209,7 +218,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         deaths: skywars.deaths_team_insane || 0,
         kdr: ratio(skywars.kills_team_insane, skywars.deaths_team_insane),
         games: skywars.games_team || 0,
-        playtime: toTime(skywars.time_played_team || 0).formatted.formatted,
+        playtime: toTime(skywars.time_played_team || 0).formatted,
         rawplaytime: skywars.time_played_team || 0,
         assists: skywars.assists_team || 0
       },
@@ -705,7 +714,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       deaths: pit_stats_ptl.deaths || 0,
       kills: pit_stats_ptl.kills || 0,
       kdr: ratio(pit_stats_ptl.kills, pit_stats_ptl.deaths) || 0,
-      playtime: f(t(pit_stats_ptl.playtime_minutes), 0)+"h" || "0h",
+      playtime: f(toTime(pit_stats_ptl.playtime_minutes).m, 0)+"h" || "0h",
       contracts: pit_stats_ptl.contracts_completed || 0,
     }
 

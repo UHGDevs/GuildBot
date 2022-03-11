@@ -21,16 +21,6 @@ module.exports = class Functions {
     return n
   }
 
-  m(n){
-    try {o = Number(n)} catch (e) {return n}
-    d = String(n).length
-    p=Math.pow
-    d=p(10,d)
-    i=7
-    while(i)(s=p(10,i--*3))<=n&&(n=Math.floor(Math.round(n*d/s)/d)+"kMGTPE"[i])
-    return n
-  }
-
   ratio(n1=0, n2=0, n3=2) {
     var options = {minimumFractionDigits: 0, maximumFractionDigits: n3};
     return Number(Number(isFinite(n1 / n2) ? + (n1 / n2) : n1).toLocaleString('en', options))
@@ -49,24 +39,11 @@ module.exports = class Functions {
   }
 
   toTime(sec) {
-    days = sec / 60 / 60 / 24
-    hours = sec / 60 / 60 % 24
-    formatted = `${Math.floor(Number(days))}d ${Math.floor(Number(hours))}h`
-    final = {formatted:formatted, h:sec/60/60, d: sec/60/60/24, m: sec/60, s: sec}
+    let days = sec / 60 / 60 / 24
+    let hours = sec / 60 / 60 % 24
+    let formatted = `${Math.floor(Number(days))}d ${Math.floor(Number(hours))}h`
+    let final = {formatted:formatted, h:sec/60/60, d: sec/60/60/24, m: sec/60, s: sec}
     return final
-  }
-  
-  t(number, unit) {
-    if (unit == "min" || unit == "m" || unit == "minute") hours = number / 60
-    else if (unit == "s" || unit == "sec" || unit == "second") hours = number / 60 / 60
-    else hours = number / 60
-    return hours
-  }
-  
-  toTimeHours(minutes) {
-    hours = minutes / 60
-    playtime = `${Math.floor(Number(hours))}h`
-    return playtime
   }
 
   getMilestones(first, second) {
@@ -74,9 +51,7 @@ module.exports = class Functions {
     return {next: Math.ceil(first/second), need: Math.ceil(first/second) * second - first}
  }
 
-  getNwLevel(exp) {
-    return Math.sqrt(Number(exp) * 2 + 30625) / 50 - 2.5
-  }
+  getNwLevel(exp) { return Math.sqrt(Number(exp) * 2 + 30625) / 50 - 2.5 }
 
   getSwLevel(xp) {
     var xps = [0, 20, 70, 150, 250, 500, 1000, 2000, 3500, 6000, 10000, 15000];
@@ -115,18 +90,17 @@ module.exports = class Functions {
     else return ""
   }
 
-  getBwExpForLevel(level) {
-    var progress = level % 100
-    if (progress > 3) return 5000;
-    return {
-      0: 500,
-      1: 1000,
-      2: 2000,
-      3: 3500
-    }[progress]
-  }
-
   getBwLevel(exp = 0) {
+    function getBwExpForLevel(level) {
+      var progress = level % 100
+      if (progress > 3) return 5000;
+      return {
+        0: 500,
+        1: 1000,
+        2: 2000,
+        3: 3500
+      }[progress]
+    }
     var prestiges = Math.floor(exp / 487000);
     var level = prestiges * 100;
     var remainingExp = exp - (prestiges * 487000);
@@ -163,9 +137,9 @@ module.exports = class Functions {
 }
 
   getOnline(json) {
-    online = {}
-    game = renameHypixelGames(json.gameType || null)
-    mode = getGameMode(json.mode || null)
+    let online = {}
+    let game = renameHypixelGames(json.gameType || null)
+    let mode = getGameMode(json.mode || null)
     online.title = "Online"
     online.game = game
     if (mode == "LOBBY") {
@@ -281,10 +255,11 @@ module.exports = class Functions {
       xpForNext,
       progress
     }; */
-}
+  }
 
   getRank(json) {
-    rank = json.prefix || json.rank || json.monthlyPackageRank || json.packageRank || json.newPackageRank || false
+    function replaceRank (rank) { return rank.replace(/§.|\[|]/g, '').replace('SUPERSTAR', "MVP++").replace('VIP_PLUS', 'VIP+').replace('MVP_PLUS', 'MVP+').replace('NONE', 'MVP+').replace("GAME_MASTER", "GM").replace("YOUTUBER", "YOUTUBE").replace("OWNER", "OWNER").replace("EVENTS", "EVENTS").replace("MOJANG", "MOJANG").replace("ADMIN", "ADMIN")}
+    let rank = json.prefix || json.rank || json.monthlyPackageRank || json.packageRank || json.newPackageRank || false
     if (!rank) return {rank: "NON", prefix: json.displayname}
     return { rank: replaceRank(rank), prefix: `[${replaceRank(rank)}] ${json.displayname}` }
   }
@@ -407,20 +382,6 @@ module.exports = class Functions {
         .replace("housing", "Housing")
   }
 
-  replaceRank(toReplace) {
-    return toReplace
-      .replace(/§.|\[|]/g, '')
-      .replace('SUPERSTAR', "MVP++")
-      .replace('VIP_PLUS', 'VIP+')
-      .replace('MVP_PLUS', 'MVP+')
-      .replace('NONE', 'MVP+')
-      .replace("GAME_MASTER", "GM")
-      .replace("YOUTUBER", "YOUTUBE")
-      .replace("OWNER", "OWNER")
-      .replace("EVENTS", "EVENTS")
-      .replace("MOJANG", "MOJANG")
-      .replace("ADMIN", "ADMIN")
-  }
 
   renameHypixelGames(game){
     if (game === null || game === undefined) return
@@ -462,4 +423,3 @@ module.exports = class Functions {
     }
   }
 }
-
