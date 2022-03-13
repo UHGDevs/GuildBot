@@ -114,7 +114,7 @@ setInterval(function () {uhg.reload(["mongo"])}, 30000);
 
 exports.uhg = () => { return uhg }
 
-
+require("./time/handler.js") (uhg)
 if (uhg.mc.client) {
   require("./minecraft/handler.js") (uhg)
   require("./minecraft/commands.js") (uhg)
