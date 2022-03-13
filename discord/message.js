@@ -3,8 +3,16 @@ module.exports = async (uhg, message) => {
   if (message.channel.partial) await message.channel.fetch();
   if (message.partial) await message.fetch();
 
-  if (!message.content.startsWith(".")) return
-  let content = message.content.replace(".", "")
+  let prefix = uhg.settings.prefix || "."
+
+  if (!message.content.startsWith(prefix)) return
+  let content = message.content.replace(prefix, "")
+
+  let command = uhg.mc.commands.get(uhg.mc.aliases.get(content.split(" ")[0].toLowerCase()));
+  if (command) {
+    let msg = await command.run(uhg, {nickname:content.split(" ")[1]||"DavidCzPdy"}) || "nic"
+    await uhg.dc.channels.botjs.send(msg)
+  }
 
   if (content == "cmd") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !level Honzu`)
   if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > §a[VIP§6+§a] The_AntiFrost_SK§f [Elite]: necham drakov`);

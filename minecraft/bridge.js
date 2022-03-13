@@ -1,25 +1,35 @@
 exports.chat = async function (uhg, pmsg) {
+  let channel;
   let msg = await pings(pmsg.content, uhg)
-  await uhg.dc.channels.botjs.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " " + pmsg.username + ": " +msg).trim())
+  if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
+  else channel = uhg.dc.channels.gchat
+  await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " " + pmsg.username + ": " +msg).trim())
   return
 }
 
 exports.info = async function (uhg, pmsg) {
+  let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
+  if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
+  else channel = uhg.dc.channels.gchat
   let msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
-  await uhg.dc.channels.botjs.send(msg)
+  await channel.send(msg)
   return
 }
 
 exports.send = async function (uhg, msg) {
+  let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
-  await uhg.dc.channels.botjs.send(semoji + msg)
+  if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
+  else channel = uhg.dc.channels.gchat
+  await channel.send(semoji + msg)
   return
 }
 
 exports.guildjoin = async function (uhg, pmsg) {
+  let channel = uhg.dc.channels.ochat
   let semoji = await getEmoji(uhg.dc.client, "server")
-  let msg = await uhg.dc.channels.botjs.send({ content:semoji + pmsg.send, components: [pmsg.buttons] })
+  let msg = await channel.send({ content:semoji + pmsg.send, components: [pmsg.buttons] })
   msg.expire = Number(new Date()) + 60000
   msg.pmsg = pmsg
   uhg.cache.guildjoin.set(pmsg.username, msg)

@@ -1,4 +1,5 @@
 {
+  "prefix": ".",
   "discord": true,
   "minecraft": false,
   "test": true
