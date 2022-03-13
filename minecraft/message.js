@@ -84,15 +84,15 @@ module.exports = async (uhg, packet) => {
     pmsg.command = "gtierguild"
   } else if (pmsg.msg.endsWith(" joined the guild!")) {
     pmsg.channel = "Guild"
-  } else if (pmsg.msg.endsWith(" left the guild!")||message.includes("was kicked from the guild by")) {
+  } else if (pmsg.msg.endsWith(" left the guild!")||pmsg.msg.includes("was kicked from the guild by")) {
     pmsg.channel = "Guild"
   } else if (pmsg.msg.startsWith("The Guild has reached Level ")) {
     pmsg.channel = "Guild"
-  } else if (pmsg.msg.endsWith("was demoted from General to Manager") || message.endsWith("was demoted from Manager to Officer") || message.endsWith("was demoted from Officer to Elite Member") || message.endsWith("was demoted from Elite Member to Member")) {
+  } else if (pmsg.msg.endsWith("was demoted from General to Manager") || pmsg.msg.endsWith("was demoted from Manager to Officer") || pmsg.msg.endsWith("was demoted from Officer to Elite Member") || pmsg.msg.endsWith("was demoted from Elite Member to Member")) {
     pmsg.channel = "Guild"
-  } else if (pmsg.msg.endsWith("was promoted from Manager to General") || message.endsWith("was promoted from Officer to Manager") || message.endsWith("was promoted from Elite Member to Officer") || message.endsWith("was promoted from Member to Elite Member")) {
+  } else if (pmsg.msg.endsWith("was promoted from Manager to General") || pmsg.msg.endsWith("was promoted from Officer to Manager") || pmsg.msg.endsWith("was promoted from Elite Member to Officer") || pmsg.msg.endsWith("was promoted from Member to Elite Member")) {
     pmsg.channel = "Guild"
-  } 
+  }
 
   if (!pmsg.channel) return pmsg
 
