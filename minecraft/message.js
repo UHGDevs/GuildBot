@@ -59,7 +59,7 @@ module.exports = async (uhg, packet) => {
 
   if (typeof pmsg.content != 'string') console.log("\n\n\nSTRING\n\n\n")
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
-  if (pmsg.msg.startsWith("You have joined ")&&pmsg.msg.endsWith(`'s party!`)) {
+  if (pmsg.msg.startsWith("You have joined ")&&(pmsg.msg.endsWith(`'s party!`)||pmsg.msg.endsWith(`s' party!`))) {
     let t = pmsg.msg.replace("You have joined ", "").split(" ")
     if (t[0].includes("[")) {
       pmsg.rank = t[0]
@@ -79,7 +79,20 @@ module.exports = async (uhg, packet) => {
       pmsg.rank = t[0]
       pmsg.username = t[1]
     } else pmsg.username = t[0]
-  }
+  } else if (pmsg.msg.startsWith('The guild has completed Tier')) {
+    pmsg.channel = "Guild"
+    pmsg.command = "gtierguild"
+  } else if (pmsg.msg.endsWith(" joined the guild!")) {
+    pmsg.channel = "Guild"
+  } else if (pmsg.msg.endsWith(" left the guild!")||message.includes("was kicked from the guild by")) {
+    pmsg.channel = "Guild"
+  } else if (pmsg.msg.startsWith("The Guild has reached Level ")) {
+    pmsg.channel = "Guild"
+  } else if (pmsg.msg.endsWith("was demoted from General to Manager") || message.endsWith("was demoted from Manager to Officer") || message.endsWith("was demoted from Officer to Elite Member") || message.endsWith("was demoted from Elite Member to Member")) {
+    pmsg.channel = "Guild"
+  } else if (pmsg.msg.endsWith("was promoted from Manager to General") || message.endsWith("was promoted from Officer to Manager") || message.endsWith("was promoted from Elite Member to Officer") || message.endsWith("was promoted from Member to Elite Member")) {
+    pmsg.channel = "Guild"
+  } 
 
   if (!pmsg.channel) return pmsg
 
