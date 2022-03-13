@@ -11,6 +11,7 @@ module.exports = async (uhg, message) => {
   if (content == "pchat") await uhg.test.server.broadcast(`§2Party > §a[VIP§6+§a] AntreX95§f: necham drakov`);
   if (content == "msg") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: !online Honzu`)
   if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
+  if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] Farmans§f has requested to join the Guild!`)
   if (content.split(" ")[0] == "c") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !${content.split(" ")[1]} Honzu`)
   if (content == "r") require("../minecraft/commands.js") (uhg)
 }

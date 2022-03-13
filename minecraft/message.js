@@ -56,7 +56,6 @@ module.exports = async (uhg, packet) => {
       }
   }
   pmsg.content = content
-  if (!pmsg.channel) return pmsg
 
   if (typeof pmsg.content != 'string') console.log("\n\n\nSTRING\n\n\n")
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
@@ -73,14 +72,16 @@ module.exports = async (uhg, packet) => {
       pmsg.username = t[1]
     } else pmsg.username = t[0]
   } else if (pmsg.msg.includes(" has requested to join the Guild!")) {
-    t = msg.split(" has requested to join the Guild!")[0].split(" ")
+    t = pmsg.msg.split(" has requested to join the Guild!")[0].split(" ")
     pmsg.channel = "Officer"
-    pmsg.command = "getjoined"
+    pmsg.command = "GjoininG"
     if (t[0].includes("[")) {
       pmsg.rank = t[0]
       pmsg.username = t[1]
     } else pmsg.username = t[0]
   }
+
+  if (!pmsg.channel) return pmsg
 
   let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
   if (pmsg.username && data.length) {
@@ -122,7 +123,8 @@ module.exports = async (uhg, packet) => {
   }
   let events = fs.readdirSync(`minecraft/events/`).filter((file) => file.endsWith(".js"))
   events = events.filter(event => event.split(".")[0] == pmsg.channel.toLowerCase())
-  if (events.length) require(`./events/${events[0]}`)(uhg, pmsg)
+  if (events.length) return require(`./events/${events[0]}`)(uhg, pmsg)
+  return require("./events/all")(uhg, pmsg)
 
   /*let a = {
     msg: msg || null,
