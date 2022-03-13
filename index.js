@@ -14,10 +14,12 @@ class Login {
     this.dc = {client: dc}
     this.mc = {client: mc}
     this.test = {server:mctest}
+    this.members = []
     this.settings = {}
     this.mongo = require("./utils/mongodb.js")
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
+    this.cache = {guildjoin: new Collection()}
   }
   async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {
@@ -25,6 +27,9 @@ class Login {
     }
     if (reload.includes("guild") || reload.includes("mongo") || !reload.length) {
       this.data.guild = await this.mongo.get("stats", "guild")
+      this.members = []
+      this.data.guild[0].members.forEach(member =>{ this.members.push(member.name) })
+
     }
     if (reload.includes("verify") || reload.includes("mongo") || !reload.length) {
       this.data.verify = await this.mongo.get("general", "verify")

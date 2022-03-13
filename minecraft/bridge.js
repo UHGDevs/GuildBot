@@ -17,6 +17,15 @@ exports.send = async function (uhg, msg) {
   return
 }
 
+exports.guildjoin = async function (uhg, pmsg) {
+  let semoji = await getEmoji(uhg.dc.client, "server")
+  let msg = await uhg.dc.channels.botjs.send({ content:semoji + pmsg.send, components: [pmsg.buttons] })
+  msg.expire = Number(new Date()) + 60000
+  msg.pmsg = pmsg
+  uhg.cache.guildjoin.set(pmsg.username, msg)
+  return
+}
+
 
 
 async function pings(message, uhg) {

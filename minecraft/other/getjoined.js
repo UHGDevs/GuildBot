@@ -1,8 +1,16 @@
+const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
+let bridge = require(`../bridge.js`)
 module.exports = async (uhg, pmsg) => {
   console.log(pmsg)
-  let api = await uhg.func.getApi(pmsg.nickname)
+  let api = await uhg.func.getApi(pmsg.username)
   if (api instanceof Object == false) return api
   let level = Math.floor(api.hypixel.level) || 0
-  let message = `[${level}] ${pmsg.nickname} se chce připojit do guildy!\n https://plancke.io/hypixel/player/stats/${pmsg.nickname}`
-  bridge.send(uhg, message)
+  pmsg.send = `[${level}] ${pmsg.username} se chce připojit do guildy!\n https://plancke.io/hypixel/player/stats/${pmsg.username}`
+  pmsg.buttons = new MessageActionRow()
+    .addComponents(new MessageButton().setCustomId(`/g accept ${pmsg.username}`).setLabel('PŘIJMOUT').setStyle('SUCCESS'))
+    .addComponents(new MessageButton().setCustomId('guild_denine').setLabel('ODMÍTNOUT').setStyle('DANGER'))
+  pmsg.secondbuttons = new MessageActionRow()
+    .addComponents(new MessageButton().setCustomId(`/g invite ${pmsg.username}`).setLabel('POZVAT ZNOVU').setStyle('PRIMARY'))
+    .addComponents(new MessageButton().setCustomId('guild_denine').setLabel('ODMÍTNOUT').setStyle('DANGER'))
+  bridge.guildjoin(uhg, pmsg)
 }
