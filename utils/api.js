@@ -813,6 +813,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.skyblock.skills = {}
     api.skyblock.main = {}
     api.skyblock.mining = {}
+    
     var skyblock = await fetch(`https://api.hypixel.net/skyblock/profiles?key=${api_key}&uuid=${uuid}`).then(api => api.json())
     if (!skyblock.success) return "Chyba v skyblock api"
     let profiles = skyblock.profiles
@@ -822,8 +823,22 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let dungeons = profiles[i].members[uuid].dungeons || null
         if (!dungeons||!dungeons.selected_dungeon_class) continue
         let secrets = skyblocksecrets || 0
-        let catacombs = dungeons.dungeon_types.catacombs
+        let catacombs = dungeons.dungeon_types.catacombs || {}
         let mastercatacombs = dungeons.dungeon_types.master_catacombs || {}
+        let runscata = catacombs.times_played || {}
+        let runsmm = mastercatacombs.times_played || {}
+        let runs = 0;
+        for (let o in runscata) {
+          if (runscata.hasOwnProperty(o)) {
+            runs += parseFloat(runscata[o]);
+          }
+        }
+        for (let o in runsmm) {
+          if (runsmm.hasOwnProperty(o)) {
+            runs += parseFloat(runsmm[o]);
+          }
+        }
+        let secretsperrun = secrets/runs || 0
         let classes = dungeons.player_classes || {}
         let healer = getLevelByXp(classes.healer.experience, "dungeons")
         let mage = getLevelByXp(classes.mage.experience, "dungeons")
@@ -831,10 +846,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let archer = getLevelByXp(classes.archer.experience, "dungeons")
         let tank = getLevelByXp(classes.tank.experience, "dungeons")
        let catalvl = await getCataLvl(catacombs.experience||0)
-
+       
        api.skyblock.dungeons[profilname] = {
          level: catalvl,
          secrets: secrets,
+         runs: runs,
+         secretsratio: secretsperrun,
          "class": dungeons.selected_dungeon_class,
          overallclassxp: healer+mage+berserk+archer+tank,
          classavg: (healer+mage+berserk+archer+tank)/5,

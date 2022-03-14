@@ -20,8 +20,9 @@ module.exports = {
       let profil = dungeons[profile]
       let catalevel = profil.level || 0
       let secrets = profil.secrets || 0
+      let secretsratio = profil.secretsratio || 0
       let clas = profil.class || "nic"
-      let message = `Cata: [${catalevel}] **${api.username}** - ${uhg.func.f(secrets)} secrets (${clas})`
+      let message = `Cata: [${catalevel}] **${api.username}** - ${uhg.func.f(secrets)} secrets - ${uhg.func.f(secretsratio)} secrets/run (${clas})`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
