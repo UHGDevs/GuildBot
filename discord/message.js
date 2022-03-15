@@ -11,6 +11,10 @@ module.exports = async (uhg, message) => {
   let command = uhg.dc.commands.get(content.split(" ")[0]);
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
   if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));
+  if (command) {
+    let msg = await command.run(uhg, message, content.replace(content.split(" ")[0], "").trim())
+    return await uhg.dc.channels.botjs.send(msg)
+  }
   if (!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(content.split(" ")[0].toLowerCase()));
   if (command) {
     let msg = await command.run(uhg, {nickname:content.split(" ")[1]||"DavidCzPdy"}) || "nic"
