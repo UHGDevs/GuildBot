@@ -21,4 +21,6 @@ module.exports = async (uhg) => {
   const event = require(`./message.js`)
   uhg.dc.client.on("messageCreate", event.bind(null, uhg));
 
+  require("./commands")(uhg)
+
 }

@@ -8,11 +8,16 @@ module.exports = async (uhg, message) => {
   if (!message.content.startsWith(prefix)) return
   let content = message.content.replace(prefix, "")
 
-  let command = uhg.mc.commands.get(uhg.mc.aliases.get(content.split(" ")[0].toLowerCase()));
+  let command = uhg.dc.commands.get(content.split(" ")[0]);
+  if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
+  if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));
+  if (!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(content.split(" ")[0].toLowerCase()));
   if (command) {
     let msg = await command.run(uhg, {nickname:content.split(" ")[1]||"DavidCzPdy"}) || "nic"
-    await uhg.dc.channels.botjs.send(msg)
-  }
+    return await uhg.dc.channels.botjs.send(msg)
+  } //else return message.reply("Neplatný command")
+
+
 
   if (content == "cmd") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !level Honzu`)
   if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > §a[VIP§6+§a] The_AntiFrost_SK§f [Elite]: necham drakov`);
