@@ -15,6 +15,7 @@ class Login {
     this.mc = {client: mc}
     this.test = {server:mctest}
     this.members = []
+    this.ignore = []
     this.settings = {}
     this.mongo = require("./utils/mongodb.js")
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
