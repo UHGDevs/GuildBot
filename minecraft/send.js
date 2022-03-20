@@ -5,6 +5,9 @@ exports.send = async function (uhg, pmsg) {
   if (!message) return
   //message = pings(message, uhg)
 
+  message = pings(message, uhg)
+  message = message.replace(/\*/g, "")
+
   let channel = pmsg.channel || ""
 
   if (message.startsWith("/")) ready = true
