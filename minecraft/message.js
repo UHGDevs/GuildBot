@@ -32,7 +32,7 @@ module.exports = async (uhg, packet) => {
       content.shift()
       again1 = false;
     }
-    else if (content[0].match(/To|From|Party|Guild|Officer/) && again == true) { pmsg.channel=content[0]
+    else if (content[0].match(/To|From|Party|Guild|Officer/) && content[1] && content[1].startsWith(">") && again == true) { pmsg.channel=content[0]
       content.shift()}
     else if (content[0].startsWith(">")) content.shift()
     else if (a<4 && content[0].startsWith("[") && content[0].endsWith("]")) {

@@ -68,6 +68,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     if (!hypixel.player) return "Hráč nikdy nebyl na hypixelu"
     if (!hypixel.player.stats || false) return "Hráč nehrál žádnou minihru"
 
+    var currenttourney = "bedwars_eight_two_0" //  ! CURRENT TOURNAMENT !
+
     hypixel = hypixel.player
     var achievements = hypixel.achievements || {}
     var skywars = hypixel.stats.SkyWars || {}
@@ -91,6 +93,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     var mw = hypixel.stats.Walls3 || {}
     var smash = hypixel.stats.SuperSmash || {}
     var warlords = hypixel.stats.Battleground || {}
+    var tourney = hypixel.tourney || {}
+    var ctourney = tourney[currenttourney] || {}
 
     var skyblocksecrets = achievements.skyblock_treasure_hunter || 0
 
@@ -741,6 +745,35 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       vampiredeaths: vampirez.vampire_deaths || 0,
       goldbought: vampirez.gold_bought || 0,
       humankills: vampirez.human_kills || 0,
+    }
+
+    api.hypixel.stats.tourney = {
+      games: ctourney.games_played || 0,
+      maxgames: 40, //   ! UPDATOVAT !
+      playtime: ctourney.playtime || 0,
+      tributes: ctourney.tributes_earned || 0,
+      totaltributes: tourney.total_tributes || 0,
+      currenttournament: currenttourney || null,
+      bedwars_eight_two_0: {
+        games: bedwars.tourney_bedwars_eight_two_0_games_played_bedwars || 0,
+        winstreak: bedwars.tourney_bedwars_eight_two_0_winstreak2 || 0,
+        wins: bedwars.tourney_bedwars_eight_two_0_wins_bedwars || 0,
+        losses: bedwars.tourney_bedwars_eight_two_0_losses_bedwars || 0,
+        wlr: ratio(bedwars.tourney_bedwars_eight_two_0_wins_bedwars, bedwars.tourney_bedwars_eight_two_0_losses_bedwars, 2),
+        finalKills: bedwars.tourney_bedwars_eight_two_0_final_kills_bedwars || 0,
+        finalDeaths: bedwars.tourney_bedwars_eight_two_0_final_deaths_bedwars || 0,
+        fkdr: ratio(bedwars.tourney_bedwars_eight_two_0_final_kills_bedwars, bedwars.tourney_bedwars_eight_two_0_final_deaths_bedwars),
+        kills: bedwars.tourney_bedwars_eight_two_0_kills_bedwars || 0,
+        deaths: bedwars.tourney_bedwars_eight_two_0_deaths_bedwars || 0,
+        kdr: ratio(bedwars.tourney_bedwars_eight_two_0_kills_bedwars, bedwars.tourney_bedwars_eight_two_0_deaths_bedwars),
+        bedsBroken: bedwars.tourney_bedwars_eight_two_0_beds_broken_bedwars || 0,
+        bedsLost: bedwars.tourney_bedwars_eight_two_0_beds_lost_bedwars || 0,
+        bblr: ratio(bedwars.tourney_bedwars_eight_two_0_beds_broken_bedwars, bedwars.tourney_bedwars_eight_two_0_beds_lost_bedwars),
+        iron: bedwars.tourney_bedwars_eight_two_0_iron_resources_collected_bedwars || 0,
+        gold: bedwars.tourney_bedwars_eight_two_0_gold_resources_collected_bedwars || 0,
+        diamond: bedwars.tourney_bedwars_eight_two_0_diamond_resources_collected_bedwars || 0,
+        emerald: bedwars.tourney_bedwars_eight_two_0_emerald_resources_collected_bedwars || 0,
+      },
     }
 
     // api.hypixel.stats.quake = {

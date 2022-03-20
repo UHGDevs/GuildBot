@@ -1,8 +1,9 @@
 exports.send = async function (uhg, pmsg) {
   let ready;
   let message = pmsg.send;
+  console.log(message)
   if (!message) return
-  message = pings(message, uhg).replace(/\*/g, "")
+  //message = pings(message, uhg)
 
   let channel = pmsg.channel || ""
 
