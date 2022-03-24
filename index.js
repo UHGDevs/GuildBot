@@ -21,6 +21,7 @@ class Login {
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
+    this.time = {database: {refreshed:0}}
   }
   async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {

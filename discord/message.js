@@ -8,6 +8,8 @@ module.exports = async (uhg, message) => {
   if (!message.content.startsWith(prefix)) return
   let content = message.content.replace(prefix, "")
 
+  if (content.startsWith("test")) return require("../time/events/database.js").run(uhg)
+
   let command = uhg.dc.commands.get(content.split(" ")[0]);
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
   if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));

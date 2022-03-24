@@ -5,7 +5,7 @@ module.exports = class Functions {
     this.getApi = require("./api")
   }
 
-  delay(ms) {new Promise(res => setTimeout(res, ms))}
+  delay(ms) {return new Promise(res => setTimeout(res, ms))}
 
   clear(message) { return message.replace(/✫|✪|⚝/g, '?').replace(/§|¡±/g, '�').replace(/�[0-9A-FK-OR]/gi, '') }
 
