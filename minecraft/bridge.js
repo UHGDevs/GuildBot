@@ -3,7 +3,7 @@ exports.chat = async function (uhg, pmsg) {
   let msg = await pings(pmsg.content, uhg)
   if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
   else channel = uhg.dc.channels.gchat
-  await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " " + pmsg.username + ": " +msg).trim())
+  await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " **" + pmsg.username + ":** " +msg).trim())
   return
 }
 

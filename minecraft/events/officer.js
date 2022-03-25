@@ -5,7 +5,12 @@ module.exports = async (uhg, pmsg) => {
 
   if (pmsg.command === "GjoininG") return require("../other/getjoined.js")(uhg, pmsg)
   if (pmsg.command) {
-    console.log("MM")
-    await bridge.send(uhg, pmsg.command + " - command comming soon (Its going to be here)", "Officer") //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
+    let command = uhg.mc.commands.get(pmsg.command)
+    if(!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(pmsg.command.toLowerCase()));
+    let res = "Neznámý command"
+    if (command) res = await command.run(uhg, pmsg);
+    pmsg.send = res
+    await bridge.send(uhg, pmsg.send)
+    await chat.send(uhg, pmsg)
   }
 }

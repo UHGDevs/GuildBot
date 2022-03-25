@@ -31,8 +31,17 @@ async function send(uhg, pmsg) {
     console.log(pmsg.error)
     console.log("ERROR HANDLERING COMMING SOON")
     return
-    // ERROR HANDLERING HERE
-    // (like you cannot send this message twice / you cannot message this player etc.)
+
+
+    // TODO: SEND ERROR HANDLERING (like you cannot send this message twice / you cannot message this player etc.)
+
+    if (pmsg.error == "You cannot say the same message twice!") {
+
+    }
+    else if (pmsg.error == "You cannot message this player.") {
+      console.log(pmsg.send)
+      // Pokud to je že neni verified tak poslat na dc, jinak return
+    }
   }
 
   pmsg.ready = true
