@@ -19,7 +19,17 @@ module.exports = async (uhg, interaction) => {
 
   if (expire < now && !interaction.customId.includes("/g invite ")) return await interaction.editReply({ components: [msg.pmsg.secondbuttons] })
 
-  if (interaction.customId.includes("/g accept ")) await interaction.editReply({ components: [accepted] })
-  else if (interaction.customId.includes("/g invite ")) await interaction.editReply({ components: [invited] })
+  if (interaction.customId.includes("/g accept ")) {
+    if (expire > now){
+      uhg.mc.send.push({send: `/g accept ${nickname}`, onetime:true})
+      await interaction.editReply({ components: [accepted] })
+    } else {
+      uhg.mc.send.push({send: `/g invite ${nickname}`, onetime:true})
+      await interaction.editReply({ components: [invited] })
+    }
+  } else if (interaction.customId.includes("/g invite ")) {
+    await interaction.editReply({ components: [invited] })
+    uhg.mc.send.push({send: `/g invite ${nickname}`, onetime:true})
+  }
 
 }

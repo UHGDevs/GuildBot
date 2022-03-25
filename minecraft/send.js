@@ -62,6 +62,8 @@ exports.write = async function (uhg, pmsg) {
     else if (!pmsg.antispam && msg.length > 256) msg = msg.slice(0, 253)+"..."
     else if (pmsg.antispam) msg = msg + pmsg.antispam
 
+    console.log(pmsg)
+    console.log(msg)
     uhg.mc.client.write("chat", { message: msg, position: 0 })
 
     client.on('chat', async function(packet) {
@@ -72,7 +74,7 @@ exports.write = async function (uhg, pmsg) {
     })
     await delay(500)
     if (!pmsg.error) return
-    send(uhg, pmsg)
+    if (!pmsg.onetime) send(uhg, pmsg)
   } finally {return uhg.mc.ready = true}
 }
 

@@ -13,6 +13,8 @@ exports.info = async function (uhg, pmsg) {
   if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
   else channel = uhg.dc.channels.gchat
   let msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
+  if (msg.endsWith(`${pmsg.username} joined.`)) msg = msg.replace(pmsg.username + " joined.", `\`${pmsg.username} joined.\``)
+  else if (msg.endsWith(`${pmsg.username} left.`)) msg = msg.replace(pmsg.username + " left.", `\`${pmsg.username} left.\``)
   await channel.send(msg)
   return
 }

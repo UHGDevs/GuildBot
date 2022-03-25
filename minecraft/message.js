@@ -16,6 +16,8 @@ module.exports = async (uhg, packet) => {
   if (pmsg.msg.startsWith("-")) pmsg.msg = pmsg.msg.replace(/-/g, "").trim()
   pmsg.msg = pmsg.msg.replace(/\s+/g, ' ').trim()
 
+  console.log(pmsg.msg)
+
   //["Guild", ">", "jmenonnona:", "zprava"]
   let content = pmsg.msg.split(" ")
 
@@ -94,8 +96,9 @@ module.exports = async (uhg, packet) => {
     pmsg.channel = "Guild"
   } else if (pmsg.msg.endsWith("was promoted from Manager to General") || pmsg.msg.endsWith("was promoted from Officer to Manager") || pmsg.msg.endsWith("was promoted from Elite Member to Officer") || pmsg.msg.endsWith("was promoted from Member to Elite Member")) {
     pmsg.channel = "Guild"
+  } else if (pmsg.msg.endsWith("to your guild. They have 5 minutes to accept.")) {
+    pmsg.channel = "Officer"
   }
-
   if (!pmsg.channel) return pmsg
 
   let data = uhg.data.guild || await uhg.mongo.get("stats", "guild")
