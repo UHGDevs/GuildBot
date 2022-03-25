@@ -12,7 +12,7 @@ const config = require('./settings/config.json');
 class Login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc}
-    this.mc = {client: mc}
+    this.mc = {client: mc, send: [], ready: false}
     this.test = {server:mctest}
     this.members = []
     this.ignore = []
@@ -58,12 +58,12 @@ if (config.discord === true) {
 }
 if (config.minecraft === true) {
   mc = minecraft.createClient({
-    host: "play.survival-games.cz",
-    //host: "mc.hypixel.net",
-    username: "dasfhvas",
-    //username: process.env.email,
-    //password: process.env.password,
-    //auth: 'microsoft'
+  //  host: "play.survival-games.cz",
+  //  username: "dasfhvas",
+    host: "mc.hypixel.net",
+    username: process.env.email,
+    password: process.env.password,
+    auth: 'microsoft'
   });
 }
 
