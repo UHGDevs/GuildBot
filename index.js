@@ -11,7 +11,7 @@ const config = require('./settings/config.json');
 
 class Login {
   constructor(dc, mc, mctest) {
-    this.dc = {client: dc}
+    this.dc = {client: dc, channelsids: {guild:"957005113149521930", officer:"957005146460684299"}}
     this.mc = {client: mc, send: [], ready: false}
     this.test = {server:mctest}
     this.members = []

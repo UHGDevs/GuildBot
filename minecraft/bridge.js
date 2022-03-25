@@ -54,7 +54,6 @@ async function pings(message, uhg) {
     if (!user.length) return
     msg = msg.replace(`@${men}`, `<@${user[0]._id}>`)
   })
-  // if (mentions.length) for (let m=0; m<mentions.length;m++) for (let i=0;i<data.length;i++) if (mentions[m] == data.members[i].username.toLowerCase()) msg = msg.replace(`@${mentions[m]}`, `<@${data.members[i].id}>`)
   return msg
 }
 

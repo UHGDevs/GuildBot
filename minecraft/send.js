@@ -36,7 +36,7 @@ async function send(uhg, pmsg) {
     // TODO: SEND ERROR HANDLERING (like you cannot send this message twice / you cannot message this player etc.)
 
     if (pmsg.error == "You cannot say the same message twice!") {
-      pmsg.antispam = " [" + ((Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)).slice(0, Math.ceil((message.length)/100*15)) + "]"
+      pmsg.antispam = " [" + ((Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)+(Math.random()+1).toString(36).substring(2)).slice(0, Math.ceil((message.length+3)/100*16)) + "]"
 
     } else if (pmsg.error == "You cannot message this player.") {
       console.log(pmsg.send)
@@ -51,7 +51,7 @@ async function send(uhg, pmsg) {
   else pmsg.count += 1
 
   uhg.mc.send.push(pmsg)
-  // console.log(uhg.mc.send)
+  //console.log(uhg.mc.send)
   return
 }
 
