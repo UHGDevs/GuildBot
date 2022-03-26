@@ -10,6 +10,9 @@ module.exports = {
       let args = content.split(" ")
       if (!args.length) return "Nezadal jsi jméno"
 
+      let verified = await uhg.mongo.get("general", "verify", {_id:message.author.id})
+      console.log(verified)
+
       let nickname = args[0]
 
       let msg = await message.channel.send("Začíná verifikace!");
@@ -22,8 +25,8 @@ module.exports = {
 
 
       console.log(member)
-
-      return "comming soon (I hope)"
+      msg.edit("Coming soon")
+      return
     } catch (e) {
         console.log(String(e.stack).bgRed)
         return "Chyba ve verify příkazu!"

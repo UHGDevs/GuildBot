@@ -9,7 +9,6 @@ module.exports = async (uhg) => {
     pull.start = new cron.CronJob(
       pull.time, // time
       async function() { // run the time function
-        console.log(uhg.time.ready[pull.name])
         if(!uhg.time.ready[pull.name]) return
         uhg.time.ready[pull.name]=false
         await pull.run(uhg);

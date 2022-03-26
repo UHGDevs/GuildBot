@@ -1,19 +1,16 @@
 module.exports = {
   name: "database",
   description: "Automatická aktualizace databáze",
-  time: '*/60 * * * * *', //'*/10 * * * * *'
+  time: '*/300 * * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   run: async (uhg) => {
-    console.log("WORKUJE")
     let now = Number(new Date())
     try {
-      console.log(uhg.mongo.get)
       let data = await uhg.mongo.get("stats", "stats")
-      console.log("data")
-
-      data = data.filter(n => n.updated<=now-n.delay || n.updated<=now-43000000)
+      //console.log(data)
+      data = data.filter(n => n.updated<=now-43000000) //n.updated<=now-n.delay || 
       let update = data.slice(0,50)
-
+      console.log(update.length)
       update.forEach(async (member) => {
         console.log(member.name)
         let api = await uhg.func.getApi(member.uuid, ["hypixel"])
@@ -33,8 +30,8 @@ module.exports = {
         }
         await uhg.mongo.update("stats", "stats", {_id: api.uuid}, staty)
       });
+      console.log("now")
       //await uhg.func.delay(5000)
-      console.log("hotovo")
       //uhg.time.ready.database = true
       return
 

@@ -123,7 +123,7 @@ console.log(`${utils.length} utils prepared`.brightGreen)
 
 fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
-setInterval(function () {uhg.reload(["mongo"])}, 30000);
+//setInterval(function () {uhg.reload(["mongo"])}, 30000);
 
 exports.uhg = () => { return uhg }
 
