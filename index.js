@@ -21,11 +21,22 @@ class Login {
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
-    this.time = {events: new Collection()}
+    this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
   }
   async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {
+      let oldtime = this.settings.time
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
+      if (!oldtime) return
+      try {
+        Object.keys(this.settings.time).forEach(key => {
+          if (oldtime[key]==this.settings.time[key]) return
+          if (this.settings.time[key] === true) {this.time.events.get(key).start.start(); uhg.time.ready[key] = true; return;}
+          else return this.time.events.get(key).start.stop();
+        });
+      } catch (e) {console.log("Time event neni pripraven!"); console.log(e)}
+
+
     }
     if (reload.includes("guild") || reload.includes("mongo") || !reload.length) {
       this.data.guild = await this.mongo.get("stats", "guild")
