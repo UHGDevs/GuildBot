@@ -1,4 +1,4 @@
-const constants = require('../src/skyblockconstants')
+const constants = require('../settings/values/skyblockconstants')
 
 module.exports = class Functions {
   constructor() {
