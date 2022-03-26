@@ -11,8 +11,8 @@ const config = require('./settings/config.json');
 
 class Login {
   constructor(dc, mc, mctest) {
-    this.dc = {client: dc, channelsids: {guild:"957005113149521930", officer:"957005146460684299"}}
-    this.mc = {client: mc, send: [], ready: false}
+    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), channelsids: {guild:"957005113149521930", officer:"957005146460684299"}}
+    this.mc = {client: mc, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:mctest}
     this.members = []
     this.ignore = []
@@ -21,7 +21,7 @@ class Login {
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
-    this.time = {database: {refreshed:0}}
+    this.time = {events: new Collection()}
   }
   async reload(reload=[]) {
     if (reload.includes("settings") || !reload.length) {

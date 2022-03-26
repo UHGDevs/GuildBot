@@ -846,7 +846,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.skyblock.skills = {}
     api.skyblock.main = {}
     api.skyblock.mining = {}
-    
+
     var skyblock = await fetch(`https://api.hypixel.net/skyblock/profiles?key=${api_key}&uuid=${uuid}`).then(api => api.json())
     if (!skyblock.success) return "Chyba v skyblock api"
     let profiles = skyblock.profiles
@@ -879,7 +879,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let archer = getLevelByXp(classes.archer.experience, "dungeons")
         let tank = getLevelByXp(classes.tank.experience, "dungeons")
        let catalvl = await getCataLvl(catacombs.experience||0)
-       
+
        api.skyblock.dungeons[profilname] = {
          level: catalvl,
          secrets: secrets,

@@ -20,6 +20,7 @@ module.exports = async (uhg, message) => {
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
   if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));
   if (command) {
+    if (command.allowedids.length && !command.allowedids.includes(message.author.id)) return await message.channel.send("Nemáš na to oprávnění!")
     let msg = await command.run(uhg, message, content.replace(content.split(" ")[0], "").trim())
     return await message.channel.send(msg)
   }
@@ -45,6 +46,5 @@ module.exports = async (uhg, message) => {
     if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
     if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] Technoblade§f has requested to join the Guild!`)
     if (content.split(" ")[0] == "c") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !${content.split(" ")[1]} Honzu`)
-    if (content == "r") require("../minecraft/commands.js") (uhg)
   }
 }

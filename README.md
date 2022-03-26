@@ -14,4 +14,4 @@ Guild BOT of the Hypixel Guild UltimateHypixelGuild [✿UHG✿]
 - [ ] Minecraft bot
 - [ ] Finish
 
-[####----------------] 20% done
+[######--------------] 30% done

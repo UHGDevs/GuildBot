@@ -1,6 +1,8 @@
 module.exports = {
   name: "verify",
   aliases: ["v"],
+  allowedids: [],
+  platform: "dc",
   run: async (uhg, message, content) => {
     try {
       if (!content) return "Nezadal jsi jméno"
