@@ -4,6 +4,6 @@
   "minecraft": false,
   "test": true,
   "time": {
-    "database": true
+    "database": false
   }
 }
