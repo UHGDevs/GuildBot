@@ -7,8 +7,6 @@ module.exports = async (uhg) => {
     uhg.time.events.set(pull.name, pull)
   }
 
-  console.log(uhg.time.events)
-
   console.log(`${uhg.time.events.size} Time Events prepared`.brightGreen);
 
   const autoupdate = new cron('*/10 * * * * *', async function() {
