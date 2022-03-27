@@ -4,10 +4,15 @@ module.exports = {
   time: '*/5 * * * * *', //'*/10 * * * * *'
   ignore: '* * * * * *', //'sec min hour den(mesic) mesic den(tyden)'
   run: async (uhg) => {
-    let now = Number(new Date())
     try {
       if (!uhg.snipe.size) return
-      uhg.snipe.forEach(item => {item.run()});  
+      for (let item of uhg.snipe) {
+        console.time("Sniper run")
+        await item[1].run()
+        console.timeEnd("Sniper run")
+        await uhg.func.delay(1000)
+      }
+      //uhg.snipe.forEach(item => {item.run()});
       return
 
     } catch(e) {

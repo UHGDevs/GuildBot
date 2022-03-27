@@ -9,6 +9,7 @@ const api_key_2 = process.env.api_key_2;
 
 /* Function getAPI */
 module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) => {
+  try {
   const uhg = await require("../index.js").uhg()
   const f = uhg.func.f
   const getSwLevel = uhg.func.getSwLevel
@@ -844,7 +845,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   if (call.includes("recent")) {
     let recent = await fetch(`https://api.hypixel.net/recentgames?key=${api_key}&uuid=${uuid}`).then(api => api.json())
     if (!recent.success) return `Recent Games API: ${recent.cause || "error"}`
-    api.recent = {games: recent.games}    
+    api.recent = {games: recent.games}
   }
 
   if (call.includes("skywars")) {
@@ -1054,5 +1055,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   return api
 
 
-
+} catch (e) {
+  console.log(String(e.stack).bgRed)
+  return "Blbá api fetch chyba"
+}
 }

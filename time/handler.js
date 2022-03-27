@@ -12,8 +12,8 @@ module.exports = async (uhg) => {
         if(!uhg.time.ready[pull.name]) return
         uhg.time.ready[pull.name]=false
         await pull.run(uhg);
-      },
-      function() {uhg.time.ready[pull.name]=true} // ready for next use
+        uhg.time.ready[pull.name]=true
+      }
     )
     pull.ignore.split(" ").forEach((unit, i) => {
       if (unit == "*") return

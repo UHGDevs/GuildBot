@@ -33,6 +33,7 @@ module.exports = {
 
       let sniper = new Sniper(uhg, api, notify)
       sniper.author = message.author.id
+      sniper.message = message
 
       uhg.snipe.set(api.username, sniper)
 
