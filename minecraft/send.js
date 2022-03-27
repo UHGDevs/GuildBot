@@ -18,7 +18,7 @@ async function send(uhg, pmsg) {
     if (pmsg.channel == "Guild") message = "/gc " + message
     else if (pmsg.channel == "Officer") message = "/go " + message
     else if (pmsg.channel == "Party") message = "/pc " + message
-    else if (pmsg.channel == "From") message = `/msg ${psmg.username} ` + message
+    else if (pmsg.channel == "From") message = `/msg ${pmsg.username} ` + message
     else {
       console.log(message)
       console.log(pmsg)
