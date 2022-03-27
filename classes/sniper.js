@@ -29,7 +29,7 @@ class Sniper {
       return this.echo("Hráč není online, vypnuto")
     }
 
-    if (this.game != api.online.game || this.map != api.online.map || this.mode != api.online.mode) {
+    if (this.checks && (this.game != api.online.game || this.map != api.online.map || this.mode != api.online.mode)) {
       this.game = api.online.game
       this.map = api.online.map
       this.mode = api.online.mode
@@ -40,6 +40,12 @@ class Sniper {
 
 
     this.checks += 1
+
+    if (this.checks%5==0) {
+      let embed = new MessageEmbed().setColor('GREY').setTitle(`Watching ${this.username}`).setFooter({ text: 'By DavidCzPdy' })
+      embed.setDescription(`**Status:**Žádná změna\n**Time:** \`number\`\n**Total Checks:** \`${this.checks}\``)
+      return this.echo(`${this.username} je stále ve hře!`, null, embed)
+    }
 
     console.log(api)
     //this.echo(api.online.footer)

@@ -42,7 +42,7 @@ class Login {
         try {
           Object.keys(this.settings.time).forEach(key => {
             if (!oldtime[key]==this.settings.time[key]) {
-              if (this.settings.time[key] === true) {this.time.events.get(key).start.start(); uhg.time.ready[key] = true; return;}
+              if (this.settings.time[key] === true) {this.time.events.get(key).start.start(); this.time.ready[key] = true; return;}
               else this.time.events.get(key).start.stop();
             }
           });
