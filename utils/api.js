@@ -791,7 +791,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       bestkillstreak: quake.highest_killstreak || 0,
       kills: (quake.kills||0)+quake.kills_teams || 0,
       deaths: (quake.deaths||0)+quake.deaths_teams || 0,
-      kdr: ratio( (quake.kills||0) + (quake.kills_teams||0), (quake.deaths||0) + (quake.deaths_teams||0)),
+      kdr: ratio((quake.kills||0) + (quake.kills_teams||0), (quake.deaths||0) + (quake.deaths_teams||0)),
       wins: (quake.wins||0) + quake.wins_teams || 0,
       headshots: (quake.headshots||0) + quake.headshots_teams || 0,
     }
@@ -799,6 +799,15 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.hypixel.stats.duels = {
       coins: duels.coins || 0,
       winstreak: duels.current_winstreak || 0,
+      bestwinstreak: duels.best_overall_winstreak || 0,
+      wins: duels.wins || 0,
+      losses: duels.losses || 0,
+      wlr: ratio((duels.wins || 0), (duels.losses || 0)),
+      kills: duels.kills || 0,
+      deaths: duels.deaths || 0,
+      kdr: ratio((duels.kills || 0), (duels.deaths || 0)),
+      games: duels.games_played_duels || 0,
+      lootchests: duels.duels_chests || 0,
     }
 
 }
