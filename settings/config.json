@@ -4,6 +4,7 @@
   "minecraft": false,
   "test": true,
   "time": {
-    "database": false
+    "database": false,
+    "sniper": false
   }
 }

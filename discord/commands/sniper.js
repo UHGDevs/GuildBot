@@ -10,6 +10,12 @@ module.exports = {
       if (!content || !content.length) return `${uhg.settings.prefix}sniper [nick] [notify]`
       let args = content.split(" ")
 
+      if (args[0] == "stop") {uhg.snipe.delete(uhg.snipe.find(f=>f.author==message.author.id).username); return "Zastaveno"}
+      if (args[0] == "stopall" && message.author.id == "378928808989949964") {uhg.snipe.forEach(n => {uhg.snipe.delete(n.username)});return "Vše zastaveno"}
+
+      if (uhg.snipe.get(uhg.snipe.find(f=>f.author==message.author.id)) return "Už někoho trackuješ"
+      if (uhg.snipe.size>0) return "Už je trackovaný jiný hráč"
+
       let notify = false
       if (args[1]) {
         notify = await uhg.func.getApi(args[1], ["mojang", "online"])
@@ -19,21 +25,18 @@ module.exports = {
       }
       if (notify && !uhg.mc.client) return `Bot zrovna není zaplý na minicraft`
 
-      console.log(notify)
-
       let api = await uhg.func.getApi(args[0], ["mojang", "online", "recent"])
       if (api instanceof Object == false) return api
       if (!api.online.online) return "Hráč není online (or api off)"
       if (!api.recent.games.length) return "Hráč má vyplé recent games api, nebo ještě nehrál žádnou hru"
-
-      if (uhg.snipe.get("username")) return "Hráč už je trackovaný"
-      if (uhg.snipe.size>0) return "Jiný hráč už je trackovaný"
-
-      console.log(api.username)
+      if (uhg.snipe.get(api.username)) return "Hráč už je trackovaný"
 
       let sniper = new Sniper(uhg, api, notify)
+      sniper.author = message.author.id
 
-      console.log(sniper)
+      uhg.snipe.set(api.username, sniper)
+//uhg.sniper.filter(f=>f.author==message.author.id)[0].username
+
       return
     } catch (e) {
         console.log(String(e.stack).bgRed)
