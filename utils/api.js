@@ -796,7 +796,10 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       headshots: (quake.headshots||0) + quake.headshots_teams || 0,
     }
 
-    //console.log(api.hypixel.stats.murder)
+    api.hypixel.stats.duels = {
+      coins: duels.coins || 0,
+      winstreak: duels.current_winstreak || 0,
+    }
 
 }
 
@@ -827,6 +830,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       api.online.online = true,
       api.online.icon = "https://cdn.discordapp.com/attachments/875503784086892617/896771219817365514/unknown.png"
     }
+  }
+
+  if (call.includes("recent")) {
+    let recent = await fetch(`https://api.hypixel.net/recentgames?key=${api_key}&uuid=${uuid}`).then(api => api.json())
+    if (!recent.success) return `Recent Games API: ${recent.cause || "error"}`
+    api.recent = {games: recent.games}    
   }
 
   if (call.includes("skywars")) {
