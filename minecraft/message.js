@@ -23,6 +23,7 @@ module.exports = async (uhg, packet) => {
 
   let again = true;
   let again1 = true
+  console.log(content)
   for (let a=0; a<7; a++) {
     if (!Array.isArray(content)) break
     else if (!content.length) content = pmsg.msg
@@ -86,7 +87,6 @@ module.exports = async (uhg, packet) => {
     } else pmsg.username = t[0]
   } else if (pmsg.msg.startsWith('The guild has completed Tier')) {
     pmsg.channel = "Guild"
-    pmsg.command = "gtierguild"
   } else if (pmsg.msg.endsWith(" joined the guild!")) {
     pmsg.channel = "Guild"
   } else if (pmsg.msg.endsWith(" left the guild!")||pmsg.msg.includes("was kicked from the guild by")) {
