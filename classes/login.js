@@ -15,6 +15,7 @@ class Login {
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
     this._event = new Events()
+    this.snipe = new Collection()
     this.ready = this.load()
   }
   async load() {

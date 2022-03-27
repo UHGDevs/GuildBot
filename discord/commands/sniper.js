@@ -26,10 +26,14 @@ module.exports = {
       if (!api.online.online) return "Hráč není online (or api off)"
       if (!api.recent.games.length) return "Hráč má vyplé recent games api, nebo ještě nehrál žádnou hru"
 
+      if (uhg.snipe.get("username")) return "Hráč už je trackovaný"
+      if (uhg.snipe.size>0) return "Jiný hráč už je trackovaný"
+
       console.log(api.username)
 
       let sniper = new Sniper(uhg, api, notify)
 
+      console.log(sniper)
       return
     } catch (e) {
         console.log(String(e.stack).bgRed)
