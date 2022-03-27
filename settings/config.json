@@ -1,7 +1,7 @@
 {
   "prefix": ".",
   "discord": true,
-  "minecraft": true,
+  "minecraft": false,
   "test": true,
   "time": {
     "database": false
