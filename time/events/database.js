@@ -6,9 +6,9 @@ module.exports = {
   run: async (uhg) => {
     let now = Number(new Date())
     try {
-      let data = await uhg.mongo.get("stats", "stats")
+      let data = await uhg.run.mongo.get("stats", "stats")
       //console.log(data)
-      data = data.filter(n => n.updated<=now-43000000) //n.updated<=now-n.delay || 
+      data = data.filter(n => n.updated<=now-43000000) //n.updated<=now-n.delay ||
       let update = data.slice(0,50)
       console.log(update.length)
       update.forEach(async (member) => {
@@ -28,7 +28,7 @@ module.exports = {
               karma: api.hypixel.karma,
               rank: api.hypixel.rank
         }
-        await uhg.mongo.update("stats", "stats", {_id: api.uuid}, staty)
+        await uhg.run.mongo.update("stats", "stats", {_id: api.uuid}, staty)
       });
       console.log("now")
       //await uhg.func.delay(5000)

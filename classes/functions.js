@@ -2,7 +2,7 @@ const constants = require('../settings/values/skyblockconstants')
 
 module.exports = class Functions {
   constructor() {
-    this.getApi = require("./api")
+    this.getApi = require("../utils/api")
   }
 
   delay(ms) {return new Promise(res => setTimeout(res, ms))}

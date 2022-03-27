@@ -1,8 +1,7 @@
-const { MongoClient } = require("mongodb");
-const mongo = new MongoClient(process.env.db);
-//console.log(mongo)
-mongo.connect()
-
+let mongo;
+exports.setup = (mng) => {
+  mongo = mng
+}
 
 exports.get = async function(db="stats", col="stats", query={}) {
   try {
