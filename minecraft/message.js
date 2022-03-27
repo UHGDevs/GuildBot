@@ -23,7 +23,6 @@ module.exports = async (uhg, packet) => {
 
   let again = true;
   let again1 = true
-  console.log(content)
   for (let a=0; a<7; a++) {
     if (!Array.isArray(content)) break
     else if (!content.length) content = pmsg.msg
@@ -100,7 +99,8 @@ module.exports = async (uhg, packet) => {
   } else if (pmsg.msg.endsWith("to your guild. They have 5 minutes to accept.")) {
     pmsg.channel = "Officer"
   }
-  if (!pmsg.channel) return pmsg
+  if (!pmsg.channel || pmsg.username==uhg.mc.client.username) return pmsg
+  //console.log(pmsg)
 
   let data = uhg.data.guild || await uhg.mongo.run.get("stats", "guild")
   if (pmsg.username && data.length) {

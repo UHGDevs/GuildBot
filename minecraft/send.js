@@ -28,9 +28,7 @@ async function send(uhg, pmsg) {
   }
 
   if (pmsg.error) {
-    console.log(pmsg.error)
-    console.log("ERROR HANDLERING COMMING SOON")
-    return
+    //return
 
 
     // TODO: SEND ERROR HANDLERING (like you cannot send this message twice / you cannot message this player etc.)
@@ -41,7 +39,12 @@ async function send(uhg, pmsg) {
     } else if (pmsg.error == "You cannot message this player.") {
       console.log(pmsg.send)
       console.log(`${pmsg.username} má vyplé msg!`)
+      return
       // Pokud to je že neni verified tak poslat na dc, jinak return
+    } else {
+      console.log("ERROR HANDLERING COMMING SOON")
+      console.log(pmsg.error)
+      return
     }
   }
 
@@ -62,17 +65,17 @@ exports.write = async function (uhg, pmsg) {
     else if (!pmsg.antispam && msg.length > 256) msg = msg.slice(0, 253)+"..."
     else if (pmsg.antispam) msg = msg + pmsg.antispam
 
-    console.log(pmsg)
-    console.log(msg)
+    delete pmsg.error
+
     uhg.mc.client.write("chat", { message: msg, position: 0 })
 
-    client.on('chat', async function(packet) {
+    uhg.mc.client.on('chat', async function(packet) {
       let message = JSON.parse(packet.message)
-      let text = clear(message.text)
+      let text = uhg.func.clear(message.text)
       if (message.color == "red" && text.endsWith("!") && !text.includes("are a bannable")) pmsg.error = text
       return
     })
-    await delay(500)
+    await uhg.func.delay(500)
     if (!pmsg.error) return
     if (!pmsg.onetime) send(uhg, pmsg)
   } finally {return uhg.mc.ready = true}
