@@ -13,7 +13,7 @@ module.exports = {
       if (args[0] == "stop") {uhg.snipe.delete(uhg.snipe.find(f=>f.author==message.author.id).username); return "Zastaveno"}
       if (args[0] == "stopall" && message.author.id == "378928808989949964") {uhg.snipe.forEach(n => {uhg.snipe.delete(n.username)});return "Vše zastaveno"}
 
-      if (uhg.snipe.get(uhg.snipe.find(f=>f.author==message.author.id)) return "Už někoho trackuješ"
+      if (uhg.snipe.get(uhg.snipe.find(f=>f.author==message.author.id))) return "Už někoho trackuješ"
       if (uhg.snipe.size>0) return "Už je trackovaný jiný hráč"
 
       let notify = false
@@ -35,9 +35,8 @@ module.exports = {
       sniper.author = message.author.id
 
       uhg.snipe.set(api.username, sniper)
-//uhg.sniper.filter(f=>f.author==message.author.id)[0].username
 
-      return
+      return "Target byl nastaven, be ready now"
     } catch (e) {
         console.log(String(e.stack).bgRed)
         return "Chyba v rozhodně random příkazu!"
