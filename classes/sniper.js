@@ -13,9 +13,7 @@ class Sniper {
   setup() {
     delete this.setup
     if (this.notify === false) delete this.notify
-    if (!uhg.snipe) uhg.snipe = new Collection()
-
-    uhg.snipe
+  
     this.uhg._event.emit("sniper added", this)
   }
 }
