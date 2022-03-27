@@ -7,14 +7,14 @@ class Sniper {
     this.username = api.username
     this.uuid = api.uuid
     this.notify = notify
-    this.setup = setup()
+    this.setup = this.setup()
   }
 
   setup() {
     delete this.setup
     if (this.notify === false) delete this.notify
+  
     this.uhg._event.emit("sniper added", this)
-    console.log(this)
   }
 }
 
