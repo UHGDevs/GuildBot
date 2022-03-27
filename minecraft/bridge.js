@@ -42,7 +42,7 @@ exports.guildjoin = async function (uhg, pmsg) {
 
 async function pings(message, uhg) {
   let data = uhg.data.uhg
-  if (!data.length) data = await uhg.run.mongo.get("general", "verify")
+  if (!data.length) data = await uhg.mongo.run.get("general", "verify")
   let mentions = []
   let msg = message
   if (msg.includes("<@&")) msg = msg.replace(/<@&/gi, "")

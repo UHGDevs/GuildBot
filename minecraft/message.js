@@ -101,14 +101,14 @@ module.exports = async (uhg, packet) => {
   }
   if (!pmsg.channel) return pmsg
 
-  let data = uhg.data.guild || await uhg.run.mongo.get("stats", "guild")
+  let data = uhg.data.guild || await uhg.mongo.run.get("stats", "guild")
   if (pmsg.username && data.length) {
     data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
     for (let i=0;i<data.members.length;i++) {
       if (pmsg.username==data.members[i].name) {
         pmsg.uuid = data.members[i].uuid
-        let verified = uhg.data.uhg || await uhg.run.mongo.get("general", "uhg")
-        if (!verified.length) verified = await uhg.run.mongo.get("general", "uhg")
+        let verified = uhg.data.uhg || await uhg.mongo.run.get("general", "uhg")
+        if (!verified.length) verified = await uhg.mongo.run.get("general", "uhg")
         verified = verified.filter(ver=>ver.username==pmsg.username)
         if (!verified.length) break
         verified = verified[0]

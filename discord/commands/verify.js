@@ -10,7 +10,7 @@ module.exports = {
       let args = content.split(" ")
       if (!args.length) return "Nezadal jsi jméno"
 
-      let verified = await uhg.run.mongo.get("general", "verify", {_id:message.author.id})
+      let verified = await uhg.mongo.run.get("general", "verify", {_id:message.author.id})
       console.log(verified)
 
       let nickname = args[0]
