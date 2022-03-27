@@ -68,22 +68,19 @@ if (config.test === true && config.minecraft !== true) {
 }
 
 let uhg = new Login(dc, mc, mctest)
-uhg.reload(["settings"])
-
-let utils = fs.readdirSync(`utils/`).filter((file) => file.endsWith(".js"))
-console.log(`${utils.length} utils prepared`.brightGreen)
-
-fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
-
-//setInterval(function () {uhg.reload(["mongo"])}, 30000);
-
 exports.uhg = () => { return uhg }
 
-require("./time/handler.js") (uhg)
+uhg._event.once("ready", () => {
+  require("./time/handler.js") (uhg)
+  if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
+  setInterval(function () {uhg.reload(["mongo"])}, 5*60*1000);
+  fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
+
+  console.log("Guild bot je připraven!".bold.brightGreen)
+  return
+})
+
 require("./minecraft/commands.js") (uhg)
-if (uhg.mc.client) {
-  require("./minecraft/handler.js") (uhg)
-}
 if (uhg.dc.client) {
   require("./discord/handler.js") (uhg)
   uhg.dc.client.login(process.env.token);

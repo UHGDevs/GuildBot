@@ -17,10 +17,12 @@ module.exports = async (uhg) => {
   }
   await events()
   console.log(`${amount} Events Loaded`.brightGreen);
-
-  const event = require(`./message.js`)
-  uhg.dc.client.on("messageCreate", event.bind(null, uhg));
-
   require("./commands")(uhg)
+
+
+  const event = require(`./message.js`)  
+  uhg._event.once("ready", () => {
+    uhg.dc.client.on("messageCreate", event.bind(null, uhg));
+  })
 
 }

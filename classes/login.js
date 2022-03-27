@@ -3,35 +3,39 @@ const fs = require('fs');
 const { MongoClient } = require("mongodb");
 
 const Functions = require('./functions.js')
-
+const Events = require('events')
 class Login {
   constructor(dc, mc, mctest) {
     this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), channelsids: {guild:"957005113149521930", officer:"957005146460684299"}}
     this.mc = {client: mc, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:mctest}
-    this.members = []
     this.ignore = []
-    this.settings = {}
-    this.mongo = this.createMongo()
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
+    this._event = new Events()
+    this.ready = this.load()
+  }
+  async load() {
+    delete this.ready
+    await Promise.all([this.createMongo()]);
+    this._event.emit("ready")
   }
 
   async createMongo() {
-    console.log(require("../utils/mongodb"))
     const mongo = new MongoClient(process.env.db);
     await mongo.connect()
     await require("../utils/mongodb").setup(mongo)
     this.mongo = {client: mongo, run: require("../utils/mongodb")}
-    this.reload(["mongo"])
+    this.reload(["stats"])
+    await this.reload()
   }
-  async reload(reload=[]) {
-    console.log("FETCHING")
-    if (reload.includes("settings") || !reload.length) {
 
-      let oldtime = this.settings.time
+  async reload(reload=[]) {
+    if (reload.includes("settings") || !reload.length) {
+      let oldtime;
+      if (this.settings) oldtime = this.settings.time
       this.settings = JSON.parse(fs.readFileSync('settings/config.json', 'utf8'));
       if (oldtime) {
         try {
@@ -55,7 +59,7 @@ class Login {
       this.data.verify = await this.mongo.run.get("general", "verify")
     }
 
-    if (reload.includes("stats") || reload.includes("mongo") || !reload.length) {
+    if (reload.includes("stats") || reload.includes("mongo") /* || !reload.length */) {
       this.data.stats = await this.mongo.run.get("stats", "stats")
     }
 
