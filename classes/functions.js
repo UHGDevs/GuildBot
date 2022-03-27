@@ -115,31 +115,70 @@ module.exports = class Functions {
     }
 
     return parseFloat((level + (remainingExp / 5000)).toFixed(2))
-}
+  }
 
   getPitPrestige(xp) {
     var xps = [1.1, 1.2]
   }
 
   getGuildLevel(exp) {
-  const EXP_NEEDED = [ 100000, 150000, 250000, 500000, 750000, 1000000, 1250000, 1500000, 2000000, 2500000, 2500000, 2500000, 2500000, 2500000, 3000000];
-  let level = 0;
-  for (let i = 0; i <= 1000; i += 1) {
-    let need = 0;
-    if (i >= EXP_NEEDED.length) {
-      need = EXP_NEEDED[EXP_NEEDED.length - 1];
-    } else { need = EXP_NEEDED[i]; }
-    if ((exp - need) < 0) {
-      return level + (exp / need);
+    const EXP_NEEDED = [ 100000, 150000, 250000, 500000, 750000, 1000000, 1250000, 1500000, 2000000, 2500000, 2500000, 2500000, 2500000, 2500000, 3000000];
+    let level = 0;
+    for (let i = 0; i <= 1000; i += 1) {
+      let need = 0;
+      if (i >= EXP_NEEDED.length) {
+        need = EXP_NEEDED[EXP_NEEDED.length - 1];
+      } else { need = EXP_NEEDED[i]; }
+      if ((exp - need) < 0) {
+        return level + (exp / need);
+      }
+      level += 1;
+      exp -= need;
     }
-    level += 1;
-    exp -= need;
+    return 1000;
   }
-  return 1000;
-}
 
   getOnline(json) {
+    function renameHypixelGames(game){
+        if (game === null || game === undefined) return
+        else {
+          return game.toLowerCase()
+            .replace("skywars", "SkyWars")
+            .replace("bedwars", "BedWars")
+            .replace("gingerbread", "TKR")
+            .replace("mcgo", "Cops & Crims")
+            .replace("super_smash", "Smash Heroes")
+            .replace("skyblock", "SkyBlock")
+            .replace("murder_mystery", "Murder Mystery")
+            .replace("legacy", "Classic Games")
+            .replace("survival_games", "Blitz SG")
+            .replace("uhc", "UHC")
+            .replace("speed_uhc", "Speed UHC")
+            .replace("tntgames", "TNT Games")
+            .replace("pit", "The Hypixel Pit")
+            .replace("arcade", "Arcade Games")
+            .replace("walls3", "Mega Walls")
+            .replace("arena", "Arena Brawl")
+            .replace("vampirez", "VampireZ")
+            .replace("walls", "The Walls")
+            .replace("battleground", "Warlords")
+            .replace("build_battle", "Build Battle")
+        }
+      }
+    function getGameMode(gamemode) {
+        if (gamemode === null || gamemode === undefined) return
+        else {
+          return gamemode.toLowerCase()
+            .replace(/bedwars_eight_one/g, "BedWars Solo")
+            .replace(/bedwars_eight_two/g, "BedWars Doubles")
+            .replace(/bedwars_four_three/g, "BedWars 3s")
+            .replace(/bedwars_four_four/g, "BedWars 4s")
+            .replace(/bedwars_two_four/g, "BedWars 4v4")
+            .replace(/_/g, " ")
+        }
+      }
     let online = {}
+    //console.log(this)
     let game = renameHypixelGames(json.gameType || null)
     let mode = getGameMode(json.mode || null)
     online.title = "Online"
@@ -385,43 +424,4 @@ module.exports = class Functions {
   }
 
 
-  renameHypixelGames(game){
-    if (game === null || game === undefined) return
-    else {
-      return game.toLowerCase()
-        .replace("skywars", "SkyWars")
-        .replace("bedwars", "BedWars")
-        .replace("gingerbread", "TKR")
-        .replace("mcgo", "Cops & Crims")
-        .replace("super_smash", "Smash Heroes")
-        .replace("skyblock", "SkyBlock")
-        .replace("murder_mystery", "Murder Mystery")
-        .replace("legacy", "Classic Games")
-        .replace("survival_games", "Blitz SG")
-        .replace("uhc", "UHC")
-        .replace("speed_uhc", "Speed UHC")
-        .replace("tntgames", "TNT Games")
-        .replace("pit", "The Hypixel Pit")
-        .replace("arcade", "Arcade Games")
-        .replace("walls3", "Mega Walls")
-        .replace("arena", "Arena Brawl")
-        .replace("vampirez", "VampireZ")
-        .replace("walls", "The Walls")
-        .replace("battleground", "Warlords")
-        .replace("build_battle", "Build Battle")
-    }
-  }
-
-  getGameMode(gamemode) {
-    if (gamemode === null || gamemode === undefined) return
-    else {
-      return gamemode.toLowerCase()
-        .replace(/bedwars_eight_one/g, "BedWars Solo")
-        .replace(/bedwars_eight_two/g, "BedWars Doubles")
-        .replace(/bedwars_four_three/g, "BedWars 3s")
-        .replace(/bedwars_four_four/g, "BedWars 4s")
-        .replace(/bedwars_two_four/g, "BedWars 4v4")
-        .replace(/_/g, " ")
-    }
-  }
 }
