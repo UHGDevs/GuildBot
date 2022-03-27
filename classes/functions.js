@@ -139,46 +139,46 @@ module.exports = class Functions {
   }
 
   getOnline(json) {
-    function renameHypixelGames(game){
-        if (game === null || game === undefined) return
-        else {
-          return game.toLowerCase()
-            .replace("skywars", "SkyWars")
-            .replace("bedwars", "BedWars")
-            .replace("gingerbread", "TKR")
-            .replace("mcgo", "Cops & Crims")
-            .replace("super_smash", "Smash Heroes")
-            .replace("skyblock", "SkyBlock")
-            .replace("murder_mystery", "Murder Mystery")
-            .replace("legacy", "Classic Games")
-            .replace("survival_games", "Blitz SG")
-            .replace("uhc", "UHC")
-            .replace("speed_uhc", "Speed UHC")
-            .replace("tntgames", "TNT Games")
-            .replace("pit", "The Hypixel Pit")
-            .replace("arcade", "Arcade Games")
-            .replace("walls3", "Mega Walls")
-            .replace("arena", "Arena Brawl")
-            .replace("vampirez", "VampireZ")
-            .replace("walls", "The Walls")
-            .replace("battleground", "Warlords")
-            .replace("build_battle", "Build Battle")
-        }
-      }
-    function getGameMode(gamemode) {
-        if (gamemode === null || gamemode === undefined) return
-        else {
-          return gamemode.toLowerCase()
-            .replace(/bedwars_eight_one/g, "BedWars Solo")
-            .replace(/bedwars_eight_two/g, "BedWars Doubles")
-            .replace(/bedwars_four_three/g, "BedWars 3s")
-            .replace(/bedwars_four_four/g, "BedWars 4s")
-            .replace(/bedwars_two_four/g, "BedWars 4v4")
-            .replace(/_/g, " ")
-        }
-      }
     let online = {}
-    //console.log(this)
+    function renameHypixelGames(game){
+      if (game === null || game === undefined) return
+      else {
+        return game.toLowerCase()
+          .replace("skywars", "SkyWars")
+          .replace("bedwars", "BedWars")
+          .replace("gingerbread", "TKR")
+          .replace("mcgo", "Cops & Crims")
+          .replace("super_smash", "Smash Heroes")
+          .replace("skyblock", "SkyBlock")
+          .replace("murder_mystery", "Murder Mystery")
+          .replace("legacy", "Classic Games")
+          .replace("survival_games", "Blitz SG")
+          .replace("uhc", "UHC")
+          .replace("speed_uhc", "Speed UHC")
+          .replace("tntgames", "TNT Games")
+          .replace("pit", "The Hypixel Pit")
+          .replace("arcade", "Arcade Games")
+          .replace("walls3", "Mega Walls")
+          .replace("arena", "Arena Brawl")
+          .replace("vampirez", "VampireZ")
+          .replace("walls", "The Walls")
+          .replace("battleground", "Warlords")
+          .replace("build_battle", "Build Battle")
+      }
+    }
+
+    function getGameMode(gamemode) {
+      if (gamemode === null || gamemode === undefined) return
+      else {
+        return gamemode.toLowerCase()
+          .replace(/bedwars_eight_one/g, "BedWars Solo")
+          .replace(/bedwars_eight_two/g, "BedWars Doubles")
+          .replace(/bedwars_four_three/g, "BedWars 3s")
+          .replace(/bedwars_four_four/g, "BedWars 4s")
+          .replace(/bedwars_two_four/g, "BedWars 4v4")
+          .replace(/_/g, " ")
+      }
+    }
     let game = renameHypixelGames(json.gameType || null)
     let mode = getGameMode(json.mode || null)
     online.title = "Online"
@@ -422,6 +422,4 @@ module.exports = class Functions {
         .replace("pit", "")
         .replace("housing", "Housing")
   }
-
-
 }
