@@ -27,6 +27,7 @@ module.exports = async (uhg, packet) => {
     if (!Array.isArray(content)) break
     else if (!content.length) content = pmsg.msg
     else if (content[0] == "UHGuild") content.shift()
+    else if (content[0].match(/To|From/) && a==0) {pmsg.channel = content[0]; content.shift()}
     else if (content[0].match(/To|From|Party|Guild|Officer/) && content[1] && content[1].startsWith(">") && content[2] && !content[2].startsWith("[") && !content[2].endsWith("]") && again1 == true) {
       //if the guild member is non
       if (content.length > 1) content.splice(0, 0, content.splice(2, 1)[0]);
