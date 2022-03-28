@@ -5,6 +5,7 @@
   "test": true,
   "time": {
     "database": false,
-    "sniper": false
+    "sniper": false,
+    "finder": true
   }
 }
