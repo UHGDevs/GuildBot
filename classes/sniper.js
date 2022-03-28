@@ -42,7 +42,6 @@ class Sniper {
     }
 
     if (api.online.mode == "lobby") {
-      console.log(api)
       let men;
       if (api.online.mode != this.mode || api.online.game != this.game) men = `<@${this.author}>`
       this.echo(`${this.username} je v ${api.online.game} Lobby!`, men, embed.setColor('DARK_PURPLE').setTitle(`${this.username} je v ${api.online.game} Lobby!`).setDescription(`**Celkový čas pozorování:** ${ttime}`))

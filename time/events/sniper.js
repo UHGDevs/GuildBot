@@ -7,10 +7,7 @@ module.exports = {
     try {
       if (!uhg.snipe.size) return
       for (let item of uhg.snipe) {
-        console.time("Sniper run")
         await item[1].run()
-        console.timeEnd("Sniper run")
-        await uhg.func.delay(1000)
       }
       //uhg.snipe.forEach(item => {item.run()});
       return
