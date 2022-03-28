@@ -8,9 +8,8 @@ module.exports = {
     try {
       let data = await uhg.mongo.run.get("stats", "stats")
       //console.log(data)
-      data = data.filter(n => n.updated<=now-43000000) //n.updated<=now-n.delay ||
+      data = data.filter(n => n.updated<=now-1000*60*60) //n.updated<=now-n.delay ||43000000
       let update = data.slice(0,50)
-      console.log(update.length)
       update.forEach(async (member) => {
         let api = await uhg.func.getApi(member.uuid, ["hypixel"])
         if (api instanceof Object == false) return;
