@@ -20,7 +20,7 @@ module.exports = {
         if (api instanceof Object == false) return api
         let tourney = api.hypixel.stats.tourney
         let currenttournament = tourney.currenttournament
-        let ctfancy = "Bed Wars Doubles" //   UPDATOVAT
+        let ctfancy = "None" //   UPDATOVAT
         let ctourney = tourney[currenttournament]
         if (!currenttournament) return "Momentálně se neodehrává žádný turnaj"
   
