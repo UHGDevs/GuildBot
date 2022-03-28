@@ -1,5 +1,6 @@
 const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 let bridge = require(`../bridge.js`)
+let chat = require(`../send.js`)
 module.exports = async (uhg, pmsg) => {
   console.log(pmsg)
   let api = await uhg.func.getApi(pmsg.username)
@@ -13,4 +14,5 @@ module.exports = async (uhg, pmsg) => {
     .addComponents(new MessageButton().setCustomId(`/g invite ${pmsg.username}`).setLabel('POZVAT ZNOVU').setStyle('PRIMARY'))
     .addComponents(new MessageButton().setCustomId('guild_denine').setLabel('ODMÍTNOUT').setStyle('DANGER'))
   bridge.guildjoin(uhg, pmsg)
+  chat.send(uhg, pmsg)
 }
