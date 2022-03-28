@@ -40,7 +40,7 @@ module.exports = async (uhg, message) => {
 
 
   if (uhg.test.server){
-    if (content == "gfind") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: někdo bw? je to nejlepší hra`)
+    if (content == "gfind") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Honzu §e[Gnrl]§f: někdo bedwars? je to nejlepší hra`)
     if (content == "gcmd") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !level Honzu`)
     if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > §a[VIP§6+§a] The_AntiFrost_SK§f [Elite]: necham drakov`);
     if (content == "pchat") await uhg.test.server.broadcast(`§2Party > §a[VIP§6+§a] AntreX95§f: necham drakov`);

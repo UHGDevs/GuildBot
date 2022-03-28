@@ -1,10 +1,11 @@
 let bridge = require(`../bridge.js`)
 let chat = require(`../send.js`)
 module.exports = async (uhg, pmsg) => {
-  let finder = pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (někdo|nekdo|someone|any|[0-9]\/[0-9]|[0-9])? (\w{2,10})?(.*)$/)
-  if (finder) guildfinder(uhg, pmsg, finder)
   if (pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (.*)$/)) await bridge.chat(uhg, pmsg)
   else await bridge.info(uhg, pmsg)
+
+  let finder = pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (někdo|nekdo|someone|any|[0-9]\/[0-9]|[0-9])? (\w{2,10})?(.*)$/i)
+  if (finder) guildfinder(uhg, pmsg, finder)
 
   if (!pmsg.command) return
   let command = uhg.mc.commands.get(pmsg.command)
@@ -21,11 +22,37 @@ module.exports = async (uhg, pmsg) => {
 
 async function guildfinder(uhg, pmsg, finder) {
   let user = await uhg.mongo.run.get("general", "guildfind", {_id: pmsg.username}) || {}
-  if (user) user = user[0]
-  let games = user.games || [];
-  let messages = user.messages || [];
+  if (user.length) user = user[0]
 
-  games.push(finder[5])
-  messages.push(pmsg.content)
-  uhg.mongo.run.post("general", "guildfind", {_id: pmsg.username, discord: pmsg.id, games: games, messages: messages, updated: Number(new Date())})
+  let userdata = user.data || []
+
+  let game = uhg.mc.aliases.get(finder[5].toLowerCase())
+
+  userdata.push( {game: game || finder[5], message: pmsg.content, time: Number(new Date())} )
+
+  if (userdata.length>1) userdata.sort((a, b) => b.time - a.time);
+
+  let send = []
+
+  let data = await uhg.mongo.run.get("general", "guildfind")
+  data.forEach(item => {
+    if (item._id == pmsg.username) return
+    let same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
+
+    if (!same.length) return
+    let time = Math.floor(uhg.func.toTime(Number(new Date()) - same[0].time, true).m)
+    send.push(`${item._id} chtěl hrát před ${time}min taky ${game} -> \"${item._id}: ${same[0].message}\"`)
+  })
+
+  uhg.mongo.run.post("general", "guildfind", {_id: pmsg.username, data: userdata, discord: pmsg.id, updated: Number(new Date())})
+
+  send.forEach(msg => {
+    let pemsg = pmsg
+    pemsg.send = msg
+    pemsg.channel = "/gc"
+    bridge.send(uhg, msg)
+    chat.send(uhg, pemsg)
+  });
+
+
 }
