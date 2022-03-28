@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const Sniper = require("../../classes/sniper")
 module.exports = {
   name: "sniper",
@@ -35,9 +36,14 @@ module.exports = {
       sniper.author = message.author.id
       sniper.message = message
 
+      let embed = new MessageEmbed().setColor('GREY').setTitle(`Command is now ready`).setFooter({ text: 'By DavidCzPdy' }).setDescription(`**Watching ${api.username}**\n\n**Notify:** ${notify||"null"}\n`)
+      let msg = await message.channel.send({ embeds: [embed] })
+
+      sniper.msg = msg
+
       uhg.snipe.set(api.username, sniper)
 
-      return "Target byl nastaven, be ready now"
+      return
     } catch (e) {
         console.log(String(e.stack).bgRed)
         return "Chyba v rozhodně random příkazu!"

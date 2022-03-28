@@ -40,7 +40,8 @@ module.exports = class Functions {
     return roman;
   }
 
-  toTime(sec) {
+  toTime(sec, ms=false) {
+    if (ms) sec = sec/1000
     let days = sec / 60 / 60 / 24
     let hours = sec / 60 / 60 % 24
     let formatted = `${Math.floor(Number(days))}d ${Math.floor(Number(hours))}h`
