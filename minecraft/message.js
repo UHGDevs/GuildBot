@@ -140,6 +140,9 @@ module.exports = async (uhg, packet) => {
     pmsg.args.shift()
     pmsg.args = pmsg.args.join(pmsg.command).trim()
   }
+
+  if (pmsg.channel == "To") return
+
   let events = fs.readdirSync(`minecraft/events/`).filter((file) => file.endsWith(".js"))
   events = events.filter(event => event.split(".")[0] == pmsg.channel.toLowerCase())
   if (events.length) return require(`./events/${events[0]}`)(uhg, pmsg)

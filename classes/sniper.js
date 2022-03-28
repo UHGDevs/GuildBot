@@ -11,6 +11,8 @@ class Sniper {
     this.setup = this.setup()
     this.totalchecks = 0
     this.checks = 0
+    this.sniped = false
+    this.newueue = 0
   }
 
   setup() {
@@ -66,6 +68,7 @@ class Sniper {
     }
 
     if (this.game != api.online.game || this.map != api.online.map || this.mode != api.online.mode) {
+      this.sniped = false
       let zmena = [`**Status: ${status}**`]
 
       if (this.game != api.online.game) zmena.push(`**Game:** ${this.game || "First time"} → **${api.online.game}**`)
@@ -91,7 +94,6 @@ class Sniper {
 
     if (status.startsWith("In Queue")) {
       let desc = []
-
       desc.push(`**Game:** **${api.online.game}**`)
       desc.push(`**Mode:** **${api.online.mode}**`)
       desc.push(`**Mapa:** **${api.online.map}**`)
@@ -131,7 +133,7 @@ class Sniper {
       let temp = await this.message.channel.send(mention)
       await temp.delete()
     }
-    if (this.notify) this.uhg.mc.send.push({send: `/msg ${this.notify} ` + message})
+    if (this.notify && (mention || !this.sniped)) this.uhg.mc.send.push({send: `/msg ${this.notify} ` + message})
   }
 }
 
