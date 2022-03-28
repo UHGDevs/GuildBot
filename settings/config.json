@@ -6,6 +6,6 @@
   "time": {
     "database": false,
     "sniper": false,
-    "finder": true
+    "finder": false
   }
 }
