@@ -12,7 +12,6 @@ module.exports = {
       let update = data.slice(0,50)
       console.log(update.length)
       update.forEach(async (member) => {
-        console.log(member.name)
         let api = await uhg.func.getApi(member.uuid, ["hypixel"])
         if (api instanceof Object == false) return;
 
@@ -30,7 +29,6 @@ module.exports = {
         }
         await uhg.mongo.run.update("stats", "stats", {_id: api.uuid}, staty)
       });
-      console.log("now")
       //await uhg.func.delay(5000)
       //uhg.time.ready.database = true
       return
