@@ -13,7 +13,13 @@ module.exports = async (uhg, pmsg) => {
     let sniped = uhg.snipe.get(uhg.snipe.find(n=>n.notify==pmsg.username).username)
     if (!sniped) return
     uhg.snipe.delete(sniped.username)
-    chat.send(uhg, {send: `/msg ${pmsg.username} stopped`})
+    return chat.send(uhg, {send: `/msg ${pmsg.username} stopped`})
+  } else if (pmsg.command == "sniper" && pmsg.args && pmsg.args.split(" ")[0]=="resume") {
+    let sniped = uhg.snipe.get(uhg.snipe.find(n=>n.notify==pmsg.username).username)
+    if (!sniped) return chat.send(uhg, {send: `/msg ${pmsg.username} neexistuje žádá session`})
+    sniped.sniped = false
+    uhg.snipe.set(sniped)
+    return chat.send(uhg, {send: `/msg ${pmsg.username} resumed`})
   }
 
   let command = uhg.mc.commands.get(pmsg.command)
