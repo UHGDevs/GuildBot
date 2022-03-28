@@ -1,7 +1,7 @@
 module.exports = {
   name: "database",
   description: "Automatická aktualizace databáze",
-  time: '*/300 * * * * *', //'*/10 * * * * *'
+  time: '0 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   run: async (uhg) => {
     let now = Number(new Date())
