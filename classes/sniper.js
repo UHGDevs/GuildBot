@@ -56,11 +56,17 @@ class Sniper {
 
     let status;
     let lgtime = this.uhg.func.toTime(Number(new Date())-lastgame.date, true)
-    if (!lastgame.ended) status = `In game - ${Math.floor(lgtime.m)}m ${Math.floor(lgtime.s-Math.floor(lgtime.m)*60)}`
+    if (!lastgame.ended) status = `In game - ${Math.floor(lgtime.m)}m ${Math.floor(lgtime.s-Math.floor(lgtime.m)*60)}s`
     else status = "In Queue!"
     if (lastgame.map != api.online.map) status = "In Queue! (dev - v2)"
 
-    if (this.checks > 0 && (this.game != api.online.game || this.map != api.online.map || this.mode != api.online.mode)) {
+    if (this.checks === 0) {
+      this.game = api.online.game
+      this.map = api.online.map
+      this.mode = api.online.mode
+    }
+
+    if (this.game != api.online.game || this.map != api.online.map || this.mode != api.online.mode) {
       let zmena = [`**Status: ${status}**`]
 
       if (this.game != api.online.game) zmena.push(`**Game:** ${this.game || "First time"} → **${api.online.game}**`)
@@ -100,12 +106,21 @@ class Sniper {
 
     this.checks += 1
 
-    if (this.checks%5==0) {
-      embed.setDescription(`**Status:** ${status}\n**Review:** ${review}\n**Track Time:** \`${ttime}\`\n**Total Checks:** \`${this.checks}\``).setColor('GREY').setTitle(`Watching ${this.username}`)
+    if (this.checks%3==0) {
+      let desc = []
+      desc.push(`**Game Time:** \`${Math.floor(lgtime.m)}m ${Math.floor(lgtime.s-Math.floor(lgtime.m)*60)}s\``)
+      desc.push(`**Game:** **${api.online.game}**`)
+      desc.push(`**Mode:** **${api.online.mode.replace(api.online.game)}**`)
+      desc.push(`**Mapa:** **${api.online.map}**`)
+      desc.push(``)
+      desc.push(`**Track Time:** \`${ttime}\``)
+      desc.push(`**Total Checks:** \`${this.checks}\``)
+
+      embed.setDescription(desc.join("\n")).setColor('GREY').setTitle(`${this.username} je ve hře!`)
       return this.echo(`${this.username} - Status: ${status} ${review}`, null, embed)
     }
 
-    console.log(api)
+    //console.log(api)
     //this.echo(api.online.footer)
     return
   }
