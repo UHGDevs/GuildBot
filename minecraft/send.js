@@ -2,7 +2,7 @@ exports.send = send
 async function send(uhg, pmsg) {
   let message = pmsg.send.slice(0, 256);
   if (!message) return
-  if (pmsg.count && pmsg.count > 2) return console.log("MOC POKUSŮ NA POSLÁNÍ ZPRÁVY")
+  if (pmsg.count && pmsg.count > 4) return console.log("MOC POKUSŮ NA POSLÁNÍ ZPRÁVY")
 
   if (!pmsg.ready) {
     message = await pings(message, uhg)

@@ -4,7 +4,7 @@ module.exports = async (uhg, pmsg) => {
   if (pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (.*)$/)) await bridge.chat(uhg, pmsg)
   else await bridge.info(uhg, pmsg)
 
-  let finder = pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (někdo|nekdo|someone|any|[0-9]\/[0-9]|[0-9])? (\w{2,10})?(.*)$/i)
+  let finder = pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (někdo|nekdo|someone|any|[0-9]\/[0-9]|[0-9]|any1)? (\w{2,10})?(.*)$/i)
   if (finder) guildfinder(uhg, pmsg, finder)
 
   if (!pmsg.command) return
@@ -26,7 +26,7 @@ async function guildfinder(uhg, pmsg, finder) {
 
   let userdata = user.data || []
 
-  let game = uhg.mc.aliases.get(finder[5].toLowerCase())
+  let game = uhg.mc.aliases.get(finder[5].toLowerCase()) ||finder[5]
 
   userdata.push( {game: game || finder[5], message: pmsg.content, time: Number(new Date())} )
 
@@ -41,18 +41,19 @@ async function guildfinder(uhg, pmsg, finder) {
 
     if (!same.length) return
     let time = Math.floor(uhg.func.toTime(Number(new Date()) - same[0].time, true).m)
-    send.push(`${item._id} chtěl hrát před ${time}min taky ${game} -> \"${item._id}: ${same[0].message}\"`)
+    send.push(`[${game}] ${item._id}: - ${time}min ago  -> \"${same[0].message}\"`)
   })
 
   uhg.mongo.run.post("general", "guildfind", {_id: pmsg.username, data: userdata, discord: pmsg.id, updated: Number(new Date())})
 
-  send.forEach(msg => {
+  for (let msg of send) {
     let pemsg = pmsg
-    pemsg.send = msg
-    pemsg.channel = "/gc"
-    bridge.send(uhg, msg)
-    chat.send(uhg, pemsg)
-  });
+    pemsg.send = `/msg ${pemsg.username} ${msg}`
+    //bridge.send(uhg, msg)
+    await chat.send(uhg, pemsg)
+    await uhg.func.delay(2000)
+  }
+
 
 
 }

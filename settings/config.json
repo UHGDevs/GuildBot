@@ -1,11 +1,11 @@
 {
   "prefix": ".",
   "discord": true,
-  "minecraft": false,
+  "minecraft": true,
   "test": true,
   "time": {
     "database": false,
     "sniper": false,
-    "finder": false
+    "finder": true
   }
 }
