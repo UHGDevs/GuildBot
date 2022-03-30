@@ -6,7 +6,7 @@ const Functions = require('./functions.js')
 const Events = require('events')
 class Login {
   constructor(dc, mc, mctest) {
-    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), channelsids: {guild:"957005113149521930", officer:"957005146460684299"}}
+    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), channelsids: {guild:"912776277361053758", botguild:"957005113149521930", officer: "929435160234053726", botofficer:"957005146460684299"}}
     this.mc = {client: mc, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:mctest}
     this.ignore = []

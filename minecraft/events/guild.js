@@ -21,6 +21,7 @@ module.exports = async (uhg, pmsg) => {
 }
 
 async function guildfinder(uhg, pmsg, finder) {
+  if (!finder[5].match(/[A-Z]+/gi)) return;
   let user = await uhg.mongo.run.get("general", "guildfind", {_id: pmsg.username}) || {}
   if (user.length) user = user[0]
 
