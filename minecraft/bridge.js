@@ -7,7 +7,7 @@ exports.chat = async function (uhg, pmsg) {
   return
 }
 
-exports.info = async function (uhg, pmsg, mcchannel="Officer") {
+exports.info = async function (uhg, pmsg, mcchannel="Guild") {
   let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
   if (mcchannel==="Officer") channel = uhg.dc.channels.ochat
