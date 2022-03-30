@@ -11,7 +11,7 @@ module.exports = async (uhg, pmsg) => {
     let res = "Neznámý command"
     if (command) res = await command.run(uhg, pmsg);
     pmsg.send = res
-    await bridge.send(uhg, pmsg.send)
+    await bridge.send(uhg, pmsg.send, "Officer")
     await chat.send(uhg, pmsg)
   }
 }

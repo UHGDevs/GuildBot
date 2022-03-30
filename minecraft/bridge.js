@@ -1,16 +1,16 @@
 exports.chat = async function (uhg, pmsg) {
   let channel;
   let msg = await pings(pmsg.content, uhg)
-  if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
+  if (pmsg.channel==="Officer" || pmsg.channel==="/go") channel = uhg.dc.channels.ochat
   else channel = uhg.dc.channels.gchat
   await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " **" + pmsg.username + ":** " +msg).trim())
   return
 }
 
-exports.info = async function (uhg, pmsg) {
+exports.info = async function (uhg, pmsg, mcchannel="Officer") {
   let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
-  if (pmsg.channel==="Officer") channel = uhg.dc.channels.ochat
+  if (mcchannel==="Officer") channel = uhg.dc.channels.ochat
   else channel = uhg.dc.channels.gchat
   let msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
   if (msg.endsWith(`${pmsg.username} joined.`)) msg = msg.replace(pmsg.username + " joined.", `\`${pmsg.username} joined.\``)
