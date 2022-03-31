@@ -16,6 +16,11 @@ exports.info = async function (uhg, pmsg, mcchannel="Guild") {
   if (msg.endsWith(`${pmsg.username} joined.`)) msg = msg.replace(pmsg.username + " joined.", `\`${pmsg.username} joined.\``)
   else if (msg.endsWith(`${pmsg.username} left.`)) msg = msg.replace(pmsg.username + " left.", `\`${pmsg.username} left.\``)
   await channel.send(msg)
+
+  if (pmsg.msg.endsWith(`${pmsg.username} joined.`) && uhg.data.unverified && uhg.data.unverified.filter(n=>n.name == pmsg.username).length) {
+    let send = `/msg ${pmsg.username} Připoj se prosím na discord a verifikuj se pomocí ${uhg.settings.prefix}verify ${pmsg.username} - http://dsc.gg/čauuhg`
+    require("./send").send(uhg, {send: send, onetime: true})
+  }
   return
 }
 
