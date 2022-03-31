@@ -166,7 +166,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       tokens: skywars.cosmetic_tokens || 0,
       opals: skywars.opals || 0,
       expmilestone: getSwExpLeft(skywars.skywars_experience || 0),
-      playtime: toTime(skywars.time_played || 0).formatted,
+      playtime: toTime(skywars.time_played || 0).h,
       overall: {
         wins: skywars.wins || 0,
         losses: skywars.losses || 0,
