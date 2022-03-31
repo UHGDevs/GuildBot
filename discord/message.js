@@ -21,7 +21,6 @@ module.exports = async (uhg, message) => {
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
   if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));
   if (command) {
-    console.log(uhg.func.onCoolDown(uhg, message, command))
     if (command.allowedids.length && !command.allowedids.includes(message.author.id)) return await message.channel.send("Nemáš na to oprávnění!")
     let msg = await command.run(uhg, message, content.replace(content.split(" ")[0], "").trim())
     if (msg) await message.channel.send(msg)
