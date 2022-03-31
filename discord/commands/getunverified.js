@@ -14,7 +14,6 @@ module.exports = {
       }
 
       let nickname = args[0]
-      console.log(uhg.data.unverified)
       let player = uhg.data.unverified.filter(n => n.name.toLowerCase()==nickname.toLowerCase())
       if (!player.length) return "Hráč nebyl nalezen"
       return `${player[0].name} - ${player[0].joined}D`
