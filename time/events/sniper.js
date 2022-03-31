@@ -3,6 +3,7 @@ module.exports = {
   description: "Dont Ask",
   time: '*/5 * * * * *', //'*/10 * * * * *'
   ignore: '* * * * * *', //'sec min hour den(mesic) mesic den(tyden)'
+  onstart: false,
   run: async (uhg) => {
     try {
       if (!uhg.snipe.size) return

@@ -3,6 +3,7 @@ module.exports = {
   description: "Find and play!",
   time: '0 * * * * *', //'*/10 * * * * *'
   ignore: '* * * * * *', //'sec min hour den(mesic) mesic den(tyden)'
+  onstart: false,
   run: async (uhg) => {
     try {
       let data = await uhg.mongo.run.get("general", "guildfind")

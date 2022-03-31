@@ -20,6 +20,11 @@ module.exports = async (uhg) => {
       unit.split(",").forEach(t => {delete pull.start.cronTime[getDict(i)][t]});
     });
     if (uhg.settings.time[pull.name]===true) {pull.start.start();running+=1;}
+    if (uhg.settings.time[pull.name]===true && pull.onstart === true) {
+      uhg.time.ready[pull.name]=false
+      await pull.run(uhg);
+      uhg.time.ready[pull.name]=true
+    }
     uhg.time.events.set(pull.name, pull)
   }
 

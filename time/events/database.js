@@ -3,6 +3,7 @@ module.exports = {
   description: "Automatická aktualizace databáze",
   time: '0 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
+  onstart: false,
   run: async (uhg) => {
     let now = Number(new Date())
     try {
