@@ -3,7 +3,6 @@ module.exports = {
   aliases: [],
   allowedids: [],
   platform: "dc",
-  coolown: 5,
   run: async (uhg, message, content) => {
     try {
       let id = message.author.id

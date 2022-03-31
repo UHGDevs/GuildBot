@@ -6,7 +6,6 @@ module.exports = {
   description: "UHG, the snipers",
   allowedids: ["378928808989949964"],
   platform: "dc",
-  cooldown: 50,
   run: async (uhg, message, content) => {
     try {
       if (!content || !content.length) return `${uhg.settings.prefix}sniper [nick] [notify]`

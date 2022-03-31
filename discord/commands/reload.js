@@ -38,7 +38,7 @@ module.exports = {
 
       try {
         delete require.cache[require.resolve(`${path}/${cmd.name}.js`)]
-        
+
         let newcmd = require(`${path}/${cmd.name}.js`) || {name: "error"}
         if (path == "./") uhg.dc.commands.set(cmd.name, newcmd)
         else uhg.mc.commands.set(cmd.name, newcmd)

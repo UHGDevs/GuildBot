@@ -3,7 +3,6 @@ module.exports = {
   aliases: ["v"],
   allowedids: [],
   platform: "dc",
-  coolown: 5,
   run: async (uhg, message, content) => {
     try {
       if (!content) return "Nezadal jsi jméno"

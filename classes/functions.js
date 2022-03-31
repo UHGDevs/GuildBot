@@ -1,4 +1,5 @@
 const constants = require('../settings/values/skyblockconstants')
+const { Collection } = require('discord.js');
 
 module.exports = class Functions {
   constructor() {
