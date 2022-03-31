@@ -13,6 +13,8 @@ module.exports = async (uhg) => {
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
+  //await guild.members.fetch()
+
   let roles = ["478816107222925322", "530504032708460584", "537255964898754571", "530504766225383425", "537252847025127424", "475585340762226698", "530504567528620063"]
   roles.forEach(id => {
     let role = guild.roles.cache.get(id)
