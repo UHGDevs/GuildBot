@@ -14,7 +14,7 @@ module.exports = async (uhg, message) => {
   else if (message.content.trim().startsWith("!") && mcchat) content = message.content.trim().replace("!", "").trim()
   if (!content) return
 
-  if (content.startsWith("test")) return require("../time/events/database.js").run(uhg)
+  if (content.startsWith("test")) return require("../time/events/gmembers.js").run(uhg)
 
   let command = uhg.dc.commands.get(content.split(" ")[0]);
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());

@@ -827,7 +827,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         url: `https://plancke.io/hypixel/guild/player/${nickname}`,
       }
       api.guild.all = guild
-      api.guild.member = guild.member.filter(n => n.uuid == uuid)
+      api.guild.member = guild.members.filter(n => n.uuid == uuid)[0]
     }
   }
 

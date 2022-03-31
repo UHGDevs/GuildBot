@@ -20,7 +20,8 @@ module.exports = {
         try { await member.setNickname(null) } catch (e) {message.reply("Nemám práva na změnu nickname")}
 
         for (let role of cache) {
-          try { if (member._roles.includes(role.id)) await member.roles.remove(role.role) } catch (e) {console.log(e)}
+          role = role[1]
+          if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {console.log(e)}}
         }
       }
 

@@ -13,9 +13,6 @@ module.exports = {
 
       let id = message.author.id
 
-      let verified = await uhg.mongo.run.get("general", "verify", {_id:id})
-      if (verified.length && verified[0].nickname.toLowerCase() == args[0].toLowerCase()) return "Už jsi verifikovaný"
-
       let nickname = args[0]
 
       let api = await uhg.func.getApi(nickname, ["key", "hypixel", "mojang", "guild"])
@@ -34,15 +31,30 @@ module.exports = {
 
         if (!member._roles.includes("478816107222925322")) await member.roles.add( message.guild.roles.cache.get("478816107222925322"))
 
+        let cache = uhg.dc.cache.uhgroles
+        let rGMember = cache.get("Guild Member")
+
         if (api.guild.name === "UltimateHypixelGuild") {
-          let grole = api.guild.member.rank
-          let cache = uhg.dc.cache.uhgroles
+          let grole = "Guild " + api.guild.member.rank
+          if (!member._roles.includes(rGMember.id)) try { await member.roles.add(rGMember.role) } catch (e) {}
           for (let role of cache) {
+            if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
+            role = role[1]
             if (member._roles.includes(role.id) && role.name!=grole) try { await member.roles.remove(role.role) } catch (e) {}
-            else if (!member._roles.includes(role.id) && role.name==grole) try { await member.reoles.add(role.role) } catch (e) {}
+            else if (!member._roles.includes(role.id) && role.name == grole) {try { await member.roles.add(role.role) } catch (e) {}}
+          }
+        } else {
+          for (let role of cache) {
+            if (role[0] == "🌙Default🌙") continue
+            role = role[1]
+            if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {}}
           }
         }
       }
+
+
+      let verified = await uhg.mongo.run.get("general", "verify", {_id:id})
+      if (verified.length && verified[0].nickname.toLowerCase() == args[0].toLowerCase()) return "Už jsi verifikovaný"
 
       let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username, updated: Number(new Date()) })
       if (!post.acknowledged) return "Někde nastala chyba!"

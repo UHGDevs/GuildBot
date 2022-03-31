@@ -7,6 +7,7 @@ module.exports = {
     let now = Number(new Date())
     try {
       let data = await uhg.mongo.run.get("stats", "stats")
+      uhg.data.stats = data
       //console.log(data)
       data = data.filter(n => n.updated<=now-1000*60*60) //n.updated<=now-n.delay ||43000000
       let update = data.slice(0,50)
