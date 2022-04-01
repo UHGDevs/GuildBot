@@ -15,7 +15,7 @@ module.exports = async (uhg, pmsg) => {
 
 
   pmsg.send = res
-  await bridge.send(uhg, pmsg.send) //await uhg.dc.channels.botjs.send(pmsg.command + " - command comming soon")
+  await bridge.send(uhg, pmsg.send)
 
   await chat.send(uhg, pmsg)
 }

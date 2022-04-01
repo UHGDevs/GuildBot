@@ -9,8 +9,10 @@ module.exports = async (uhg, message) => {
     if (message.content.toLowerCase().includes(banned[i])) return message.reply({ content: "Zpráva obsahuje nepovolené slovo" })
   }
 
-  let chat = "/go"
-  if (message.channel.id==uhg.dc.channelsids.guild) chat = "/gc"
+  let chat;
+  if (message.channel.id==uhg.getDiscordIds().channels.officer) chat = "/go"
+  if (message.channel.id==uhg.getDiscordIds().channels.guild) chat = "/gc"
+  if (!chat) return;
 
   require("../minecraft/send.js").send(uhg, {send: `${chat} ${user.nickname}: ${message.content}`})
 

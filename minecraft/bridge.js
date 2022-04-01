@@ -1,8 +1,9 @@
 exports.chat = async function (uhg, pmsg) {
   let channel;
   let msg = await pings(pmsg.content, uhg)
-  if (pmsg.channel==="Officer" || pmsg.channel==="/go") channel = uhg.dc.channels.ochat
-  else channel = uhg.dc.channels.gchat
+  if (pmsg.channel==="Officer" || pmsg.channel==="/go") channel = uhg.dc.cache.channels.get("officer")
+  else channel = uhg.dc.cache.channels.get("guild")
+  if (!channel) return console.log("Nenašel se kanál (bridge.js)")
   await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " **" + pmsg.username + ":** " +msg).trim())
   return
 }
@@ -10,8 +11,8 @@ exports.chat = async function (uhg, pmsg) {
 exports.info = async function (uhg, pmsg, mcchannel="Guild") {
   let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
-  if (mcchannel==="Officer") channel = uhg.dc.channels.ochat
-  else channel = uhg.dc.channels.gchat
+  if (mcchannel==="Officer") channel = uhg.dc.cache.channels.get("officer")
+  else channel = uhg.dc.cache.channels.get("guild")
   let msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
   if (msg.endsWith(`${pmsg.username} joined.`)) msg = msg.replace(pmsg.username + " joined.", `\`${pmsg.username} joined.\``)
   else if (msg.endsWith(`${pmsg.username} left.`)) msg = msg.replace(pmsg.username + " left.", `\`${pmsg.username} left.\``)
@@ -27,14 +28,16 @@ exports.info = async function (uhg, pmsg, mcchannel="Guild") {
 exports.send = async function (uhg, msg, chnl="Guild") {
   let channel;
   let semoji = await getEmoji(uhg.dc.client, "server")
-  if (chnl==="Officer") channel = uhg.dc.channels.ochat
-  else channel = uhg.dc.channels.gchat
+  if (chnl==="Officer") channel = uhg.dc.cache.channels.get("officer")
+  else channel = uhg.dc.cache.channels.get("guild")
+  if (!channel) return console.log("Nenašel se kanál (bridge.js)")
   await channel.send(semoji + msg)
   return
 }
 
 exports.guildjoin = async function (uhg, pmsg) {
-  let channel = uhg.dc.channels.ochat
+  let channel = uhg.dc.cache.channels.get("officer")
+    if (!channel) return console.log("Nenašel se kanál (bridge.js)")
   let semoji = await getEmoji(uhg.dc.client, "server")
   let msg = await channel.send({ content:semoji + pmsg.send, components: [pmsg.buttons] })
   msg.expire = Number(new Date()) + 60000
@@ -53,8 +56,6 @@ async function pings(message, uhg) {
   if (msg.includes("<@&")) msg = msg.replace(/<@&/gi, "")
   if (msg.includes("@")) for (let n=0; n<msg.split(" ").length;n++) if (msg.split(" ")[n].match(/@.*/)) mentions.push(msg.split(" ")[n].substring(1))
   mentions.forEach(men =>{
-    console.log(men)
-    console.log(men.toLowerCase())
     let user = data.filter(n=>n.nickname.toLowerCase() == men.toLowerCase())
     if (!user.length) return
     msg = msg.replace(`@${men}`, `<@${user[0]._id}>`)

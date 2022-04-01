@@ -3,25 +3,26 @@ const fs = require('fs');
 const { MongoClient } = require("mongodb");
 
 const Functions = require('./functions.js')
-const Events = require('events')
-class Login {
-  constructor(dc, mc, mctest) {
-    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), channelsids: {guild:"912776277361053758", botguild:"957005113149521930", officer: "929435160234053726", botofficer:"957005146460684299"}, cache: {}}
-    this.mc = {client: mc, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
-    this.test = {server:mctest}
+const EventEmitter = require('events').EventEmitter
+class Login extends EventEmitter {
+  constructor(dc) {
+    super()
+    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), cache: {}}
+    this.mc = {client: null, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
+    this.test = {server:null}
     this.ignore = []
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
     this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
-    this._event = new Events()
     this.snipe = new Collection()
     this.ready = this.load()
   }
   async load() {
     delete this.ready
-    await Promise.all([this.createMongo()]);
-    this._event.emit("ready")
+    this.reload(["settings"])
+    await Promise.all([this.createMongo(), require("../utils/client.js")(this)]);
+    this.emit("ready")
   }
 
   async createMongo() {
@@ -29,8 +30,7 @@ class Login {
     await mongo.connect()
     await require("../utils/mongodb").setup(mongo)
     this.mongo = {client: mongo, run: require("../utils/mongodb")}
-    this.reload(["stats"])
-    await this.reload()
+    await this.reload(["mongo"])
   }
 
   async reload(reload=[]) {
@@ -60,13 +60,16 @@ class Login {
       this.data.verify = await this.mongo.run.get("general", "verify")
     }
 
-    if (reload.includes("stats") || reload.includes("mongo") /* || !reload.length */) {
+    if (reload.includes("stats") || reload.includes("mongo")  || !reload.length) {
       this.data.stats = await this.mongo.run.get("stats", "stats")
     }
 
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
       this.data.stats = await this.mongo.run.get("general", "uhg")
     }
+  }
+  getDiscordIds() {
+    return JSON.parse(fs.readFileSync('settings/discord.json', 'utf8'));
   }
 }
 

@@ -2,17 +2,17 @@ const { Collection } = require('discord.js');
 module.exports = async (uhg) => {
   console.log(`Discord Bot is online! (${uhg.dc.client.user.tag})`.bold.brightGreen)
   uhg.dc.client.user.setActivity(' Guild Chat', { type: 'WATCHING' });
-  uhg.dc.channels = {}
-  uhg.dc.channels.gchat = await uhg.dc.client.channels.cache.get(uhg.dc.channelsids.guild)
-  uhg.dc.channels.ochat = await uhg.dc.client.channels.cache.get(uhg.dc.channelsids.officer)
-  uhg.dc.channels.botjs = await uhg.dc.client.channels.cache.get("875503798733385779")
-  await uhg.func.delay(500)
-
-  uhg.dc.cache.uhgroles = new Collection()
 
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
+  uhg.dc.cache.channels = new Collection()
+
+  uhg.dc.cache.channels.set("guild", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.guild))
+  uhg.dc.cache.channels.set("officer", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.officer))
+  uhg.dc.cache.channels.set("bot", uhg.dc.client.channels.cache.get("875503798733385779"))
+
+  uhg.dc.cache.uhgroles = new Collection()
   //await guild.members.fetch()
 
   let roles = ["478816107222925322", "530504032708460584", "537255964898754571", "530504766225383425", "537252847025127424", "475585340762226698", "530504567528620063"]
