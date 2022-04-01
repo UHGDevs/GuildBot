@@ -5,11 +5,22 @@ module.exports = (uhg) => {
   if (uhg.settings.minecraft === true) {
 
     uhg.mc.client = minecraft.createClient({
+      uhg: uhg,
       host: "mc.hypixel.net",
       username: process.env.email,
       password: process.env.password,
       auth: 'microsoft'
-      //keepalive: true
+    })
+    uhg.mc.client.setMaxListeners(Infinity)
+
+    uhg.on("token", packet => {
+      console.log(packet)
+    })
+
+    uhg.mc.client.on("success", (packet, a) => {
+//      console.log(packet)
+//      console.log(a)
+      console.log("BOT LOG ON".brightGreen)
     })
 
   } else if (uhg.settings.test === true && uhg.settings.minecraft !== true) {

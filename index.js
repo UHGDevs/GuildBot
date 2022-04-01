@@ -15,13 +15,15 @@ let uhg = new Login(dc)
 exports.uhg = () => { return uhg }
 
 uhg.once("ready", () => {
-  if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
   require("./time/handler.js") (uhg)
 
   uhg.dc.client.on("messageCreate", require(`./discord/message.js`).bind(null, uhg));
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
   console.log("Guild bot je připraven!".bold.brightGreen)
+
+  if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
+
   return
 })
 
