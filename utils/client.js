@@ -8,8 +8,8 @@ module.exports = (uhg) => {
       host: "mc.hypixel.net",
       username: process.env.email,
       password: process.env.password,
-      auth: 'microsoft',
-      keepalive: true
+      auth: 'microsoft'
+      //keepalive: true
     })
 
   } else if (uhg.settings.test === true && uhg.settings.minecraft !== true) {
@@ -46,7 +46,7 @@ module.exports = (uhg) => {
      host: "localhost",
      port: 25565,
      username: "Technoblade",
-     version: "1.16.1",
+     version: "1.16.1"
     })
 
   }

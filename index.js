@@ -15,8 +15,8 @@ let uhg = new Login(dc)
 exports.uhg = () => { return uhg }
 
 uhg.once("ready", () => {
-  require("./time/handler.js") (uhg)
   if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
+  require("./time/handler.js") (uhg)
   //setInterval(function () {uhg.reload(["mongo"])}, 5*60*1000);
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
