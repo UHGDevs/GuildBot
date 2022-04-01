@@ -5,9 +5,7 @@ module.exports = {
   platform: "dc",
   run: async (uhg, message, content) => {
     try {
-//require("../../utils/client")(uhg)
-//uhg.mc.client.connect("25565", "mc.hypixel.net")
-return "WIP"
+      return uhg.restartbot()
     } catch (e) {
         console.log(String(e.stack).bgRed)
         return "Chyba v restart příkazu!"

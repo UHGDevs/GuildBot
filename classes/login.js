@@ -67,6 +67,14 @@ class Login extends Functions {
       this.data.stats = await this.mongo.run.get("general", "uhg")
     }
   }
+
+  restartbot() {
+    if (!this.mc.client) return "Minecraft není zaplý"
+    this.mc.client.end()
+    require("../utils/client")(this)
+    require("../minecraft/handler.js")(this)
+    return "DONE"
+  }
 }
 
 

@@ -32,7 +32,7 @@ module.exports = async (uhg, message) => {
     let msg = await command.run(uhg, {username: uhg.data.verify.filter(n=>n._id==message.author.id)[0].nickname||content.split(" ")[0], args:content.toLowerCase().replace(content.split(" ")[0].toLowerCase(), "").trim()||"", nickname:content.split(" ")[1]||uhg.data.verify.filter(n=>n._id==message.author.id)[0].nickname||"KOkasfneplatne"}) || "error v posilani mc commandu z discordu"
     if (mcchat) {
       let mcchannel = "/go "
-      if (message.channel.id == uhg.getChannelIds().channels.guild) mcchannel = "/gc "
+      if (message.channel.id == uhg.getDiscordIds().channels.guild) mcchannel = "/gc "
       require("../minecraft/send").send(uhg, {send: mcchannel+msg})
     }
     return await message.reply(msg)
