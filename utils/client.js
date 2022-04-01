@@ -13,15 +13,15 @@ module.exports = (uhg) => {
     })
     uhg.mc.client.setMaxListeners(Infinity)
 
-    uhg.on("token", packet => {
-      console.log(packet)
-    })
+    // uhg.on("token", packet => {
+    //   console.log(packet)
+    // })
 
-    uhg.mc.client.on("success", (packet, a) => {
-//      console.log(packet)
-//      console.log(a)
-      console.log("BOT LOG ON".brightGreen)
-    })
+//     uhg.mc.client.on("success", (packet, a) => {
+// //      console.log(packet)
+// //      console.log(a)
+//       console.log("BOT LOG ON".brightGreen)
+//     })
 
   } else if (uhg.settings.test === true && uhg.settings.minecraft !== true) {
 
