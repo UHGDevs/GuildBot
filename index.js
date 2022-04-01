@@ -1,6 +1,6 @@
 const fs = require('fs');
 const colors = require("colors");
-const { Client, Intents, Collection, Util, WebhookClient, MessageEmbed } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const Login = require('./classes/login.js')
 
 const dotenv = require('dotenv');
@@ -17,7 +17,8 @@ exports.uhg = () => { return uhg }
 uhg.once("ready", () => {
   if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
   require("./time/handler.js") (uhg)
-  //setInterval(function () {uhg.reload(["mongo"])}, 5*60*1000);
+
+  uhg.dc.client.on("messageCreate", require(`./discord/message.js`).bind(null, uhg));
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
   console.log("Guild bot je připraven!".bold.brightGreen)
