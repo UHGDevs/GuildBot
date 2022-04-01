@@ -4,7 +4,7 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try {
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["dungeons"])
+      let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["dungeons"])
       if (api instanceof Object == false) return api
       let dungeons = api.skyblock.dungeons
       let profile;
@@ -25,7 +25,7 @@ module.exports = {
       let tank = profil.tanklvl || 0
       let berserk = profil.berserklvl || 0
       let classavg = profil.classavg || 0
-      let message = `Class: [${uhg.func.f(classavg)} CA] **${api.username}** - H: ${healer}, M: ${mage}, B: ${berserk}, A: ${archer}, T: ${tank} (${cata} Cata)`
+      let message = `Class: [${uhg.f(classavg)} CA] **${api.username}** - H: ${healer}, M: ${mage}, B: ${berserk}, A: ${archer}, T: ${tank} (${cata} Cata)`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

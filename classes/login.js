@@ -3,8 +3,7 @@ const fs = require('fs');
 const { MongoClient } = require("mongodb");
 
 const Functions = require('./functions.js')
-const EventEmitter = require('events').EventEmitter
-class Login extends EventEmitter {
+class Login extends Functions {
   constructor(dc) {
     super()
     this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), cache: {}}
@@ -12,7 +11,6 @@ class Login extends EventEmitter {
     this.test = {server:null}
     this.ignore = []
     this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
-    this.func = new Functions()
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
     this.snipe = new Collection()
@@ -21,7 +19,8 @@ class Login extends EventEmitter {
   async load() {
     delete this.ready
     this.reload(["settings"])
-    await Promise.all([this.createMongo(), require("../utils/client.js")(this)]);
+    await Promise.all([this.createMongo()]);
+    require("../utils/client.js")(this)
     this.emit("ready")
   }
 
@@ -67,9 +66,6 @@ class Login extends EventEmitter {
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
       this.data.stats = await this.mongo.run.get("general", "uhg")
     }
-  }
-  getDiscordIds() {
-    return JSON.parse(fs.readFileSync('settings/discord.json', 'utf8'));
   }
 }
 

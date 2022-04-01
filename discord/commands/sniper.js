@@ -19,14 +19,14 @@ module.exports = {
 
       let notify = false
       if (args[1]) {
-        notify = await uhg.func.getApi(args[1], ["mojang", "online"])
+        notify = await uhg.getApi(args[1], ["mojang", "online"])
         if (notify instanceof Object == false) return notify
         if (!notify.online.online) return "Hráč, kam má být zaslán výsledek není online (or api off)"
         notify = notify.username
       }
       if (notify && !uhg.mc.client) return `Bot zrovna není zaplý na minicraft`
 
-      let api = await uhg.func.getApi(args[0], ["mojang", "online", "recent"])
+      let api = await uhg.getApi(args[0], ["mojang", "online", "recent"])
       if (api instanceof Object == false) return api
       if (!api.online.online) return "Hráč není online (or api off)"
       if (!api.recent.games.length) return "Hráč má vyplé recent games api, nebo ještě nehrál žádnou hru"

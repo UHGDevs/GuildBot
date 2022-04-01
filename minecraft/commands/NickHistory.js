@@ -3,7 +3,7 @@ module.exports = {
   aliases: ["nickhistory", "namehistory", "history", "names", "nicks"],
   run: async (uhg, pmsg) => {
     try{
-      let api = await uhg.func.getApi(pmsg.nickname)
+      let api = await uhg.getApi(pmsg.nickname)
       if (api instanceof Object == false) return api
       let nicks = api.hypixel
       let message = `**${api.username}** - ${nicks.nicks.join(", ")}`

@@ -4,7 +4,7 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try {
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["main"])
+      let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["main"])
       if (api instanceof Object == false) return api
       let coins = api.skyblock.main
       let profile;
@@ -21,9 +21,9 @@ module.exports = {
       }
       let profil = coins[profile]
       let apioff = profil.apioff
-      if (apioff == true) return `Coins: **${api.username}** - Purse: ${uhg.func.f(purse).split(".")[0]} (BANK API OFF)`
+      if (apioff == true) return `Coins: **${api.username}** - Purse: ${uhg.f(purse).split(".")[0]} (BANK API OFF)`
       console.log(profile)
-      let message = `Coins: [${uhg.func.f(sum).split(".")[0]}] **${api.username}** - Purse: ${uhg.func.f(purse).split(".")[0]} - Bank: ${uhg.func.f(bank).split(".")[0]}`
+      let message = `Coins: [${uhg.f(sum).split(".")[0]}] **${api.username}** - Purse: ${uhg.f(purse).split(".")[0]} - Bank: ${uhg.f(bank).split(".")[0]}`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

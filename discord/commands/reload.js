@@ -19,7 +19,7 @@ module.exports = {
 
         req.forEach(item => {
           delete require.cache[item]
-          if (item.includes("api.js")) uhg.func.getApi = require(item)
+          if (item.includes("api.js")) uhg.getApi = require(item)
           if (!item.includes("/commands/") && !item.includes("/time/events/")) return
 
           let newcmd = require(item)

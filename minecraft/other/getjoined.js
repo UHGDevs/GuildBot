@@ -3,7 +3,7 @@ let bridge = require(`../bridge.js`)
 let chat = require(`../send.js`)
 module.exports = async (uhg, pmsg) => {
   console.log(pmsg)
-  let api = await uhg.func.getApi(pmsg.username)
+  let api = await uhg.getApi(pmsg.username)
   if (api instanceof Object == false) return api
   let level = Math.floor(api.hypixel.level) || 0
   pmsg.send = `[${level}] ${pmsg.username} se chce připojit do guildy!\n https://plancke.io/hypixel/player/stats/${pmsg.username}`

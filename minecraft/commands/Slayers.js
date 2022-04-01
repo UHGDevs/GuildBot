@@ -4,7 +4,7 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try {
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["slayers"])
+      let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["slayers"])
       if (api instanceof Object == false) return api
       let slayers = api.skyblock.slayers
       let profile;
@@ -25,7 +25,7 @@ module.exports = {
       let spiderxp = profil.spiderxp || 0
       let wolfxp = profil.wolfxp || 0
       let emanxp = profil.emanxp || 0
-      let message = `Slayers: [${uhg.func.f(overallxp)}] **${api.username}** - Rev ${Math.floor(zombielvl)} (${uhg.func.f(zombiexp)}) - Tara ${Math.floor(spiderlvl)} (${uhg.func.f(spiderxp)}) - Sven ${Math.floor(wolflvl)} (${uhg.func.f(wolfxp)}) - Voidgloom ${Math.floor(emanlvl)} (${uhg.func.f(emanxp)})`
+      let message = `Slayers: [${uhg.f(overallxp)}] **${api.username}** - Rev ${Math.floor(zombielvl)} (${uhg.f(zombiexp)}) - Tara ${Math.floor(spiderlvl)} (${uhg.f(spiderxp)}) - Sven ${Math.floor(wolflvl)} (${uhg.f(wolfxp)}) - Voidgloom ${Math.floor(emanlvl)} (${uhg.f(emanxp)})`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

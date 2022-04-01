@@ -4,13 +4,13 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try{
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname)
+      let api = await uhg.getApi(nickname)
       if (api instanceof Object == false) return api
       let hns = api.hypixel.stats.arcade.hideandseek
       let overall = hns.overall
       let pp = hns.partypopper
       let ph = hns.prophunt
-      message = `**HideAndSeek**: **${api.username}** - ${uhg.func.f(overall.wins)}Wins (Party Pooper: ${uhg.func.f(pp.hiderwins)}H ${uhg.func.f(pp.seekerwins)}S, Prop Hunt: ${uhg.func.f(ph.hiderwins)}H ${uhg.func.f(ph.seekerwins)}S)`
+      message = `**HideAndSeek**: **${api.username}** - ${uhg.f(overall.wins)}Wins (Party Pooper: ${uhg.f(pp.hiderwins)}H ${uhg.f(pp.seekerwins)}S, Prop Hunt: ${uhg.f(ph.hiderwins)}H ${uhg.f(ph.seekerwins)}S)`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

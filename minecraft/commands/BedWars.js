@@ -2,10 +2,10 @@ module.exports = {
   name: "BedWars",
   aliases: ["bw", "bedwars"],
   run: async (uhg, pmsg) => {
-    const f = uhg.func.f
+    const f = uhg.f
     try{
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname)
+      let api = await uhg.getApi(nickname)
       if (api instanceof Object == false) return api
       let bedwars = api.hypixel.stats.bedwars
       let overall = bedwars.overall

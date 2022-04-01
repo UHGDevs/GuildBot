@@ -3,7 +3,7 @@ module.exports = {
   aliases: ["member", "guild"],
   run: async (uhg, pmsg) => {
     try{
-      let api = await uhg.func.getApi(pmsg.nickname, ["guild", "key", "mojang", "guild"])
+      let api = await uhg.getApi(pmsg.nickname, ["guild", "key", "mojang", "guild"])
       if (api instanceof Object == false) return message
       let guild = api.guild.all
       if (!api.guild.guild) return `**${api.username}** - Guild: Žádná`
@@ -17,7 +17,7 @@ module.exports = {
         }
       }
       let timein = Math.floor((new Date().getTime()-joined)/ 86400000)
-      message = `**${grank} ${api.username}** - [${uhg.func.f(uhg.func.getGuildLevel(guild.exp))}] ${guild.name} - ${timein}d`
+      message = `**${grank} ${api.username}** - [${uhg.f(uhg.getGuildLevel(guild.exp))}] ${guild.name} - ${timein}d`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

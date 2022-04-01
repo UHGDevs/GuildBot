@@ -4,7 +4,7 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try {
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["mining"])
+      let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["mining"])
       if (api instanceof Object == false) return api
       let mining = api.skyblock.mining
       let profile;
@@ -20,7 +20,7 @@ module.exports = {
         }
       }
       let profil = mining[profile]
-      let message = `Powder: **${api.username}** - Mithril: ${uhg.func.f(mithril)} - Gemstone: ${uhg.func.f(gemstone)}`
+      let message = `Powder: **${api.username}** - Mithril: ${uhg.f(mithril)} - Gemstone: ${uhg.f(gemstone)}`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

@@ -3,7 +3,7 @@ module.exports = {
   aliases: ["sim", "sims", "simulators", "simulator", "easter", "scuba", "halloween", "grinch", "eastersimulator", "scubasimulator", "halloweensimulator", "grinchsimulator"],
   run: async (uhg, pmsg) => {
     try{
-      let api = await uhg.func.getApi(pmsg.nickname)
+      let api = await uhg.getApi(pmsg.nickname)
       if (api instanceof Object == false) return api
       let easter = api.hypixel.stats.arcade.simulators.easter
       let scuba = api.hypixel.stats.arcade.simulators.scuba

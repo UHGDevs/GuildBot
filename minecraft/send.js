@@ -71,11 +71,11 @@ exports.write = async function (uhg, pmsg) {
 
     uhg.mc.client.on('chat', async function(packet) {
       let message = JSON.parse(packet.message)
-      let text = uhg.func.clear(message.text)
+      let text = uhg.clear(message.text)
       if (message.color == "red" && text.endsWith("!") && !text.includes("are a bannable")) pmsg.error = text
       return
     })
-    await uhg.func.delay(500)
+    await uhg.delay(500)
     if (!pmsg.error) return
     if (!pmsg.onetime) send(uhg, pmsg)
   } finally {return uhg.mc.ready = true}

@@ -4,7 +4,7 @@ const fs = require('fs');
 class Sniper {
   constructor(uhg, api, notify) {
     this.uhg = uhg
-    this.getApi = uhg.func.getApi
+    this.getApi = uhg.getApi
     this.username = api.username
     this.uuid = api.uuid
     this.notify = notify
@@ -23,7 +23,7 @@ class Sniper {
   }
 
   async run() {
-    let time = this.uhg.func.toTime(Number(new Date()) - this.time, true)
+    let time = this.uhg.toTime(Number(new Date()) - this.time, true)
     let ttime = `${Math.floor(time.m)}min ${Math.floor(time.s-Math.floor(time.m)*60)}s`
     this.totalchecks += 1
     let api = await this.getApi(this.uuid, ["online", "recent"])
@@ -56,7 +56,7 @@ class Sniper {
     let lastgame = api.recent.games[0]
 
     let status;
-    let lgtime = this.uhg.func.toTime(Number(new Date())-lastgame.date, true)
+    let lgtime = this.uhg.toTime(Number(new Date())-lastgame.date, true)
     if (!lastgame.ended) status = `In game - ${Math.floor(lgtime.m)}m ${Math.floor(lgtime.s-Math.floor(lgtime.m)*60)}s`
     else status = "In Queue!"
     if (lastgame.map != api.online.map) status = "In Queue! (dev - v2)"

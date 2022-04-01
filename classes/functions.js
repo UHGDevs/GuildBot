@@ -1,10 +1,15 @@
 const constants = require('../settings/values/skyblockconstants')
 const { Collection } = require('discord.js');
+const fs = require('fs');
+const EventEmitter = require('events').EventEmitter
 
-module.exports = class Functions {
+module.exports = class Functions extends EventEmitter {
   constructor() {
+    super()
     this.getApi = require("../utils/api")
   }
+
+  getDiscordIds() {return JSON.parse(fs.readFileSync('settings/discord.json', 'utf8'));}
 
   delay(ms) {return new Promise(res => setTimeout(res, ms))}
 

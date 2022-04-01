@@ -41,7 +41,7 @@ async function guildfinder(uhg, pmsg, finder) {
     let same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
 
     if (!same.length) return
-    let time = Math.floor(uhg.func.toTime(Number(new Date()) - same[0].time, true).m)
+    let time = Math.floor(uhg.toTime(Number(new Date()) - same[0].time, true).m)
     send.push(`[${game}] ${item._id}: - ${time}min ago  -> \"${same[0].message}\"`)
   })
 
@@ -52,7 +52,7 @@ async function guildfinder(uhg, pmsg, finder) {
     pemsg.send = `/msg ${pemsg.username} ${msg}`
     //bridge.send(uhg, msg)
     await chat.send(uhg, pemsg)
-    await uhg.func.delay(2000)
+    await uhg.delay(2000)
   }
 
 

@@ -4,10 +4,10 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try{
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname)
+      let api = await uhg.getApi(nickname)
       if (api instanceof Object == false) return api
       let ender = api.hypixel.stats.arcade.enderspleef
-      let message = `**EnderSpleef**: **${api.username}** - ${uhg.func.f(ender.wins)}Wins - Trail: ${ender.trail}`
+      let message = `**EnderSpleef**: **${api.username}** - ${uhg.f(ender.wins)}Wins - Trail: ${ender.trail}`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

@@ -14,7 +14,7 @@ module.exports = {
 
       let nickname = args[0]
 
-      let api = await uhg.func.getApi(nickname, ["key", "hypixel", "mojang", "guild"])
+      let api = await uhg.getApi(nickname, ["key", "hypixel", "mojang", "guild"])
       if (api instanceof Object == false) return api
 
       let member = message.guild.members.cache.get(message.author.id)

@@ -4,7 +4,7 @@ module.exports = {
   run: async (uhg, pmsg) => {
     try {
       let nickname = pmsg.nickname
-      let api = await uhg.func.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["skills"])
+      let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["skills"])
       if (api instanceof Object == false) return api
       let skills = api.skyblock.skills
       let profile;
@@ -31,7 +31,7 @@ module.exports = {
       let apioff = "";
       if (profil.apioff == true) apioff = "(API OFF)"
 
-      let message = `Skills: [${uhg.func.f(skillavg)} SA] **${api.username}** - Tam ${taming}, Mine ${mining}, Forag ${foraging}, Ench ${enchanting}, Carp ${carpentry}, Farm ${farming}, Combat ${combat}, Fish ${fishing}, Alch ${alchemy}, Rune ${runecrafting} ${apioff}`
+      let message = `Skills: [${uhg.f(skillavg)} SA] **${api.username}** - Tam ${taming}, Mine ${mining}, Forag ${foraging}, Ench ${enchanting}, Carp ${carpentry}, Farm ${farming}, Combat ${combat}, Fish ${fishing}, Alch ${alchemy}, Rune ${runecrafting} ${apioff}`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

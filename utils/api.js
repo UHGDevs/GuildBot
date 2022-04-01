@@ -11,21 +11,21 @@ const api_key_2 = process.env.api_key_2;
 module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) => {
   try {
   const uhg = await require("../index.js").uhg()
-  const f = uhg.func.f
-  const getSwLevel = uhg.func.getSwLevel
-  const nwLevel = uhg.func.getNwLevel
-  const getRank = uhg.func.getRank
-  const getOnline = uhg.func.getOnline
-  const getRankedPosition = uhg.func.getRankedPosition
-  const ratio = uhg.func.ratio
-  const toTime = uhg.func.toTime
-  const getSwExpLeft = uhg.func.getSwExpLeft
-  const getBwLevel = uhg.func.getBwLevel
-  const getCataLvl = uhg.func.getCataLvl
-  const romanize = uhg.func.romanize
-  const getPlusColor = uhg.func.getPlusColor
-  const getSlayerLvl = uhg.func.getSlayerLvl
-  const getLevelByXp = uhg.func.getLevelByXp
+  const f = uhg.f
+  const getSwLevel = uhg.getSwLevel
+  const nwLevel = uhg.getNwLevel
+  const getRank = uhg.getRank
+  const getOnline = uhg.getOnline
+  const getRankedPosition = uhg.getRankedPosition
+  const ratio = uhg.ratio
+  const toTime = uhg.toTime
+  const getSwExpLeft = uhg.getSwExpLeft
+  const getBwLevel = uhg.getBwLevel
+  const getCataLvl = uhg.getCataLvl
+  const romanize = uhg.romanize
+  const getPlusColor = uhg.getPlusColor
+  const getSlayerLvl = uhg.getSlayerLvl
+  const getLevelByXp = uhg.getLevelByXp
 
   /* Empty dictionary */
   let api = {};
@@ -156,7 +156,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
     }
     api.hypixel.stats.skywars = {
-      levelformatted: uhg.func.clear(skywars.levelFormatted || "1⋆"),
+      levelformatted: uhg.clear(skywars.levelFormatted || "1⋆"),
       level: getSwLevel(skywars.skywars_experience || 0),
       coins: skywars.coins || 0,
       souls: skywars.souls || 0,

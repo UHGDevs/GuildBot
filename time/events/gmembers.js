@@ -15,7 +15,7 @@ module.exports = {
       //   uhg.mongo.run.delete("general", "uhg", {_id: i._id})
       // });
 
-      let api = await uhg.func.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
+      let api = await uhg.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
       if (api instanceof Object == false) return console.log(api)
 
       let members = api.guild.all.members
@@ -39,7 +39,7 @@ module.exports = {
       /* get UNVERIFIED members */
       unNames = []
       for (let uuid of unUuid) {
-        let uApi = await uhg.func.getApi(uuid, ["mojang", "guild"])
+        let uApi = await uhg.getApi(uuid, ["mojang", "guild"])
         if (uApi instanceof Object == false) unNames.push({name:uuid, joined: null})
         let joined = Math.floor((new Date().getTime()-uApi.guild.member.joined)/ 86400000)
         unNames.push( {name:uApi.username, joined: joined} )
@@ -50,7 +50,7 @@ module.exports = {
       if (date.getHours() === 2 && date.getMinutes() === 0) {
         dUhg = await uhg.mongo.run.get("general", "uhg")
         for (let member of dUhg) {
-          let mapi = await uhg.func.getApi(member.uuid, ["mojang"])
+          let mapi = await uhg.getApi(member.uuid, ["mojang"])
           if (mapi instanceof Object == false) continue;
           if (mapi.username != member.username) {
             await uhg.mongo.run.update("general", "uhg", {_id:member._id, username: mapi.username})

@@ -16,7 +16,7 @@ module.exports = {
         if (args2 === "basic" || args2 === "normal" || args2 === "overall" || args2 === "základní" || args2 === "game" || args2 === "bw" || args2 === "stats" || args2 === "bedwars") nickname = args1 || pmsg.username
         if (args1 === "basic" || args1 === "normal" || args1 === "overall" || args1 === "základní" || args2 === "basic" || args2 === "normal" || args2 === "overall" || args2 === "základní") mode = "basic"
         if (args1 === "game" || args1 === "bw" || args1 === "stats" || args1 === "bedwars" || args2 === "game" || args2 === "bw" || args2 === "stats" || args2 === "bedwars") mode = "game"
-        let api = await uhg.func.getApi(nickname)
+        let api = await uhg.getApi(nickname)
         if (api instanceof Object == false) return api
         let tourney = api.hypixel.stats.tourney
         let currenttournament = tourney.currenttournament
@@ -26,7 +26,7 @@ module.exports = {
   
         let message = `Použij příkaz takhle: "!tourney game" nebo "!tourney basic"`
         if (mode === "basic") message = `${ctfancy} Tourney: ${api.username} - ${tourney.games}/${tourney.maxgames} Games - ${tourney.tributes}/100 Tributes (Total: ${tourney.totaltributes}) - ${tourney.playtime}min Playtime`
-        else if (mode === "game") message  = `${ctfancy} Tourney: ${api.hypixel.stats.bedwars.levelformatted} ${api.username} - ${uhg.func.f(ctourney.finalKills)}Finals ${uhg.func.f(ctourney.wins)}Wins ${uhg.func.f(ctourney.fkdr)}FKDR ${uhg.func.f(ctourney.wlr)}WLR`
+        else if (mode === "game") message  = `${ctfancy} Tourney: ${api.hypixel.stats.bedwars.levelformatted} ${api.username} - ${uhg.f(ctourney.finalKills)}Finals ${uhg.f(ctourney.wins)}Wins ${uhg.f(ctourney.fkdr)}FKDR ${uhg.f(ctourney.wlr)}WLR`
         return message
       } catch (e) {
           console.log(String(e.stack).bgRed)

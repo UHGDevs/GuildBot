@@ -18,7 +18,7 @@ module.exports = {
       if (args1 === "basic" || args1 === "normal" || args1 === "overall" || args1 === "základní" || args2 === "basic" || args2 === "normal" || args2 === "overall" || args2 === "základní") mode = "basic"
       if (args1 === "deck" || args1 === "setup" || args1 === "skills" || args1 === "skilly" || args2 === "deck" || args2 === "setup" || args2 === "skills" || args2 === "skilly") mode = "deck"
       if (args1 === "rt" || args1 === "rating" || args1 === "pos" || args1 === "position" || args1 === "pozice" || args1 === "ranked" || args2 === "rt" || args2 === "rating" || args2 === "pos" || args2 === "position" || args2 === "pozice" || args2 === "ranked") mode = "ranked"
-      let api = await uhg.func.getApi(nickname)
+      let api = await uhg.getApi(nickname)
       if (api instanceof Object == false) return api
       let arena = api.hypixel.stats.arena
       let overall = arena.overall
@@ -27,11 +27,11 @@ module.exports = {
       if (arena.upgrades.cooldown+arena.upgrades.health+arena.upgrades.energy+arena.upgrades.damage == 36) maxed = "[MAXED]";
       if (arena.rune_levels[rune] == 6 && arena.upgrades.cooldown+arena.upgrades.health+arena.upgrades.energy+arena.upgrades.damage == 36) maxed = "[MAXED+]";
 
-      let offensive = uhg.func.getArena(arena.offensive);
-      let utility = uhg.func.getArena(arena.utility);
-      let support = uhg.func.getArena(arena.support);
-      let ultimate = uhg.func.getArena(arena.ultimate);
-      let fancyrune = uhg.func.getArena(rune)
+      let offensive = uhg.getArena(arena.offensive);
+      let utility = uhg.getArena(arena.utility);
+      let support = uhg.getArena(arena.support);
+      let ultimate = uhg.getArena(arena.ultimate);
+      let fancyrune = uhg.getArena(rune)
 
       let prefix  = `[${overall.wins}]`
       let minigame = `**Arena**:`

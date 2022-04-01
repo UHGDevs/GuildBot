@@ -13,7 +13,7 @@ module.exports = {
       data = data.filter(n => n.updated<=now-1000*60*60) //n.updated<=now-n.delay ||43000000
       let update = data.slice(0,50)
       update.forEach(async (member) => {
-        let api = await uhg.func.getApi(member.uuid, ["hypixel"])
+        let api = await uhg.getApi(member.uuid, ["hypixel"])
         if (api instanceof Object == false) return;
 
         let staty = {
@@ -30,7 +30,7 @@ module.exports = {
         }
         await uhg.mongo.run.update("stats", "stats", {_id: api.uuid}, staty)
       });
-      //await uhg.func.delay(5000)
+      //await uhg.delay(5000)
       //uhg.time.ready.database = true
       return
 
