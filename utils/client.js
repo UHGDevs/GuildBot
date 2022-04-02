@@ -30,7 +30,7 @@ module.exports = (uhg) => {
         port: 25565,
         'max-players': 10,
         'online-mode': false,
-        logging: true,
+        logging: false,
         gameMode: 1,
         difficulty: 1,
         worldFolder: undefined,

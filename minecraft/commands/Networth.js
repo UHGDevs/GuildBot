@@ -59,7 +59,7 @@ module.exports = {
         await uhg.delay(100)
         a++
       }
-      if (user && message.starsWith('**NetWorth')) {
+      if (user && message.startsWith('**NetWorth')) {
         user[cute_name] = {message: message, cute_name: cute_name, result: result}
         cache.set(api.username, user)
       } else {
