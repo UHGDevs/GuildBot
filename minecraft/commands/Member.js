@@ -1,6 +1,6 @@
 module.exports = {
   name: "Member",
-  aliases: ["member", "guild"],
+  aliases: ["member", "guild", "g"],
   run: async (uhg, pmsg) => {
     try{
       let api = await uhg.getApi(pmsg.nickname, ["guild", "key", "mojang", "guild"])
