@@ -92,9 +92,9 @@ module.exports = async (uhg, packet) => {
     pmsg.channel = "Guild"
   } else if (pmsg.msg.startsWith("The Guild has reached Level ")) {
     pmsg.channel = "Guild"
-  } else if (pmsg.msg.endsWith("was demoted from General to Manager") || pmsg.msg.endsWith("was demoted from Manager to Officer") || pmsg.msg.endsWith("was demoted from Officer to Elite Member") || pmsg.msg.endsWith("was demoted from Elite Member to Member")) {
+  } else if (pmsg.msg.includes("was demoted")) {
     pmsg.channel = "Guild"
-  } else if (pmsg.msg.endsWith("was promoted from Manager to General") || pmsg.msg.endsWith("was promoted from Officer to Manager") || pmsg.msg.endsWith("was promoted from Elite Member to Officer") || pmsg.msg.endsWith("was promoted from Member to Elite Member")) {
+  } else if (pmsg.msg.includes("was promoted")) {
     pmsg.channel = "Guild"
   } else if (pmsg.msg.endsWith("to your guild. They have 5 minutes to accept.")) {
     pmsg.channel = "Officer"
