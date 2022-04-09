@@ -13,7 +13,9 @@ exports.info = async function (uhg, pmsg, mcchannel="Guild") {
   let semoji = await getEmoji(uhg.dc.client, "server")
   if (mcchannel==="Officer") channel = uhg.dc.cache.channels.get("officer")
   else channel = uhg.dc.cache.channels.get("guild")
-  let msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
+  let msg = pmsg.msg
+  if (msg.startsWith(`${pmsg.channel} >`)) msg = pmsg.msg.replace(`${pmsg.channel} >`, semoji)
+  else msg = semoji + msg
   if (msg.endsWith(`${pmsg.username} joined.`)) msg = msg.replace(pmsg.username + " joined.", `\`${pmsg.username} joined.\``)
   else if (msg.endsWith(`${pmsg.username} left.`)) msg = msg.replace(pmsg.username + " left.", `\`${pmsg.username} left.\``)
   await channel.send(msg)
