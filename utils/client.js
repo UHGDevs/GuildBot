@@ -9,7 +9,8 @@ module.exports = (uhg) => {
       host: "mc.hypixel.net",
       username: process.env.email,
       password: process.env.password,
-      auth: 'microsoft'
+      auth: 'microsoft',
+      onMsaCode: msaCode
     })
     uhg.mc.client.setMaxListeners(Infinity)
 
@@ -22,6 +23,10 @@ module.exports = (uhg) => {
 // //      console.log(a)
 //       console.log("BOT LOG ON".brightGreen)
 //     })
+
+  async function onMsaCode(data) {
+    console.log(data)
+  }
 
   } else if (uhg.settings.test === true && uhg.settings.minecraft !== true) {
 
