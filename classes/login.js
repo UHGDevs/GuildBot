@@ -79,7 +79,7 @@ class Login extends Functions {
   dcsend(message, where='bot') {
     if (typeof message !== 'string' || !message.length) return false
     let channel;
-    if (Number(where)) channel = this.dc.client.channels.get(where)
+    if (Number(where)) channel = this.dc.client.channels.cache.get(where)
     else channel = this.dc.cache.channels.get(where)
     if (!channel) return false
     channel.send(message)

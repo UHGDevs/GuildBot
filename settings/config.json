@@ -1,11 +1,12 @@
 {
   "prefix": ".",
-  "minecraft": false,
-  "test": true,
+  "minecraft": true,
+  "test": false,
   "time": {
-    "database": false,
+    "database": true,
     "gmembers": false,
     "sniper": false,
-    "finder": false
+    "finder": false,
+    "elites": true
   }
 }

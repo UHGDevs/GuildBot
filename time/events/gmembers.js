@@ -1,6 +1,6 @@
 module.exports = {
   name: "gmembers",
-  description: "Automatická aktualizace databáze",
+  description: "Automatická aktualizace rolí na discordu",
   time: '30 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,
