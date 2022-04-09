@@ -66,7 +66,6 @@ exports.write = async function (uhg, pmsg) {
     else if (pmsg.antispam) msg = msg + pmsg.antispam
 
     delete pmsg.error
-
     uhg.mc.client.write("chat", { message: msg, position: 0 })
 
     uhg.mc.client.on('chat', async function(packet) {
@@ -93,13 +92,13 @@ async function pings(message, uhg) {
   ids.forEach(men => {
     let name;
     let indi;
-    if (men.includes("!")) indi = "user"
-    else if (men.includes("&")) indi = "role"
+    if (men.includes("@&")) indi = "role"
+    else if (men.includes("<@")) indi = "user"
     if (!indi) return
     let id = men.replace(/\D/g, "")
     try {
-      if (indi == "user") name = data.filter(n=>n._id==id)[0] ? data.filter(n=>n._id==id)[0].nickname||{}:men
-      if (indi == "role") name = uhg.dc.client.guilds.cache.get("758650512827613195").roles.cache.get(id).name||men
+      if (indi == "user") name = data.filter(n=>n._id==id)[0] ? data.filter(n=>n._id==id)[0].username||{}:men
+      if (indi == "role") name = uhg.dc.client.guilds.cache.get("455751845319802880").roles.cache.get(id).name||men
     } catch (e) {name = men}
     msg = msg.replace(men, `@${name}`)
   });
