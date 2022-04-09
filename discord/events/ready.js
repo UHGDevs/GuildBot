@@ -7,9 +7,14 @@ module.exports = async (uhg) => {
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
   uhg.dc.cache.channels = new Collection()
-
-  uhg.dc.cache.channels.set("guild", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.guild))
-  uhg.dc.cache.channels.set("officer", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.officer))
+  if (uhg.settings.minecraft === true) {
+    uhg.dc.cache.channels.set("guild", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.guild))
+    uhg.dc.cache.channels.set("officer", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.officer))
+  }
+  else {
+    uhg.dc.cache.channels.set("guild", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.botguild))
+    uhg.dc.cache.channels.set("officer", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.botofficer))
+  }
   uhg.dc.cache.channels.set("bot", uhg.dc.client.channels.cache.get("875503798733385779"))
 
   uhg.dc.cache.uhgroles = new Collection()
