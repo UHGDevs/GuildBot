@@ -4,9 +4,9 @@
   "test": false,
   "time": {
     "database": true,
-    "gmembers": false,
-    "sniper": false,
-    "finder": false,
-    "elites": true
+    "finder": true,
+    "gmembers": true,
+    "elites": true,
+    "sniper": false
   }
 }
