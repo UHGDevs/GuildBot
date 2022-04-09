@@ -83,7 +83,7 @@ exports.write = async function (uhg, pmsg) {
 
 
 async function pings(message, uhg) {
-  let data = uhg.data.uhg
+  let data = uhg.data.verify
   if (!data.length) data = await uhg.mongo.run.get("general", "verify")
 
   let msg = message
@@ -97,7 +97,7 @@ async function pings(message, uhg) {
     if (!indi) return
     let id = men.replace(/\D/g, "")
     try {
-      if (indi == "user") name = data.filter(n=>n._id==id)[0] ? data.filter(n=>n._id==id)[0].username||{}:men
+      if (indi == "user") name = data.filter(n=>n._id==id)[0] ? data.filter(n=>n._id==id)[0].nickname||{}:men
       if (indi == "role") name = uhg.dc.client.guilds.cache.get("455751845319802880").roles.cache.get(id).name||men
     } catch (e) {name = men}
     msg = msg.replace(men, `@${name}`)

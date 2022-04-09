@@ -51,7 +51,7 @@ exports.guildjoin = async function (uhg, pmsg) {
 
 
 async function pings(message, uhg) {
-  let data = uhg.data.uhg
+  let data = uhg.data.verify
   if (!data.length) data = await uhg.mongo.run.get("general", "verify")
   let mentions = []
   let msg = message
