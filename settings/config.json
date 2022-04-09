@@ -1,9 +1,9 @@
 {
   "prefix": ".",
   "minecraft": false,
-  "test": false,
+  "test": true,
   "time": {
-    "database": true,
+    "database": false,
     "gmembers": false,
     "sniper": false,
     "finder": false

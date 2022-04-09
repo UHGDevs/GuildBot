@@ -73,7 +73,17 @@ class Login extends Functions {
     this.mc.client.end()
     require("../utils/client")(this)
     require("../minecraft/handler.js")(this)
-    return "DONE"
+    return "Bot byl úspěšně restartován"
+  }
+
+  dcsend(message, where='bot') {
+    if (typeof message !== 'string' || !message.length) return false
+    let channel;
+    if (Number(where)) channel = this.dc.client.channels.get(where)
+    else channel = this.dc.cache.channels.get(where)
+    if (!channel) return false
+    channel.send(message)
+    return true
   }
 }
 
