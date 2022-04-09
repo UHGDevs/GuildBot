@@ -7,7 +7,7 @@ module.exports = (uhg) => {
     uhg.mc.client = minecraft.createClient({
       host: "mc.hypixel.net",
       username: process.env.email,
-      //password: process.env.password,
+      password: process.env.password,
       auth: 'microsoft',
       onMsaCode: msaCode
     })
