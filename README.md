@@ -9,9 +9,8 @@ Guild BOT of the Hypixel Guild UltimateHypixelGuild [✿UHG✿]
 **Under Construction**
 
 - [x] Start
-- [ ] Discord bot
-- [x] Have a lunch \(optional)
-- [ ] Minecraft bot
+- [x] Discord bot
+- [x] Minecraft bot
 - [ ] Finish
 
-[######--------------] 30% done
+[###############--] 90% done
