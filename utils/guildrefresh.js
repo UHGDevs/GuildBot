@@ -14,7 +14,9 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
   let today = Object.keys(api.members[0].expHistory)[0]
   let yesterday = Object.keys(api.members[0].expHistory)[1]
 
-  let find = await uhg.mongo.run.get("stats", "guild", { _id: api._id })
+  let find = await uhg.mongo.run.get("stats", "guild")
+  uhg.data.guild = find
+  find.filter(n => n._id == api._id)
   if (!find.length) return
 
   let update = find[0]
