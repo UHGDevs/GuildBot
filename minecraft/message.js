@@ -66,12 +66,14 @@ module.exports = async (uhg, packet) => {
   if (typeof pmsg.content != 'string') pmsg.content = pmsg.content.join(" ")
   if (pmsg.msg.startsWith("You have joined ")&&(pmsg.msg.endsWith(`'s party!`)||pmsg.msg.endsWith(`s' party!`))) {
     let t = pmsg.msg.replace("You have joined ", "").split(" ")
+    pmsg.event = "pjoin"
     if (t[0].includes("[")) {
       pmsg.rank = t[0]
       pmsg.username = t[1].replace("'s", "")
     } else pmsg.username = t[0].replace("'s", "")
   } else if (pmsg.msg.startsWith("---") && pmsg.msg.includes("has invited you to join their party!")) {
     let t = pmsg.msg.replace(/-/g, "").substring(1).slpit(" ")
+    pmsg.event = "pinvite"
     if (t[0].includes("[")) {
       pmsg.rank = t[0]
       pmsg.username = t[1]
@@ -79,25 +81,32 @@ module.exports = async (uhg, packet) => {
   } else if (pmsg.msg.includes(" has requested to join the Guild!")) {
     t = pmsg.msg.split(" has requested to join the Guild!")[0].split(" ")
     pmsg.channel = "Officer"
-    pmsg.command = "GjoininG"
+    pmsg.event = "grequest"
     if (t[0].includes("[")) {
       pmsg.rank = t[0]
       pmsg.username = t[1]
     } else pmsg.username = t[0]
   } else if (pmsg.msg.startsWith('The guild has completed Tier')) {
     pmsg.channel = "Guild"
+    pmsg.event = "gtier"
   } else if (pmsg.msg.endsWith(" joined the guild!")) {
     pmsg.channel = "Guild"
+    pmsg.event = "gjoin"
   } else if (pmsg.msg.endsWith(" left the guild!")||pmsg.msg.includes("was kicked from the guild by")) {
     pmsg.channel = "Guild"
+    pmsg.event = "gleave"
   } else if (pmsg.msg.startsWith("The Guild has reached Level ")) {
     pmsg.channel = "Guild"
+    pmsg.event = "glevel"
   } else if (pmsg.msg.includes("was demoted")) {
     pmsg.channel = "Guild"
+    pmsg.event = "gdemote"
   } else if (pmsg.msg.includes("was promoted")) {
     pmsg.channel = "Guild"
+    pmsg.event = "gpromote"
   } else if (pmsg.msg.endsWith("to your guild. They have 5 minutes to accept.")) {
     pmsg.channel = "Officer"
+    pmsg.event = "ginvite"
   }
   if (!pmsg.channel || pmsg.username==uhg.mc.client.username) return pmsg
   //console.log(pmsg)

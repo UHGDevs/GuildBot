@@ -48,8 +48,8 @@ module.exports = async (uhg, message) => {
     if (content == "msg") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: !online Honzu`)
     if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
     if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] Technoblade§f has requested to join the Guild!`)
-    if (content == "promote") await uhg.test.server.broadcast(`Farmans was promoted from Manager to General`)
-    if (content == "demote") await uhg.test.server.broadcast(`Farmans was demoted from General to Manager`)
+    if (content == "promote") await uhg.test.server.broadcast(`§a[VIP] UHGuild was promoted from Member to Manager`)
+    if (content == "demote") await uhg.test.server.broadcast(`§a[VIP] UHGuild was demoted from Manager to Member`)
     if (content.split(" ")[0] == "c") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !${content.split(" ")[1]} Honzu`)
   }
 }
