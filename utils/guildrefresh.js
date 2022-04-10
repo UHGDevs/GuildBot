@@ -16,7 +16,7 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
 
   let find = await uhg.mongo.run.get("stats", "guild")
   uhg.data.guild = find
-  fund = find.filter(n => n._id == api._id)
+  find = find.filter(n => n._id == api._id)
   if (!find.length) return
 
   let update = find[0]
