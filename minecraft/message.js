@@ -124,7 +124,7 @@ module.exports = async (uhg, packet) => {
         pmsg.verify = true
         pmsg.grank = verified.guildrank
         pmsg.id = verified._id
-        pmag.verify_data = verified
+        pmsg.verify_data = verified
       }
     }
   }
