@@ -40,7 +40,7 @@ async function guildfinder(uhg, pmsg, finder) {
   data.forEach(item => {
     if (item._id == pmsg.username) return
     let same;
-    if (a.game) same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
+    if (game) same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
 
     if (!same.length) return
     let time = Math.floor(uhg.toTime(Number(new Date()) - same[0].time, true).m)
