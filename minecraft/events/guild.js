@@ -27,7 +27,8 @@ async function guildfinder(uhg, pmsg, finder) {
 
   let userdata = user.data || []
 
-  let game = uhg.mc.aliases.get(finder[5].toLowerCase()) ||finder[5]
+  let game;
+  if (finder[5]) game = uhg.mc.aliases.get(finder[5].toLowerCase()) ||finder[5]
 
   userdata.push( {game: game || finder[5], message: pmsg.content, time: Number(new Date())} )
 
