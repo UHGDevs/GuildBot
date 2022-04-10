@@ -18,17 +18,26 @@ module.exports = {
         if (x === NaN || y === NaN || z === NaN) return "Zadané souřadnice nejsou čísla"
 
         let database = await uhg.mongo.run.get("general", "treasure")
-        console.log(database)
 
+        let id = database.length
+        if (database.filter(n => n._id == id ).length) {
+          for (let i = 0; i < database.length; i++) {
+            if (database[i]._id !== id) {
+              id = i
+              break
+            }
+          }
+
+        }
         const data = {
-          _id: database.length || 0,
+          _id: id,
           x: x,
           y: y,
           z: z,
           coords: `${x} ${y} ${z}`,
           url: picture,
           guesses: 0,
-          names = []
+          names: []
         }
 
         data.lobby = content.replace(data.coords, "")

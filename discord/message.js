@@ -1,15 +1,15 @@
 const { MessageEmbed } = require('discord.js');
 module.exports = async (uhg, message) => {
+  if (message.channel.id == "928007600115703808") {
+      setTimeout(() => message.delete().catch((error) => {{console.log("zpráva už je smazána")}}), 30000)
+      message.guild.channels.cache.get("548772550386253824").send(`Autor: ${message.author} Zpráva: ${message.content}`)
+  }
   if (!message.guild || !message.channel || message.author.bot) return;
   if (message.channel.partial) await message.channel.fetch();
   if (message.partial) await message.fetch();
 
   let prefix = uhg.settings.prefix || "."
   let mcchat = Object.values(uhg.getDiscordIds().channels).includes(message.channel.id)
-  if (message.channel.id == "928007600115703808") {
-      setTimeout(() => message.delete().catch((error) => {{console.log("zpráva už je smazána")}}), 30000)
-      message.guild.channels.cache.get("548772550386253824").send(`Autor: ${message.author} Zpráva: ${message.content}`)
-    }
 
   if (message.content.toLowerCase().startsWith("u!verify ")) message.content = message.content.replace("u!verify ", ".verify ")
   if (!message.content.startsWith(prefix) && !mcchat) return
