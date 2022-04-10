@@ -117,14 +117,14 @@ module.exports = async (uhg, packet) => {
     for (let i=0;i<data.members.length;i++) {
       if (pmsg.username==data.members[i].name) {
         pmsg.uuid = data.members[i].uuid
-        let verified = uhg.data.uhg || await uhg.mongo.run.get("general", "uhg")
-        if (!verified.length) verified = await uhg.mongo.run.get("general", "uhg")
+        let verified = /*uhg.data.uhg || */await uhg.mongo.run.get("general", "uhg")
         verified = verified.filter(ver=>ver.username==pmsg.username)
         if (!verified.length) break
         verified = verified[0]
         pmsg.verify = true
         pmsg.grank = verified.guildrank
         pmsg.id = verified._id
+        pmag.verify_data = verified
       }
     }
   }

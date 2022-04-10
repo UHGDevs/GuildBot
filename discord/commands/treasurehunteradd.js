@@ -1,3 +1,5 @@
+const { MessageEmbed } = require('discord.js');
+
 module.exports = {
     name: "treasurehunteradd",
     aliases: ["thadd"],
@@ -5,13 +7,46 @@ module.exports = {
     platform: "dc",
     run: async (uhg, message, content) => {
       try {
-        console.log(message)
-        console.log(content)
-        //uhg.mongo.run.post("general", "treasure", data)
+        let picture;
+        message.attachments.forEach(n => {picture = n.attachment});
+        if (!picture) return "Neposlal jsi obrázek"
+        let coords = content.trim().split(" ")
+        if (coords.length <= 4) return "Zadané souřadnice nejsou zadané"
+        let x = Number(coords[0])
+        let y = Number(coords[1])
+        let z = Number(coords[2])
+        if (x === NaN || y === NaN || z === NaN) return "Zadané souřadnice nejsou čísla"
+
+        let database = await uhg.mongo.run.get("general", "treasure")
+        console.log(database)
+
+        const data = {
+          _id: database.length || 0,
+          x: x,
+          y: y,
+          z: z,
+          coords: `${x} ${y} ${z}`,
+          url: picture,
+          guesses: 0,
+          names = []
+        }
+
+        data.lobby = content.replace(data.coords, "")
+
+
+        let embed = new MessageEmbed().setColor('GREY').setTitle(`Obrázek #${data._id}`).setFooter({ text: 'UHG easter EVENT' }).setImage(data.url)
+
+        let channel = uhg.dc.client.channels.cache.get('962729811518820382')
+
+        let msg = await channel.send({ embeds: [embed] })
+        data.msgID = msg.id
+
+        uhg.mongo.run.post("general", "treasure", data)
+
+        return `K souřadnicím ${data.coords} byl přiřazen obrázek č. ${data._id}`
       } catch (e) {
           console.log(String(e.stack).bgRed)
           return "Chyba v treasurehunteradd příkazu!"
       }
     }
   }
-  
