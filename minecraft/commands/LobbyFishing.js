@@ -1,5 +1,5 @@
 module.exports = {
-    name: "AP",
+    name: "LobbyFishing",
     aliases: ["lf", "lobbyfishing", "mainlobbyfishing", "lobbyfish"],
     run: async (uhg, pmsg) => {
       try{
