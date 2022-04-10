@@ -26,6 +26,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   const getPlusColor = uhg.getPlusColor
   const getSlayerLvl = uhg.getSlayerLvl
   const getLevelByXp = uhg.getLevelByXp
+  const getHotmTier = uhg.getHotmTier
 
   /* Empty dictionary */
   let api = {};
@@ -1028,18 +1029,27 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         if (!mining) continue
         let mithril = 0;
         let gemstone = 0;
+        let hotmtier = 0;
+        let hotmxp = 0;
+        let nucleus = 0;
+        let commissions = achievements.skyblock_hard_working_miner || 0
+        let crystals = mining.crystals || null
+        if (crystals) nucleus = Math.floor(((crystals.jade_crystal.total_placed || 0)+(crystals.sapphire_crystal.total_placed || 0)+(crystals.amethyst_crystal.total_placed || 0)+(crystals.amber_crystal.total_placed || 0)+(crystals.topaz_crystal.total_placed || 0))/5)
         if (mining) {
           mithril = (mining.powder_mithril || 0)+(mining.powder_spent_mithril || 0)
           gemstone = (mining.powder_gemstone || 0)+(mining.powder_spent_gemstone || 0)
+          hotmxp = mining.experience || 0
+          hotmtier = getHotmTier(mining.experience || 0)
         }
-        //console.log(mithril)
-        //console.log(gemstone)
-        //console.log(profilname)
 
        api.skyblock.mining[profilname] = {
-         sum: mithril+gemstone,
+         powdersum: mithril+gemstone,
          mithril: mithril,
          gemstone: gemstone,
+         hotmxp: hotmxp,
+         hotmtier: hotmtier,
+         nucleus: nucleus,
+         comms: commissions,
        }
       }
     }
