@@ -28,7 +28,7 @@ module.exports = async (uhg, pmsg) => {
     points += 1
     chat.send(uhg, {send: `/msg ${pmsg.username} Správná odpověď! Nyní máš ${points} bodů!`})
     chat.send(uhg, {send: `/gc ${pmsg.username} uhádl obrázek č. ${c}! Aktuálně má ${points} bodů`})
-    bridge.info(uhg, {send: `Guild > **${pmsg.username}** uhádl obrázek č. ${c}! Aktuálně má **${points} bodů**`}))
+    bridge.info(uhg, {send: `Guild > **${pmsg.username}** uhádl obrázek č. ${c}! Aktuálně má **${points} bodů**`})
 
     uhg.mongo.run.update('general', 'uhg', { username: pmsg.username }, { points: points })
     uhg.mongo.run.update('general', 'treasure', { _id:c }, {winner: pmsg.username})
