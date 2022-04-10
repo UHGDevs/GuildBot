@@ -39,7 +39,8 @@ async function guildfinder(uhg, pmsg, finder) {
   let data = await uhg.mongo.run.get("general", "guildfind")
   data.forEach(item => {
     if (item._id == pmsg.username) return
-    let same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
+    let same;
+    if (a.game) same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
 
     if (!same.length) return
     let time = Math.floor(uhg.toTime(Number(new Date()) - same[0].time, true).m)
