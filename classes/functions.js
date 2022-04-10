@@ -255,11 +255,12 @@ module.exports = class Functions extends EventEmitter {
 
   getHotmTier(exp) {
     let tiers = [0, 3000, 12000, 37000, 97000, 197000, 347000]
-    for (let i; i<7; i++) {
+    for (let i=0; i<7; i++) {
       if (exp < tiers[i]) {
         return i
       }
     }
+    return 7
   }
 
   getCataLvl(exp) {

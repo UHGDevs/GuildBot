@@ -3,6 +3,7 @@ module.exports = {
   aliases: ["mining", "powder", "gemstone", "mithril", "gemstonepowder", "mithrilpowder", "hotm", "heartofthemountain", "nucleus", "crystalnucleus"],
   run: async (uhg, pmsg) => {
     try {
+      const f = uhg.f
       let nickname = pmsg.nickname
       let api = await uhg.getApi(nickname, ["api", "skyblock", "hypixel", "mojang"], ["mining"])
       if (api instanceof Object == false) return api
@@ -26,7 +27,7 @@ module.exports = {
         }
       }
       let profil = mining[profile]
-      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier}, ${nucleus} Nucleuses, ${comms} Comissions, ${mithril} Mithril Powder, ${gemstone} Gemstone Powder`
+      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier}, ${f(nucleus)} Nucleuses, ${f(comms)} Comissions, ${f(mithril)} Mithril Powder, ${f(gemstone)} Gemstone Powder`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
