@@ -11,7 +11,8 @@ module.exports = {
         message.attachments.forEach(n => {picture = n.attachment});
         if (!picture) return "Neposlal jsi obrázek"
         let coords = content.trim().split(" ")
-        if (coords.length <= 4) return "Zadané souřadnice nejsou zadané"
+        console.log(coords.length)
+        if (coords.length < 4) return "Zadané souřadnice nejsou zadané"
         let x = Number(coords[0])
         let y = Number(coords[1])
         let z = Number(coords[2])
