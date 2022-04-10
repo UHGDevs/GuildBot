@@ -7,7 +7,7 @@ module.exports = {
       let api = await uhg.getApi(nickname)
       if (api instanceof Object == false) return api
       let vz = api.hypixel.stats.vampirez
-      let message = `**VampireZ**: [${vz.wins}] **${api.username}** - Wins: ${vz.humanwins}H ${vz.vampirewins}V | Kills: ${vz.vampirekills}V ${vz.humankills}H ${vz.zombiekills}Z`
+      let message = `**VampireZ**: [${vz.wins}] **${api.username}** - Wins: ${vz.humanwins}H ${vz.vampirewins}V, Kills: ${vz.vampirekills}V ${vz.humankills}H ${vz.zombiekills}Z`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

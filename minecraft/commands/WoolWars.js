@@ -10,7 +10,7 @@ module.exports = {
       if (api instanceof Object == false) return api
     } catch (e) {
         console.log(String(e.stack).bgRed)
-        return "Chyba v BedWars příkazu!"
+        return "Chyba v WoolWars příkazu!"
     }
   }
 }
