@@ -6,6 +6,11 @@ module.exports = async (uhg) => {
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
+  SlashCommands = []
+  uhg.dc.slash.forEach(cmd => { SlashCommands.push({ name: cmd.name, description: cmd.description, options: cmd.options || [], permissions: cmd.permissions||[] }) });
+  await uhg.dc.client.guilds.cache.get("758650512827613195").commands.set(SlashCommands)
+
+
   uhg.dc.cache.channels = new Collection()
   if (uhg.settings.minecraft === true) {
     uhg.dc.cache.channels.set("guild", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.guild))

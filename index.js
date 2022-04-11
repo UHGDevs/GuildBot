@@ -23,7 +23,6 @@ uhg.once("ready", () => {
   console.log("Guild bot je připraven!".bold.brightGreen)
 
   if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
-
   return
 })
 
