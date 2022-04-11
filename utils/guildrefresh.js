@@ -1,6 +1,5 @@
 
 module.exports = async (uhg, guildname, names=false, games=false) => {
-
   let gmaster;
   if (guildname.toLowerCase() == "uhg" || guildname.toLowerCase() == "ultimatehypixelguild") gmaster = "64680ee95aeb48ce80eb7aa8626016c7"
   else if (guildname.toLowerCase() == "tkjk") gmaster = "574bfb977d4c475b8197b73b15194a2a"
@@ -43,7 +42,7 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
       update.left.splice(ileft,1)
     } else if (imem<0) {
       let mjg = await uhg.getApi(uuid, ["mojang"])
-      let nickname = mjg.username || "error"
+      let nickname = mjg.username
       update.members.push({uuid: uuid, name: nickname, joined: member.joined, exp: {daily: wexp}, games:{daily: {}, total: {}}})
     } else {
       update.members[imem].exp.daily = Object.assign({}, wexp, update.members[imem].exp.daily, wexp);
@@ -62,7 +61,8 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
 
     if (names) {
       let mjg = await uhg.getApi(uuid, ["mojang"])
-      let nickname = mjg ? mjg.username || {}:null
+      let nickname;
+      if (typeof mjg === 'object') nickname = mjg.username || null
       if (nickname) update.members[imem].name = nickname
     }
   }
@@ -79,8 +79,9 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
     for (let i=0; i<update.left.length;i++) {
       let uuid = update.left[i].uuid
       let mjg = await uhg.getApi(uuid, ["mojang"])
-      let nickname = mjg.username || "error"
-      update.left[i].name = nickname
+      let nickname;
+      if (typeof mjg === 'object') nickname = mjg.username || null
+      if (nickname) update.left[i].name = nickname
     }
   }
 
