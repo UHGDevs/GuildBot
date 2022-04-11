@@ -9,6 +9,9 @@ module.exports = async (uhg, pmsg) => {
     let c = Number(content[3].replace("#", ""))
     if (x === NaN || y === NaN || z === NaN || c === NaN) return
 
+    let ignore = ["DavidCzPdy", "Farmans", "Honzu", "unisdynasty"]
+    if (ignore.includes(pmsg.username)) return chat.send(uhg, {send: `/msg ${pmsg.username} Nemáš právo soutěžit!`})
+
     let database = await uhg.mongo.run.get('general', 'treasure', { _id: c })
     if (!database.length) return chat.send(uhg, {send: `/msg ${pmsg.username} obrázek číslo ${c} nebyl nalezen!`})
     database = database[0]
