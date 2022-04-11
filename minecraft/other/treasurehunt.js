@@ -13,7 +13,14 @@ module.exports = async (uhg, pmsg) => {
     if (!database.length) return chat.send(uhg, {send: `/msg ${pmsg.username} obrázek číslo ${c} nebyl nalezen!`})
     database = database[0]
 
-    if (database.winner) return chat.send(uhg, {send: `/msg ${pmsg.username} obrázek číslo ${c} už byl uhádnut!`})
+    if (database.winner) {
+      let time = uhg.toTime(Number(new Date()) - database.time, true)
+      if (time.d >= 1) time = Math.floor(time.d) + "d"
+      else if (time.h >= 1) time = Math.floor(time.h) + "h"
+      else if (time.m >= 1) time = Math.floor(time.m) + "min"
+      else time = Math.floor(time.s) + "s"
+      return chat.send(uhg, {send: `/msg ${pmsg.username} obrázek číslo ${c} už byl uhádnut hráčem ${database.winner} před ${time}!`})
+    }
     let nameStop = database.names.filter(n => n == pmsg.username)
     if (nameStop.length > 15) return chat.send(uhg, {send: `/msg ${pmsg.username} obrázek číslo ${c} jsi už 15x neuhádl, nejde ho dál hádat!`})
 
@@ -30,10 +37,10 @@ module.exports = async (uhg, pmsg) => {
     points += 1
     chat.send(uhg, {send: `/msg ${pmsg.username} Správná odpověď! Počet bodů: ${points}!`})
     chat.send(uhg, {send: `/gc ${pmsg.username} uhádl obrázek č. ${c}! Aktuální počet bodů: **${points}**`})
-    bridge.info(uhg, {msg: `Guild > **${pmsg.username}** uhádl obrázek č. ${c}! Aktuální počet bodů: **${points}**`})
+    bridge.info(uhg, {msg: `**${pmsg.username}** uhádl obrázek č. ${c}! Aktuální počet bodů: **${points}**`})
 
     uhg.mongo.run.update('general', 'uhg', { username: pmsg.username }, { points_0: points })
-    uhg.mongo.run.update('general', 'treasure', { _id:c }, {winner: pmsg.username})
+    uhg.mongo.run.update('general', 'treasure', { _id:c }, {winner: pmsg.username, time: Number(new Date())})
 
     try {
       let message = await uhg.dc.client.channels.cache.get('962729811518820382').messages.fetch(database.msgID)

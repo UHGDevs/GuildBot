@@ -11,7 +11,6 @@ module.exports = {
         message.attachments.forEach(n => {picture = n.attachment});
         if (!picture) return "Neposlal jsi obrázek"
         let coords = content.trim().split(" ")
-        console.log(coords.length)
         if (coords.length < 4) return "Zadané souřadnice nejsou zadané"
         let x = Number(coords[0])
         let y = Number(coords[1])
@@ -23,7 +22,7 @@ module.exports = {
         let id = database.length
         if (database.filter(n => n._id == id ).length) {
           for (let i = 0; i < database.length; i++) {
-            if (database[i]._id !== id) {
+            if (database[i]._id !== i) {
               id = i
               break
             }
@@ -51,7 +50,7 @@ module.exports = {
         let msg = await channel.send({ embeds: [embed] })
         data.msgID = msg.id
 
-        uhg.mongo.run.post("general", "treasure", data)
+        uhg.mongo.run.post("general", "treasure", data, false)
 
         return `K souřadnicím ${data.coords} byl přiřazen obrázek č. ${data._id}`
       } catch (e) {
