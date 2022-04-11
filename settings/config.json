@@ -5,7 +5,6 @@
   "time": {
     "database": true,
     "finder": true,
-    "gmembers": true,
     "elites": true,
     "guildinfo": true,
     "sniper": false
