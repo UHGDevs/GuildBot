@@ -450,4 +450,12 @@ module.exports = class Functions extends EventEmitter {
         .replace("pit", "")
         .replace("housing", "Housing")
   }
+
+  chunk(size) {
+    let result = [];
+    while(this.length) {
+      result.push(this.splice(0, size));
+    }
+    return result;
+  }
 }
