@@ -44,7 +44,7 @@ module.exports = {
     }
   ],
   run: async (uhg, interaction, args) => {
-    await interaction.deferReply({ ephemeral: true }).catch(() => {});
+    await interaction.deferReply({ ephemeral: false }).catch(() => {});
     try {
       Array.prototype.chunk = uhg.chunk
       let game = interaction.options.getString('minigame')
