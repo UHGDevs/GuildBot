@@ -152,27 +152,8 @@ module.exports = async (uhg, packet) => {
 
   if (pmsg.channel == "To") return
   let chats = fs.readdirSync(`minecraft/chats/`).filter((file) => file.endsWith(".js"))
+  chats = chats.filter(chat => chat.split(".")[0] == pmsg.channel.toLowerCase())
+  if (chats.length) return require(`./chats/${chats[0]}`)(uhg, pmsg)
+  return require("./chats/all")(uhg, pmsg)
 
-  let events = fs.readdirSync(`minecraft/events/`).filter((file) => file.endsWith(".js"))
-  events = events.filter(event => event.split(".")[0] == pmsg.channel.toLowerCase())
-  if (events.length) return require(`./events/${events[0]}`)(uhg, pmsg)
-  return require("./events/all")(uhg, pmsg)
-
-  /*let a = {
-    msg: msg || null,
-    non: non || null,
-    username: username || null,
-    nickname: nickname || username || null,
-    content: content || "",
-    channel: channel || "All",
-    command: command || null,
-    args: args || null,
-    rank: rank || null,
-    pluscolor: pluscolor || "",
-    verify: verify || false,
-    grank: grank || "NON Member",
-    uuid: uuid || null,
-    id: id || null,
-    data: data || {}
-  }*/
 }
