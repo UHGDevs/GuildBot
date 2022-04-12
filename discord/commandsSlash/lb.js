@@ -32,7 +32,7 @@ module.exports = {
       name: 'stat',
       description: 'Vyber si stat, který chceš vidět',
       type: 'STRING',
-      required: true,
+      required: false,
       autocomplete: true
     },
     {
@@ -44,17 +44,29 @@ module.exports = {
     }
   ],
   run: async (uhg, interaction, args) => {
+    await interaction.deferReply({ ephemeral: true }).catch(() => {});
     try {
       Array.prototype.chunk = uhg.chunk
-      let game = interaction.options.getString('game')
-      let stat = interaction.options.getString('stat')
-      let gamemode = interaction.options.getString('gamemode') || null
+      let game = interaction.options.getString('minigame')
+      let stat = interaction.options.getString('stat') || 'level'
+      let gamemode = interaction.options.getString('gamemode') || 'overall'
 
-      console.log(stat)
+      let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
+
+      data.forEach(player => {
+        console.log(player)
+        console.log(game)
+        let gamemode_api = player[game][gamemode]  || player[game]
+        console.log(gamemode_api)
+        let stats = gamemode_api[stat]
+        console.log(player.username + ": " + stats)
+      });
+
+      //console.log(data[0])
 
     } catch (e) {
         console.log(String(e.stack).bgRed)
-        return "Chyba v lb příkazu!"
+        return 'Chyba v lb příkazu!'
     }
   }
 }

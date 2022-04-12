@@ -64,7 +64,7 @@ class Login extends Functions {
     }
 
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
-      this.data.stats = await this.mongo.run.get("general", "uhg")
+      this.data.uhg = await this.mongo.run.get("general", "uhg")
     }
   }
 
