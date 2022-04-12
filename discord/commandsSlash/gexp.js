@@ -157,7 +157,7 @@ module.exports = {
       lb.send.forEach((a, i)=>{
         let value = a.join("\n")
         let embed = new MessageEmbed()
-          .setDescription(`${descinfo}Total GEXP: \`${uhg.f(totalgexp)}\`\nScaled GEXP: \`${uhg.f(scaled)}\`\nLevel: \`${uhg.f(uhg.getGuildLevel(scaled))}\``)
+          .setDescription(`${descinfo}Total GEXP: \`${uhg.f(totalgexp)}\`\nScaled GEXP: \`${uhg.f(scaled)}\`\nLevel: \`${uhg.f(uhg.ggl(scaled))}\``)
           .setColor(5592575)
           .setFooter({ text: `${i+1}/${pages}` })
           .setTitle(title)
@@ -168,7 +168,7 @@ module.exports = {
       lb.lsend.forEach((a, i)=>{
         let value = a.join("\n")
         let embed = new MessageEmbed()
-          .setDescription(`${descinfo}Total GEXP: \`${uhg.f(totalgexp)}\`\nScaled GEXP: \`${uhg.f(scaled)}\`\nLevel: \`${uhg.f(uhg.getGuildLevel(scaled))}\``)
+          .setDescription(`${descinfo}Total GEXP: \`${uhg.f(totalgexp)}\`\nScaled GEXP: \`${uhg.f(scaled)}\`\nLevel: \`${uhg.f(uhg.ggl(scaled))}\``)
           .setColor(5592575)
           .setFooter({ text: `${i + 1 + lb.send.length}/${pages}` })
           .setTitle(title)
