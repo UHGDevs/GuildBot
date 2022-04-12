@@ -3,11 +3,10 @@ const fs = require('fs');
 
 const znovu = new MessageEmbed().setTitle("ERROR").setDescription("Nepodařilo se načíst cache!\nPoužij prosím příkaz znovu").setColor(15158332).setFooter({text: "Vývojáři Farmans & DavidCzPdy"})
 
-
 module.exports = async (uhg, interaction) => {
   await interaction.update({ type:6 })
 
-  let embeds = JSON.parse(fs.readFileSync('settings/cache/gexp.json', 'utf8'));
+  let embeds = JSON.parse(fs.readFileSync('settings/cache/lb.json', 'utf8'));
   let pages = embeds[interaction.message.embeds[0].title]
 
   if (!pages) return interaction.editReply({ embeds: [znovu], components: [] })

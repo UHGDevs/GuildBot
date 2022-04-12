@@ -428,6 +428,33 @@ module.exports = class Functions extends EventEmitter {
       .replace("SNowball", "Snowball")
   }
 
+  renameHypixelGames(game){
+    if (game === null || game === undefined) return
+    else {
+      return game.toLowerCase()
+        .replace("skywars", "SkyWars")
+        .replace("bedwars", "BedWars")
+        .replace("gingerbread", "TKR")
+        .replace("mcgo", "Cops & Crims")
+        .replace("super_smash", "Smash Heroes")
+        .replace("skyblock", "SkyBlock")
+        .replace("murder_mystery", "Murder Mystery")
+        .replace("legacy", "Classic Games")
+        .replace("survival_games", "Blitz SG")
+        .replace("uhc", "UHC")
+        .replace("speed_uhc", "Speed UHC")
+        .replace("tntgames", "TNT Games")
+        .replace("pit", "The Hypixel Pit")
+        .replace("arcade", "Arcade Games")
+        .replace("walls3", "Mega Walls")
+        .replace("arena", "Arena Brawl")
+        .replace("vampirez", "VampireZ")
+        .replace("walls", "The Walls")
+        .replace("battleground", "Warlords")
+        .replace("build_battle", "Build Battle")
+    }
+  }
+
   // status
   getStatus(status) {
     if (!status) return

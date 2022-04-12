@@ -53,17 +53,39 @@ module.exports = {
 
       let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
 
+      let lb = { players: [], send: [] }
       data.forEach(player => {
-        console.log(player)
-        console.log(game)
-        let gamemode_api = player[game][gamemode]  || player[game]
-        console.log(gamemode_api)
+        let gamemode_api = player.stats[game][gamemode]  || player.stats[game]
+        if (game == 'general') gamemode_api = player
         let stats = gamemode_api[stat]
-        console.log(player.username + ": " + stats)
+        //let stats2 = gamemode_api[stat+'formatted']
+        if (!stats && stats !== 0) stats = player.stats[game][stat]
+      //  if (!stats && stats !== 0) stats2 = player.stats[game][stat+'formatted']
+        lb.players.push({ username: player.username, stat: stats })
       });
 
-      //console.log(data[0])
+      lb.players.sort((a, b) => b.stat - a.stat).forEach((a, i) => { lb.send.push(`\`#${i+1}\` **${a.username}:** \`${uhg.f(a.stat)}\``) });
+      lb.send = lb.send.chunk(20)
 
+      let title = `CZSK ${uhg.renameHypixelGames(game)} ${gamemode} ${stat} leaderboard`
+
+      let embeds = []
+      lb.send.forEach((a, i)=>{
+        let value = a.join("\n")
+        let embed = new MessageEmbed()
+          .setDescription('ㅤ')
+          .setColor(5592575)
+          .setFooter({ text: `${i+1}/${lb.send.length}` })
+          .setTitle(title)
+          .addField('ㅤ', value, false);
+        embeds.push(embed)
+      })
+
+      let cache = JSON.parse(fs.readFileSync('settings/cache/lb.json', 'utf8'));
+      cache[title] = embeds
+      await fs.writeFile('settings/cache/lb.json', JSON.stringify(cache, null, 4), 'utf8', data =>{})
+
+      await interaction.editReply({ embeds: [embeds[0]], components: [buttons] })
     } catch (e) {
         console.log(String(e.stack).bgRed)
         return 'Chyba v lb příkazu!'
