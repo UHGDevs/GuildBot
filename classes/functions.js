@@ -155,6 +155,22 @@ module.exports = class Functions extends EventEmitter {
     }
     return 1000;
   }
+  ggl(exp) {
+  const EXP_NEEDED = [3000000];
+  let level = 0;
+  for (let i = 0; i <= 1000; i += 1) {
+    let need = 0;
+    if (i >= EXP_NEEDED.length) {
+      need = EXP_NEEDED[EXP_NEEDED.length - 1];
+    } else { need = EXP_NEEDED[i]; }
+    if ((exp - need) < 0) {
+      return level + (exp / need);
+    }
+    level += 1;
+    exp -= need;
+  }
+  return 1000;
+}
 
   getOnline(json) {
     let online = {}
