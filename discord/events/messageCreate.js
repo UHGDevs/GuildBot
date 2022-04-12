@@ -13,14 +13,14 @@ module.exports = async (uhg, message) => {
 
   if (message.content.toLowerCase().startsWith("u!verify ")) message.content = message.content.replace("u!verify ", ".verify ")
   if (!message.content.startsWith(prefix) && !mcchat) return
-  if (mcchat) require("./bridge.js")(uhg, message);
+  if (mcchat) require("../bridge.js")(uhg, message);
 
   let content;
   if (message.content.trim().startsWith(prefix)) content = message.content.trim().replace(prefix, "").trim()
   else if (message.content.trim().startsWith("!") && mcchat) content = message.content.trim().replace("!", "").trim()
   if (!content) return
 
-  if (content.startsWith("test") && message.author.id == "378928808989949964") return require("../time/events/gmembers.js").run(uhg)
+  if (content.startsWith("test") && message.author.id == "378928808989949964") return require("../../time/events/gmembers.js").run(uhg)
 
   let command = uhg.dc.commands.get(content.split(" ")[0]);
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
@@ -38,7 +38,7 @@ module.exports = async (uhg, message) => {
     if (mcchat) {
       let mcchannel = "/go "
       if (message.channel.id == uhg.getDiscordIds().channels.guild) mcchannel = "/gc "
-      require("../minecraft/send").send(uhg, {send: mcchannel+msg})
+      require("../../minecraft/send").send(uhg, {send: mcchannel+msg})
     }
     return await message.reply(msg)
   }
@@ -52,7 +52,7 @@ module.exports = async (uhg, message) => {
     if (content == "pchat") await uhg.test.server.broadcast(`§2Party > §a[VIP§6+§a] AntreX95§f: necham drakov`);
     if (content == "msg") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: !online Honzu`)
     if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
-    if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] Technoblade§f has requested to join the Guild!`)
+    if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] JkGalaktus§f has requested to join the Guild!`)
     if (content == "promote") await uhg.test.server.broadcast(`§a[VIP] UHGuild was promoted from Member to Manager`)
     if (content == "demote") await uhg.test.server.broadcast(`§a[VIP] UHGuild was demoted from Manager to Member`)
     if (content == "fevent") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: 0 0 0 0`)

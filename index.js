@@ -17,7 +17,6 @@ exports.uhg = () => { return uhg }
 uhg.once("ready", () => {
   require("./time/handler.js") (uhg)
 
-  uhg.dc.client.on("messageCreate", require(`./discord/message.js`).bind(null, uhg));
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
 
   console.log("Guild bot je připraven!".bold.brightGreen)

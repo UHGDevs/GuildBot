@@ -21,10 +21,6 @@ module.exports = async (uhg, interaction) => {
   }
 
 
-  if (interaction.isButton()) {
-    if (interaction.customId.startsWith('/g ')) {
-      require('../interactions/guild_command')(uhg, interaction)
-    }
-  }
+  if (interaction.isButton() && (interaction.customId.startsWith('/g ') || interaction.customId == 'guild_denine')) require('../interactions/guild_command')(uhg, interaction)
 
 }

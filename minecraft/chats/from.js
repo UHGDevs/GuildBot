@@ -1,5 +1,5 @@
 let chat = require(`../send.js`)
-const treasurehunt = require("../other/treasurehunt")
+const treasurehunt = require("../events/treasurehunt")
 module.exports = async (uhg, pmsg) => {
   treasurehunt(uhg, pmsg)
   if (!pmsg.command) return "neni command"

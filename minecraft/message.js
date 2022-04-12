@@ -151,6 +151,7 @@ module.exports = async (uhg, packet) => {
   }
 
   if (pmsg.channel == "To") return
+  let chats = fs.readdirSync(`minecraft/chats/`).filter((file) => file.endsWith(".js"))
 
   let events = fs.readdirSync(`minecraft/events/`).filter((file) => file.endsWith(".js"))
   events = events.filter(event => event.split(".")[0] == pmsg.channel.toLowerCase())
