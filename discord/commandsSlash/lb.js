@@ -54,8 +54,6 @@ module.exports = {
       let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
 
       data.forEach(player => {
-        console.log(player)
-        console.log(game)
         let gamemode_api = player[game][gamemode]  || player[game]
         console.log(gamemode_api)
         let stats = gamemode_api[stat]
