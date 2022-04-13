@@ -10,12 +10,12 @@ module.exports = async (uhg) => {
   uhg.dc.slash.forEach(cmd => { botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
   await uhg.dc.client.guilds.cache.get("758650512827613195").commands.set(botSlashCmds)
 
-  let uhgSlashCmds = []
-  let commands = [uhg.dc.slash.find(n => n.name == "gexp")]
-  commands.forEach(cmd => { uhgSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
-  await guild.commands.set(uhgSlashCmds)
+  //let uhgSlashCmds = []
+  //let commands = [uhg.dc.slash.find(n => n.name == "gexp"), uhg.dc.slash.find(n => n.name == "lb")]
+  //commands.forEach(cmd => { uhgSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
+  //await guild.commands.set(uhgSlashCmds)
 
-  //uhg.dc.client.application.commands
+  await uhg.dc.client.application.commands.set(botSlashCmds)
 
   uhg.dc.cache.channels = new Collection()
   if (uhg.settings.minecraft === true) {

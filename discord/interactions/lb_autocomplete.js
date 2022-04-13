@@ -50,6 +50,77 @@ module.exports = async (uhg, interaction) => {
         { name: 'Tokeny', value: 'tokens' },
         { name: 'Asistence', value: 'assists' }
       ])
+    } else if (game == 'general') {
+      return interaction.respond([
+        { name: 'Level', value: 'level' },
+        { name: 'Karma', value: 'karma' },
+        { name: 'Aps', value: 'aps' }
+      ])
+    } else if (game == 'arena') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Prohry', value: 'losses' },
+        { name: 'WLR', value: 'wlr' },
+        { name: 'Zabití', value: 'kills' },
+        { name: 'Smrti', value: 'deaths' },
+        { name: 'KDR', value: 'kdr' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Klíče', value: 'keys' },
+        { name: 'WinStreak', value: 'winstreak' }
+      ])
+    } else if (game == 'murder') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Prohry', value: 'losses' },
+        { name: 'WLR', value: 'wlr' },
+        { name: 'Hry', value: 'games' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Zabití', value: 'kills' },
+        { name: 'Smrti', value: 'deaths' },
+        { name: 'KDR', value: 'kdr' },
+        { name: 'Hero Výhry', value: 'herowins' },
+        { name: 'Detektiv Výhry', value: 'detectivewins' },
+        { name: 'Murderer Výhry', value: 'murdererwins' },
+        { name: 'Survivor Výhry', value: 'survivorwins' },
+      //  { name: 'Zabití za Survivora', value: 'survivorkills' },
+      //  { name: 'Zabití za Zombie', value: 'zombiekills' }
+      ])
+    } else if (game == 'tkr') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Zlata', value: 'gold' },
+        { name: 'Stříbra', value: 'silver' },
+        { name: 'Bronzy', value: 'bronze' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Sebrané Boxy', value: 'collectedboxes' },
+        { name: 'Sebrané Mince', value: 'collectedcoins' },
+        { name: 'Kola', value: 'laps' }
+      ])
+    } else if (game == 'duels') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Prohry', value: 'losses' },
+        { name: 'WLR', value: 'wlr' },
+        { name: 'Hry', value: 'games' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Zabití', value: 'kills' },
+        { name: 'Smrti', value: 'deaths' },
+        { name: 'KDR', value: 'kdr' },
+        { name: 'WinStreak', value: 'winstrek' },
+        { name: 'Best WinStreak', value: 'bestwinstreak' },
+        { name: 'Loot Bedny', value: 'lootchests' }
+      ])
+    } else if (game == 'quake') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Hry', value: 'games' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Zabití', value: 'kills' },
+        { name: 'Smrti', value: 'deaths' },
+        { name: 'KDR', value: 'kdr' },
+        { name: 'HeadShots', value: 'headshots' },
+        { name: 'Best KillStreak', value: 'bestkillstreak' }
+      ])
     }
   } else if (focused.name == 'gamemode') {
     if (!stat) return
@@ -73,8 +144,34 @@ module.exports = async (uhg, interaction) => {
         { name: 'Doubles Insane', value: 'doubles_insane' },
         { name: 'Rankedy', value: 'ranked' }
       ]);
+    } else if (game == 'general') {
+      return interaction.respond([
+        { name: 'Celkové', value: 'overall' }
+      ]);
+    } else if (game == 'arena') {
+      if (stat == 'keys' || stat == 'coins') return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+      return interaction.respond([
+        { name: 'Celkové', value: 'overall' },
+        { name: 'Solo', value: 'solo' },
+        { name: 'Doubles', value: 'doubles' },
+        { name: 'Fours', value: 'fours' }
+      ])
+    } else if (game == 'murder') {
+      if (stat == 'herowins' || stat == 'coins' || stat == 'detectivewins' || stat == 'murdererwins') return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+      if (stat == 'survivorwins') return interaction.respond([ { name: 'Infection', value: 'infection' } ]);
+      return interaction.respond([
+        { name: 'Celkové', value: 'overall' },
+        { name: 'Classic', value: 'classic' },
+        { name: 'Double Up', value: 'doubleup' },
+        { name: 'Assassins', value: 'assassins' },
+        { name: 'Infection', value: 'infection' }
+      ])
+    } else if (game == 'tkr') {
+      return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+    } else if (game == 'duels') {
+      return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+    } else if (game == 'quake') {
+      return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     }
-
   }
-
 }

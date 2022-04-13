@@ -19,12 +19,36 @@ module.exports = {
       required: true,
       choices: [
         {
-          name: 'bedwars',
-          value: 'bedwars',
+          name: 'BedWars',
+          value: 'bedwars'
         },
         {
-          name: 'skywars',
-          value: 'skywars',
+          name: 'SkyWars',
+          value: 'skywars'
+        },
+        {
+          name: 'General',
+          value: 'general'
+        },
+        {
+          name: 'Arena Brawl',
+          value: 'arena'
+        },
+        {
+          name: 'Murder Mystery',
+          value: 'murder'
+        },
+        {
+          name: 'TKR',
+          value: 'tkr'
+        },
+        {
+          name: 'Duels',
+          value: 'duels'
+        },
+        {
+          name: 'Quakecraft',
+          value: 'quake'
         }
       ]
     },
@@ -53,10 +77,14 @@ module.exports = {
 
       let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
 
+      if ((game == 'duels' || game == 'arena') && stat == 'level') stat = 'wins'
+
       let lb = { players: [], send: [] }
       data.forEach(player => {
-        let gamemode_api = player.stats[game][gamemode]  || player.stats[game]
-        if (game == 'general') gamemode_api = player
+        if (game !== 'general' && !player.stats[game]) return //console.log(player)
+        let gamemode_api;
+        if (game !== 'general') gamemode_api = player.stats[game][gamemode]  || player.stats[game]
+        else gamemode_api = player
         let stats = gamemode_api[stat]
         //let stats2 = gamemode_api[stat+'formatted']
         if (!stats && stats !== 0) stats = player.stats[game][stat]

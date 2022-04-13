@@ -7,6 +7,7 @@
     "finder": true,
     "elites": true,
     "guildinfo": true,
+    "gmembers": true,
     "sniper": false
   }
 }
