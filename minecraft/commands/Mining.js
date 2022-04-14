@@ -27,7 +27,7 @@ module.exports = {
         }
       }
       let profil = mining[profile]
-      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier}, ${f(nucleus)} Nucleuses, ${f(comms)} Comissions, ${f(mithril)} Mithril Powder, ${f(gemstone)} Gemstone Powder`
+      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier}, ${f(nucleus)} Nucleus Runs, ${f(comms)} Comissions, ${f(mithril)} Mithril Powder, ${f(gemstone)} Gemstone Powder`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
