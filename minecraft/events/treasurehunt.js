@@ -32,7 +32,7 @@ module.exports = async (uhg, pmsg) => {
       chat.send(uhg, {send: `/msg ${pmsg.username} souřadnice ${coords} obr. č. ${c} nejsou správné!`})
       let names = database.names
       names.push(pmsg.username)
-      uhg.mongo.run.update('general', 'treasure', { _id:c }, {guesses: database.guesses += 1, names: names})
+      if (coords !== '0 0 0') uhg.mongo.run.update('general', 'treasure', { _id:c }, {guesses: database.guesses += 1, names: names})
       return
     }
 
