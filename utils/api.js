@@ -1032,7 +1032,10 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let hotmtier = 0;
         let hotmxp = 0;
         let nucleus = 0;
+        let scatha = 0;
         let commissions = achievements.skyblock_hard_working_miner || 0
+        let sbstats = profiles[i].members[uuid].stats || null
+        if (sbstats) scatha = sbstats.kills_scatha || 0
         let crystals = mining.crystals || null
         if (crystals) nucleus = Math.floor(((crystals.jade_crystal.total_placed || 0)+(crystals.sapphire_crystal.total_placed || 0)+(crystals.amethyst_crystal.total_placed || 0)+(crystals.amber_crystal.total_placed || 0)+(crystals.topaz_crystal.total_placed || 0))/5)
         if (mining) {
@@ -1050,6 +1053,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
          hotmtier: hotmtier,
          nucleus: nucleus,
          comms: commissions,
+         scatha: scatha,
        }
       }
     }
