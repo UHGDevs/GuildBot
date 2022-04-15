@@ -11,6 +11,7 @@ module.exports = {
 
       let lb = []
       database.forEach((member, i) => {
+        if (member.username == "Farmans") return
         lb.push(`\`#${i+1}\` ${member.username}: \`${member.points_0}points\``)
       });
 
