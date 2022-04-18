@@ -8,6 +8,7 @@ module.exports = async (uhg, pmsg) => {
     let z = Number(content[2])
     let c = Number(content[3].replace("#", ""))
     if (x === NaN || y === NaN || z === NaN || c === NaN) return
+    else return chat.send(uhg, {send: `/msg ${pmsg.username} Event již skončil`})
 
     let ignore = ["DavidCzPdy", "Honzu", "unisdynasty"]
     if (ignore.includes(pmsg.username)) return chat.send(uhg, {send: `/msg ${pmsg.username} Nemáš právo soutěžit!`})
