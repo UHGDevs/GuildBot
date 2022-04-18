@@ -6,7 +6,7 @@ module.exports = async (uhg, pmsg) => {
   let api = await uhg.getApi(pmsg.username)
   if (api instanceof Object == false) return api
   let level = Math.floor(api.hypixel.level) || 0
-  pmsg.send = `[${level}] ${pmsg.username} se chce připojit do guildy!\n https://plancke.io/hypixel/player/stats/${pmsg.username}`
+  pmsg.send = `[${level}] ${pmsg.username} se chce připojit do guildy!\n https://plancke.io/hypixel/player/stats/${pmsg.username} (Discord: ${api.hypixel.links.DISCORD || undefined})`
   pmsg.buttons = new MessageActionRow()
     .addComponents(new MessageButton().setCustomId(`/g accept ${pmsg.username}`).setLabel('PŘIJMOUT').setStyle('SUCCESS'))
     .addComponents(new MessageButton().setCustomId('guild_denine').setLabel('ODMÍTNOUT').setStyle('DANGER'))
