@@ -21,11 +21,13 @@ module.exports = {
       let spiderlvl = profil.spiderlvl || 0
       let wolflvl = profil.wolflvl || 0
       let emanlvl = profil.emanlvl || 0
+      let blazelvl = profil.blazelvl || 0
       let zombiexp = profil.zombiexp || 0
       let spiderxp = profil.spiderxp || 0
       let wolfxp = profil.wolfxp || 0
       let emanxp = profil.emanxp || 0
-      let message = `Slayers: [${uhg.f(overallxp)}] **${api.username}** - Rev ${Math.floor(zombielvl)} (${uhg.f(zombiexp)}) - Tara ${Math.floor(spiderlvl)} (${uhg.f(spiderxp)}) - Sven ${Math.floor(wolflvl)} (${uhg.f(wolfxp)}) - Voidgloom ${Math.floor(emanlvl)} (${uhg.f(emanxp)})`
+      let blazexp = profil.blazexp || 0
+      let message = `Slayers: [${uhg.f(overallxp)}] **${api.username}** - Rev ${Math.floor(zombielvl)} (${uhg.f(zombiexp)}); Tara ${Math.floor(spiderlvl)} (${uhg.f(spiderxp)}); Sven ${Math.floor(wolflvl)} (${uhg.f(wolfxp)}); Voidgloom ${Math.floor(emanlvl)} (${uhg.f(emanxp)}); Inferno ${Math.floor(blazelvl)} (${uhg.f(blazexp)})`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)

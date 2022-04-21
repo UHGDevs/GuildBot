@@ -946,15 +946,18 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let spider = slayers.spider || {}
         let wolf = slayers.wolf || {}
         let eman = slayers.enderman || {}
-        let overallxp = (zombie.xp || 0)+(spider.xp || 0)+(eman.xp || 0)+(wolf.xp || 0)
+        let blaze = slayers.blaze || {}
+        let overallxp = (zombie.xp || 0)+(spider.xp || 0)+(eman.xp || 0)+(wolf.xp || 0)+(blaze.xp || 0)
         let zombiexp = zombie.xp || 0
         let spiderxp = spider.xp || 0
         let emanxp = eman.xp || 0
         let wolfxp = wolf.xp || 0
+        let blazexp = blaze.xp || 0
         let zombielvl = getSlayerLvl(zombiexp, "zombie");
         let spiderlvl = getSlayerLvl(spiderxp, "spider");
         let wolflvl = getSlayerLvl(wolfxp, "wolf");
         let emanlvl = getSlayerLvl(emanxp, "eman");
+        let blazelvl = getSlayerLvl(blazexp, "blaze");
 
        api.skyblock.slayers[profilname] = {
          overallxp: overallxp,
@@ -962,10 +965,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
          spiderxp: spiderxp,
          wolfxp: wolfxp,
          emanxp: emanxp,
+         blazexp: blazexp,
          wolflvl: wolflvl,
          emanlvl: emanlvl,
          zombielvl: zombielvl,
          spiderlvl: spiderlvl,
+         blazelvl: blazelvl,
        }
       }
     }

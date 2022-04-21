@@ -239,30 +239,21 @@ module.exports = class Functions extends EventEmitter {
     //return 0
     let zombiexp = [5, 15, 200, 1000, 5000, 20000, 100000, 400000, 1000000]
     let spiderxp = [5, 25, 200, 1000, 5000, 20000, 100000, 400000, 1000000]
-    let wolfemanxp = [10, 30, 250, 1500, 5000, 20000, 100000, 400000, 1000000]
-    let exactlvl = 0
+    let wolfemanblazexp = [10, 30, 250, 1500, 5000, 20000, 100000, 400000, 1000000]
     for (let i = 0; i < 9; i++) {
       if (slayer == "zombie") {
         if (xp < zombiexp[i]) {
           return i
-          // console.log(xp)
-          // console.log(i)
-          return exactlevel = i + (xp - zombiexp[i-1]) / (zombiexp[i] - zombiexp[i-1]);
-        // break;
         }
       }
       else if (slayer == "spider") {
         if (xp < spiderxp[i]) {
           return i
-          return exactlevel = i + (xp - spiderxp[i-1]) / (spiderxp[i] - spiderxp[i-1]);
-        // break;
         }
       }
-      else if (slayer == "wolf" || slayer == "eman") {
-        if (xp < wolfemanxp[i]) {
+      else if (slayer == "wolf" || slayer == "eman" || slayer == "blaze") {
+        if (xp < wolfemanblazexp[i]) {
           return i
-          return exactlevel = i + (xp - wolfemanxp[i-1]) / (wolfemanxp[i] - wolfemanxp[i-1]);
-        //  break;
         }
       }
     }
