@@ -127,6 +127,26 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     let tkrhighestpos = Object.entries(tkrposition).reduce((a, b) => a[1] < b[1] ? a : b)[0] || 0
     let tkrhighestrt = Object.entries(tkrrating).reduce((a, b) => a[1] > b[1] ? a : b)[0] || 0
 
+    const wins = {
+      skywars: {
+        solo_normal: skywars.wins_solo_normal || 0,
+        solo_insane: skywars.wins_solo_insane || 0,
+        teams_normal: skywars.wins_team_normal || 0,
+        teams_insane: skywars.wins_team_insane || 0,
+        ranked: skywars.wins_ranked || 0,
+        normalmega: skywars.wins_mega || 0,
+        doublesmega: skywars.wins_mega_doubles || 0,
+        lab: skywars.wins_lab || 0,
+      },
+      bedwars: {
+        four_three: bedwars.four_three_wins_bedwars || 0,
+        eight_two: bedwars.eight_two_wins_bedwars || 0,
+        eight_one: bedwars.eight_one_wins_bedwars || 0,
+        four_four: bedwars.four_four_wins_bedwars || 0,
+        two_four: bedwars.two_four_wins_bedwars || 0,
+      },
+    }
+
     api.hypixel = {
       username: hypixel.displayname,
       rank: getRank(hypixel).rank,
@@ -170,6 +190,9 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         warlords: warlords.wins || 0,
       },
     }
+
+    let sw_main_mode = Object.entries(wins.skywars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+    
     api.hypixel.stats.skywars = {
       levelformatted: uhg.clear(skywars.levelFormatted || "1⋆"),
       level: getSwLevel(skywars.skywars_experience || 0),
@@ -182,6 +205,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       opals: skywars.opals || 0,
       expmilestone: getSwExpLeft(skywars.skywars_experience || 0),
       playtime: toTime(skywars.time_played || 0).h,
+      main_mode: sw_main_mode || "žádný",
       overall: {
         wins: skywars.wins || 0,
         losses: skywars.losses || 0,
@@ -260,11 +284,15 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       }
     }
     //console.log(api.hypixel.stats.skywars.ranked.highestpos)
+
+    let bw_main_mode = Object.entries(wins.bedwars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+
     api.hypixel.stats.bedwars = {
       level: getBwLevel(bedwars.Experience),
       levelformatted: `[${Math.floor(getBwLevel(bedwars.Experience))}☆]`,
       xp: bedwars.Experience || 0,
       coins: bedwars.coins || 0,
+      main_mode: bw_main_mode || "žádný",
       overall: {
           games: bedwars.games_played_bedwars || 0,
           winstreak: bedwars.winstreak || 0,

@@ -8,7 +8,7 @@ module.exports = {
       if (api instanceof Object == false) return api
       let skywars = api.hypixel.stats.skywars
       let overall = skywars.overall
-      let message = `**SkyWars**: [${skywars.levelformatted}] **${api.username}** - ${uhg.f(overall.kills)}Kills ${uhg.f(overall.wins)}Wins ${uhg.f(overall.kdr)}KDR ${uhg.f(overall.wlr)}WLR ${Math.floor(skywars.playtime)}h`
+      let message = `**SkyWars**: [${skywars.levelformatted}] **${api.username}** - ${uhg.f(overall.kills)}Kills ${uhg.f(overall.wins)}Wins ${uhg.f(overall.kdr)}KDR ${uhg.f(overall.wlr)}WLR ${Math.floor(skywars.playtime)}h (Main gamemode - ${skywars.main_mode})`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
