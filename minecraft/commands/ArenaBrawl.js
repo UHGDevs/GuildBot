@@ -33,7 +33,7 @@ module.exports = {
       let ultimate = uhg.getArena(arena.ultimate);
       let fancyrune = uhg.getArena(rune)
 
-      let prefix  = `[${overall.wins}]`
+      let prefix  = `[${uhg.f(overall.wins)}]`
       let minigame = `**Arena**:`
       let username = `**${api.username}**`
       let shortbuild = (offensive[0]+utility[0]+support[0]+ultimate[0]).toUpperCase()
@@ -42,7 +42,7 @@ module.exports = {
       let position = `#${arena.highestpos} Best Pos`
 
       let message = `${minigame} ${prefix} ${username} - ${shortbuild} ${maxed}`
-      if (mode === "basic") message = `${minigame} ${prefix} ${username} - ${arena.overall.wins}Wins ${arena.overall.kills}Kills ${arena.overall.wlr}WLR ${maxed}`
+      if (mode === "basic") message = `${minigame} ${prefix} ${username} - ${uhg.f(arena.overall.wins)}Wins ${uhg.f(arena.overall.kills)}Kills ${uhg.f(arena.overall.wlr)}WLR ${maxed}`
       else if (mode === "deck") message  = `${minigame} ${prefix} ${username} - ${fullbuild} ${maxed}`
       else if (mode === "ranked") message = `${minigame} ${prefix} ${username} - ${rating}, ${position}`
       return message
