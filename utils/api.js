@@ -127,7 +127,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     let tkrhighestpos = Object.entries(tkrposition).reduce((a, b) => a[1] < b[1] ? a : b)[0] || 0
     let tkrhighestrt = Object.entries(tkrrating).reduce((a, b) => a[1] > b[1] ? a : b)[0] || 0
 
-    const wins = {
+    const modes = {
       skywars: {
         solo_normal: skywars.wins_solo_normal || 0,
         solo_insane: skywars.wins_solo_insane || 0,
@@ -139,12 +139,20 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         lab: skywars.wins_lab || 0,
       },
       bedwars: {
-        four_three: bedwars.four_three_wins_bedwars || 0,
-        eight_two: bedwars.eight_two_wins_bedwars || 0,
-        eight_one: bedwars.eight_one_wins_bedwars || 0,
-        four_four: bedwars.four_four_wins_bedwars || 0,
-        two_four: bedwars.two_four_wins_bedwars || 0,
+        four_three: bedwars.four_three_games_played_bedwars || 0,
+        eight_two: bedwars.eight_two_games_played_bedwars || 0,
+        eight_one: bedwars.eight_one_games_played_bedwars || 0,
+        four_four: bedwars.four_four_games_played_bedwars || 0,
+        two_four: bedwars.two_four_games_played_bedwars || 0,
       },
+      murder: {
+        classic: murder.games_MURDER_CLASSIC || 0,
+        double_up: murder.games_MURDER_DOUBLE_UP || 0,
+        showdown: murder.games_MURDER_SHOWDOWN || 0,
+        infection: murder.games_MURDER_INFECTION || 0,
+        hardcore: murder.games_MURDER_HARDCORE || 0,
+        assassins: murder.games_MURDER_ASSASSINS || 0,
+      }
     }
 
     api.hypixel = {
@@ -191,7 +199,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
     }
 
-    let sw_main_mode = Object.entries(wins.skywars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+    let sw_main_mode = Object.entries(modes.skywars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
     
     api.hypixel.stats.skywars = {
       levelformatted: uhg.clear(skywars.levelFormatted || "1⋆"),
@@ -205,7 +213,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       opals: skywars.opals || 0,
       expmilestone: getSwExpLeft(skywars.skywars_experience || 0),
       playtime: toTime(skywars.time_played || 0).h,
-      main_mode: sw_main_mode || "žádný",
+      main_mode: sw_main_mode,
       overall: {
         wins: skywars.wins || 0,
         losses: skywars.losses || 0,
@@ -285,14 +293,14 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
     //console.log(api.hypixel.stats.skywars.ranked.highestpos)
 
-    let bw_main_mode = Object.entries(wins.bedwars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+    let bw_main_mode = Object.entries(modes.bedwars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
 
     api.hypixel.stats.bedwars = {
       level: getBwLevel(bedwars.Experience),
       levelformatted: `[${Math.floor(getBwLevel(bedwars.Experience))}☆]`,
       xp: bedwars.Experience || 0,
       coins: bedwars.coins || 0,
-      main_mode: bw_main_mode || "žádný",
+      main_mode: bw_main_mode,
       overall: {
           games: bedwars.games_played_bedwars || 0,
           winstreak: bedwars.winstreak || 0,
@@ -485,11 +493,14 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       }
     }
 
+    let murder_main_mode = Object.entries(modes.murder).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+
     api.hypixel.stats.murder = {
       coins: murder.coins || 0,
       murdererwins: murder.murderer_wins || 0,
       detectivewins: murder.detective_wins || 0,
       herowins: murder.was_hero || 0,
+      main_mode: murder_main_mode,
       overall: {
         games: murder.games || 0,
         wins: murder.wins || 0,
