@@ -19,7 +19,7 @@ module.exports = {
           purse = Object.values(coins)[i].purse
         }
       }
-      let profil = coins[profile]
+      let profil = coins[profile].bank
       let apioff = profil.apioff
       if (apioff == true) return `Coins: **${api.username}** - Purse: ${uhg.f(purse).split(".")[0]} (BANK API OFF)`
       console.log(profile)

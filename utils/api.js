@@ -1074,10 +1074,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         //console.log(profilname)
 
        api.skyblock.main[profilname] = {
-         purse: purse,
-         bank: bank,
-         sum: purse+bank,
-         apioff: apioff,
+         bank: {
+          purse: purse,
+          bank: bank,
+          sum: purse+bank,
+          apioff: apioff,
+         }
        }
       }
     }
