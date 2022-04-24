@@ -27,6 +27,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   const getSlayerLvl = uhg.getSlayerLvl
   const getLevelByXp = uhg.getLevelByXp
   const getHotmTier = uhg.getHotmTier
+  const getGamemode = uhg.getGamemode
 
   /* Empty dictionary */
   let api = {};
@@ -129,29 +130,29 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
     const modes = {
       skywars: {
-        solo_normal: skywars.wins_solo_normal || 0,
-        solo_insane: skywars.wins_solo_insane || 0,
-        teams_normal: skywars.wins_team_normal || 0,
-        teams_insane: skywars.wins_team_insane || 0,
-        ranked: skywars.wins_ranked || 0,
-        normalmega: skywars.wins_mega || 0,
-        doublesmega: skywars.wins_mega_doubles || 0,
-        lab: skywars.wins_lab || 0,
+        skywars_solo_normal: skywars.wins_solo_normal || 0,
+        skywars_solo_insane: skywars.wins_solo_insane || 0,
+        skywars_teams_normal: skywars.wins_team_normal || 0,
+        skywars_teams_insane: skywars.wins_team_insane || 0,
+        skywars_ranked: skywars.wins_ranked || 0,
+        skywars_normalmega: skywars.wins_mega || 0,
+        skywars_doublesmega: skywars.wins_mega_doubles || 0,
+        skywars_lab: skywars.wins_lab || 0,
       },
       bedwars: {
-        four_three: bedwars.four_three_games_played_bedwars || 0,
-        eight_two: bedwars.eight_two_games_played_bedwars || 0,
-        eight_one: bedwars.eight_one_games_played_bedwars || 0,
-        four_four: bedwars.four_four_games_played_bedwars || 0,
-        two_four: bedwars.two_four_games_played_bedwars || 0,
+        bedwars_four_three: bedwars.four_three_games_played_bedwars || 0,
+        bedwars_eight_two: bedwars.eight_two_games_played_bedwars || 0,
+        bedwars_eight_one: bedwars.eight_one_games_played_bedwars || 0,
+        bedwars_four_four: bedwars.four_four_games_played_bedwars || 0,
+        bedwars_two_four: bedwars.two_four_games_played_bedwars || 0,
       },
       murder: {
-        classic: murder.games_MURDER_CLASSIC || 0,
-        double_up: murder.games_MURDER_DOUBLE_UP || 0,
-        showdown: murder.games_MURDER_SHOWDOWN || 0,
-        infection: murder.games_MURDER_INFECTION || 0,
-        hardcore: murder.games_MURDER_HARDCORE || 0,
-        assassins: murder.games_MURDER_ASSASSINS || 0,
+        murder_classic: murder.games_MURDER_CLASSIC || 0,
+        murder_double_up: murder.games_MURDER_DOUBLE_UP || 0,
+        murder_showdown: murder.games_MURDER_SHOWDOWN || 0,
+        murder_infection: murder.games_MURDER_INFECTION || 0,
+        murder_hardcore: murder.games_MURDER_HARDCORE || 0,
+        murder_assassins: murder.games_MURDER_ASSASSINS || 0,
       }
     }
 
@@ -213,7 +214,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       opals: skywars.opals || 0,
       expmilestone: getSwExpLeft(skywars.skywars_experience || 0),
       playtime: toTime(skywars.time_played || 0).h,
-      main_mode: sw_main_mode,
+      main_mode: getGamemode(sw_main_mode),
       overall: {
         wins: skywars.wins || 0,
         losses: skywars.losses || 0,
@@ -300,7 +301,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       levelformatted: `[${Math.floor(getBwLevel(bedwars.Experience))}☆]`,
       xp: bedwars.Experience || 0,
       coins: bedwars.coins || 0,
-      main_mode: bw_main_mode,
+      main_mode: getGamemode(bw_main_mode),
       overall: {
           games: bedwars.games_played_bedwars || 0,
           winstreak: bedwars.winstreak || 0,
@@ -500,7 +501,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       murdererwins: murder.murderer_wins || 0,
       detectivewins: murder.detective_wins || 0,
       herowins: murder.was_hero || 0,
-      main_mode: murder_main_mode,
+      main_mode: getGamemode(murder_main_mode),
       overall: {
         games: murder.games || 0,
         wins: murder.wins || 0,

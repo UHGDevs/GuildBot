@@ -485,6 +485,34 @@ module.exports = class Functions extends EventEmitter {
         .replace("housing", "Housing")
   }
 
+  getGamemode(mode) {
+    if (!mode) return
+    return mode
+        .replace(/bedwars_eight_one/g, "Bed Wars Solo")
+        .replace(/bedwars_eight_two/g, "Bed Wars Doubles")
+        .replace(/bedwars_four_three/g, "Bed Wars 3s")
+        .replace(/bedwars_four_four/g, "Bed Wars 4s")
+        .replace(/bedwars_two_four/g, "Bed Wars 4v4")
+
+        .replace(/skywars_solo_normal/g, "SkyWars Solo Normal")
+        .replace(/skywars_solo_insane/g, "SkyWars Solo Insane")
+        .replace(/skywars_teams_normal/g, "SkyWars Teams Normal")
+        .replace(/skywars_teams_insane/g, "SkyWars Teams Insane")
+        .replace(/skywars_ranked/g, "Ranked SkyWars")
+        .replace(/skywars_normalmega/g, "SkyWars Mega")
+        .replace(/skywars_doublesmega/g, "SkyWars Doubles Mega")
+        .replace(/skywars_lab/g, "SkyWars Laboratory")
+
+        .replace(/murder_classic/g, "Murder Mystery Classic")
+        .replace(/murder_double_up/g, "Murder Mystery Double Up!")
+        .replace(/murder_showdown/g, "Murder Mystery Showdown")
+        .replace(/murder_infection/g, "Murder Mystery Infection")
+        .replace(/murder_hardcore/g, "Murder Mystery Hardcore")
+        .replace(/murder_assassins/g, "Murder Mystery Assassins")
+
+        .replace(/_/g, " ")
+  }
+
   chunk(size) {
     let result = [];
     while(this.length) {
