@@ -42,6 +42,7 @@ async function guildfinder(uhg, pmsg, finder) {
     let same;
     if (game) same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
 
+    if (!same) return
     if (!same.length) return
     let time = Math.floor(uhg.toTime(Number(new Date()) - same[0].time, true).m)
     send.push(`[${game}] ${item._id}: - ${time}min ago  -> \"${same[0].message}\"`)
