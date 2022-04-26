@@ -1067,7 +1067,11 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let bank = 0;
         let purse = 0;
         let apioff = false;
-        if (main) purse = main.coin_purse
+        let cakes = {};
+        if (main) {
+          purse = main.coin_purse
+          cakes = main.temp_stat_buffs
+        }
         if (banking) bank = banking.balance
         if (!banking) apioff = true
         //console.log(purse)
@@ -1075,12 +1079,13 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         //console.log(profilname)
 
        api.skyblock.main[profilname] = {
+         cakes: cakes,
          bank: {
           purse: purse,
           bank: bank,
           sum: purse+bank,
           apioff: apioff,
-         }
+         },
        }
       }
     }
