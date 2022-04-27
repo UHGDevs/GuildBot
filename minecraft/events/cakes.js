@@ -1,7 +1,7 @@
 let chat = require(`../send.js`)
 let bridge = require(`../bridge.js`)
 module.exports = async (uhg, pmsg) => {
-    let data = pmsg.verify_data.cakes || {}
+    let data = pmsg.verify_data ? pmsg.verify_data.cakes || {} : {}
     if (!data || !data.toggle) return
 
     let profile = "Grapes";
