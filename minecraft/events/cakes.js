@@ -4,6 +4,7 @@ module.exports = async (uhg, pmsg) => {
     let data = pmsg.verify_data ? pmsg.verify_data.cakes || {} : {}
     if (!data || !data.toggle) return
 
+    console.log(data)
     let profile = "Grapes";
 
     let api = await uhg.getApi(pmsg.username, ["api", "skyblock", "hypixel", "mojang"], ["main"])
