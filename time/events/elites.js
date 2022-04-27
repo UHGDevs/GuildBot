@@ -54,7 +54,7 @@ module.exports = {
       }
 
       let embed = new MessageEmbed().setTitle(`ELITE MEMBERS`).setDescription(`**Elite Members na další týden:**\n\n${msgfrag.join("\n")}`)
-      let channel = await uhg.dc.client.channels.cache.get('875503798733385779')
+      let channel = await uhg.dc.client.channels.cache.get('715989905532256346')
       channel.send({ embeds: [embed] })
 
       let elites = []

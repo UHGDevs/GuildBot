@@ -1,8 +1,11 @@
 let bridge = require(`../bridge.js`)
 let chat = require(`../send.js`)
+let cakes = require('../events/cakes.js')
 module.exports = async (uhg, pmsg) => {
   if (pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (.*)$/)) await bridge.chat(uhg, pmsg)
   else await bridge.info(uhg, pmsg)
+
+  if (pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])? joined./)) cakes(uhg, pmsg)
 
   let finder = pmsg.msg.match(/^Guild > (\[.*]\s*)?([\w]{2,17}).*?(\[.{1,15}])?: (někdo|nekdo|someone|any|[0-9]\/[0-9]|[0-9]|any1)? (\w{2,10})?(.*)$/i)
   if (finder) guildfinder(uhg, pmsg, finder)
