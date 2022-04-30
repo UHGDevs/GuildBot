@@ -15,6 +15,10 @@ module.exports = class Functions extends EventEmitter {
 
   clear(message) { return message.replace(/✫|✪|⚝/g, '?').replace(/§|¡±/g, '�').replace(/�[0-9A-FK-OR]/gi, '') }
 
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   f(number, max=2) {
     if (!Number(number)) return number
     return Number(number).toLocaleString('en', {minimumFractionDigits: 0, maximumFractionDigits: max})

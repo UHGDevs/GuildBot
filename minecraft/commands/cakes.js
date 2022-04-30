@@ -13,9 +13,31 @@ module.exports = {
       } else if (args[0] != 'on') return '!cakes on|off'
       if (args.length < 2) return '!cakes on [profile]'
 
-      let profile = args[1]
-      let message = `coming soon (zapínání na profil ${profile})`
-      uhg.mongo.run.update('general', 'uhg', { username: pmsg.username }, { cakes: {toggle: true, profile: profile} })
+      let profile = uhg.capitalize(args[1])
+
+      let api = await uhg.getApi(pmsg.username, ["api", "skyblock", "hypixel", "mojang"], ["main"])
+      if (api instanceof Object == false) return api
+      if (!api.skyblock.main[profile]) return `${profile} je neplatný profil`
+
+      let cakes = api.skyblock.main[profile].cakes
+      console.log(cakes)
+
+      let expire;
+      if (cakes) {
+        for (let cake of cakes) {
+          if (!expire || cake.expire_at < expire.expire_at) expire = cake
+        }
+      }
+
+      if (!expire) expire = {expire_at: Number(new Date())}
+
+      // need some testing
+      // když nemá žádný cake nebo jen nějaký
+
+      let message = `Zapínání cakes na profil ${profile}`
+      uhg.mongo.run.update('general', 'uhg', { username: pmsg.username }, { cakes: {toggle: true, profile: profile, expire: expire.expire_at} })
+
+      //console.log((expire.expire_at - Number(new Date()))/1000/60/60)
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
