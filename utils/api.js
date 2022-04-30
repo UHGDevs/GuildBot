@@ -3,6 +3,7 @@
 
 /* Import Functions & Packages */
 const fetch = require('node-fetch');
+const { skyblock_year_0 } = require('../settings/values/skyblockconstants.js');
 /* Api Keys */
 const api_key = process.env.api_key;
 const api_key_2 = process.env.api_key_2;
@@ -145,6 +146,17 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         bedwars_eight_one: bedwars.eight_one_games_played_bedwars || 0,
         bedwars_four_four: bedwars.four_four_games_played_bedwars || 0,
         bedwars_two_four: bedwars.two_four_games_played_bedwars || 0,
+        bedwars_castle: bedwars.castle_games_played_bedwars || 0,
+        bedwars_four_four_armed: bedwars.four_four_armed_games_played_bedwars || 0,
+        bedwars_eight_two_armed: bedwars.eight_two_armed_games_played_bedwars || 0,
+        bedwars_four_four_voidless: bedwars.four_four_voidless_games_played_bedwars || 0,
+        bedwars_eight_two_voidless: bedwars.eight_two_voidless_games_played_bedwars || 0,
+        bedwars_four_four_lucky: bedwars.four_four_lucky_games_played_bedwars || 0,
+        bedwars_eight_two_lucky: bedwars.eight_two_lucky_games_played_bedwars || 0,
+        bedwars_eight_two_ultimate: bedwars.eight_two_ultimate_games_played_bedwars || 0,
+        bedwars_four_four_ultimate: bedwars.four_four_ultimate_games_played_bedwars || 0,
+        bedwars_four_four_rush: bedwars.four_four_rush_games_played_bedwars || 0,
+        bedwars_eight_two_rush: bedwars.eight_two_rush_games_played_bedwars || 0,
       },
       murder: {
         murder_classic: murder.games_MURDER_CLASSIC || 0,
