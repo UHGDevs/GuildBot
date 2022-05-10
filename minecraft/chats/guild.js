@@ -43,7 +43,11 @@ async function guildfinder(uhg, pmsg, finder) {
   data.forEach(item => {
     if (item._id == pmsg.username) return
     let same;
-    if (game) same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
+    if (game && item.data) { 
+      console.log(game)
+      console.log(item.data)
+      same = item.data.filter(a => a.game.toLowerCase() == game.toLowerCase())
+    }
 
     if (!same) return
     if (!same.length) return
