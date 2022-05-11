@@ -25,7 +25,7 @@ module.exports = {
       }
       else nickname = args[0]
 
-      if (!nickname) return "Nezadal jsi jméno"
+      if (!nickname) return "Nezadal jsi jméno, a nebo jsi blbej a neumíš pořádně oddělovat slova jednou mezerou"
 
       let api = await uhg.getApi(nickname, ["key", "hypixel", "mojang", "guild"])
       if (api instanceof Object == false) return api
