@@ -19,6 +19,14 @@ module.exports = class Functions extends EventEmitter {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  startsWithArray(str, array) {
+    return array.some(n => str.startsWith(n));
+  }
+
+  endsWithArray(str, array) {
+    return array.some(n => str.endsWith(n));
+  }
+
   f(number, max=2) {
     if (!Number(number)) return number
     return Number(number).toLocaleString('en', {minimumFractionDigits: 0, maximumFractionDigits: max})

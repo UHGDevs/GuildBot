@@ -19,6 +19,7 @@ module.exports = {
         nickname = args[1]
         user = message.mentions.users.first() || {}
         user = message.guild.members.cache.get(user.id || args[0])
+        id = user.id
       }
 
       if (!nickname) return "Nezadal jsi jméno, a nebo jsi blbej a neumíš pořádně oddělovat slova jednou mezerou"

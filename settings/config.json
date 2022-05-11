@@ -8,6 +8,7 @@
     "elites": true,
     "guildinfo": true,
     "gmembers": true,
-    "sniper": false
+    "sniper": false,
+    "badges": true
   }
 }
