@@ -90,6 +90,7 @@ module.exports = {
         member = member[1]
         v = v[0]
         let grank = "Guild " + v.guildrank
+        if (grank == "Guild Guild Master") grank = "Guild Master"
         for (let role of cache) {
           if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
           role = role[1]
