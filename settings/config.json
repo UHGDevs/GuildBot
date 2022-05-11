@@ -9,6 +9,6 @@
     "guildinfo": true,
     "gmembers": true,
     "sniper": false,
-    "badges": true
+    "badges": false
   }
 }

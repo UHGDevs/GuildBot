@@ -3,7 +3,7 @@ module.exports = {
   description: "Automatická aktualizace hypixel badges",
   time: '0 */7 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
-  onstart: true,
+  onstart: false,
   run: async (uhg) => {
     let date = new Date()
     try {
