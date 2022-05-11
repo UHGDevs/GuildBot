@@ -6,15 +6,15 @@ module.exports = {
   run: async (uhg, message, content) => {
     try {
       if (!content) return "Nezadal jsi jméno"
-      let args = content.split(" ")
+      let args = content.split(" ").filter(n => n)
       if (!args.length) return "Nezadal jsi jméno"
 
       let id = message.author.id
-
-      auth = ["312861502073995265", "427198829935460353", "378928808989949964", "379640544143343618"]
+      console.log(args[0].length)
+      let auth = ["312861502073995265", "427198829935460353", "378928808989949964", "379640544143343618"]
 
       let nickname;
-      let user; 
+      let user;
       let form = 0;
 
       if (message.mentions.members.first() && auth.includes(id)) {
