@@ -97,6 +97,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     var mw = hypixel.stats.Walls3 || {}
     var smash = hypixel.stats.SuperSmash || {}
     var warlords = hypixel.stats.Battleground || {}
+    var ww = hypixel.stats.WoolGames || {}
     var tourney = hypixel.tourney || {}
     var ctourney = tourney[currenttourney] || {}
 
@@ -882,6 +883,32 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       kdr: ratio((duels.kills || 0), (duels.deaths || 0)),
       games: duels.games_played_duels || 0,
       lootchests: duels.duels_chests || 0,
+    }
+
+    api.hypixel.stats.ww = {
+      coins: ww.coins || 0,
+      xp: ww.progression.experience || 0,
+      layers: ww.progression.available_layers || 0,
+      games: ww.wool_wars.stats.games_played || 0,
+      wins: ww.wool_wars.stats.wins || 0,
+      losses: (ww.wool_wars.stats.games_played || 0)-(ww.wool_wars.stats.wins || 0),
+      wlr: ratio(ww.wool_wars.stats.wins || 0, (ww.wool_wars.stats.games_played || 0)-(ww.wool_wars.stats.wins || 0)),
+      kills: ww.wool_wars.stats.kills || 0,
+      deaths: ww.wool_wars.stats.deaths || 0,
+      kdr: ratio(ww.wool_wars.stats.kills || 0, ww.wool_wars.stats.deaths || 0),
+      assists: ww.wool_wars.stats.assists || 0,
+      blocks_broken: ww.wool_wars.stats.blocks_broken || 0,
+      blocks_placed: ww.wool_wars.stats.wool_placed || 0,
+      powerups: ww.wool_wars.stats.powerups_gotten || 0,
+      selected_class: ww.wool_wars.selected_class || 0,
+      class: {
+        archer: {},
+        assualt: {},
+        swordsman: {},
+        tank: {},
+        golem: {},
+        engineer: {},
+      },
     }
 
 }
