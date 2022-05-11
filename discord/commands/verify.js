@@ -33,9 +33,13 @@ module.exports = {
         let cache = uhg.dc.cache.uhgroles
         let rGMember = cache.get("Guild Member")
 
-        if (api.guild.name === "UltimateHypixelGuild") {
+        if (api.guild.name === "UltimateHypixelGuild" || id == "427198829935460353") {
           let grole = "Guild " + api.guild.member.rank
+          console.log(grole)
+          if (grole == "Guild Guild Master") grole = "Guild Master"
           if (!member._roles.includes(rGMember.id)) try { await member.roles.add(rGMember.role) } catch (e) {}
+          console.log(rGMember)
+          console.log(rGMember.id)
           for (let role of cache) {
             if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
             role = role[1]
