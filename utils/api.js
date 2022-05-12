@@ -97,11 +97,16 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     var mw = hypixel.stats.Walls3 || {}
     var smash = hypixel.stats.SuperSmash || {}
     var warlords = hypixel.stats.Battleground || {}
-    var ww = hypixel.stats.WoolGames || {wool_wars: {layouts: {}, stats: {classes: {engineer: {}, golem: {}, tank: {}, swordsman: {}, assualt: {}, archer: {}}}}, progression: {}}
+    var ww = hypixel.stats.WoolGames || {}
+    //var ww = hypixel.stats.WoolGames || {wool_wars: {layouts: {}, stats: {classes: {engineer: {}, golem: {}, tank: {}, swordsman: {}, assualt: {}, archer: {}}}}, progression: {}}
     var tourney = hypixel.tourney || {}
     var ctourney = tourney[currenttourney] || {}
 
     var skyblocksecrets = achievements.skyblock_treasure_hunter || 0
+
+    let wwexpand = ww.wool_wars || {}
+    let wwstats = wwexpand.stats || {}
+    let wwprogress = ww.progression || {}
 
     let swrating = {null: 0}
     let swposition = {null: "unknown"}
@@ -188,7 +193,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
 
     api.hypixel.stats.wins = {
-      total: (ww.wool_wars.stats.wins || 0)+(skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(uhc.wins || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(achievements.quake_wins || 0)+(pb.wins || 0)+(tkr.wins || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(achievements.blitz_wins_teams || 0)+(achievements.blitz_wins || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0),
+      total: (wwstats.wins || 0)+(skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(uhc.wins || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(achievements.quake_wins || 0)+(pb.wins || 0)+(tkr.wins || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(achievements.blitz_wins_teams || 0)+(achievements.blitz_wins || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0),
       minigames: {
         skywars: skywars.wins || 0,
         bedwars: bedwars.wins_bedwars || 0,
@@ -210,7 +215,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         megawalls: mw.wins || 0,
         smashheroes: smash.wins || 0,
         warlords: warlords.wins || 0,
-        woolwars: ww.wool_wars.stats.wins || 0,
+        woolwars: wwstats.wins || 0,
       },
     }
 
@@ -888,20 +893,20 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
     api.hypixel.stats.ww = {
       coins: ww.coins || 0,
-      xp: ww.progression.experience || 0,
-      layers: ww.progression.available_layers || 0,
-      games: ww.wool_wars.stats.games_played || 0,
-      wins: ww.wool_wars.stats.wins || 0,
-      losses: (ww.wool_wars.stats.games_played || 0)-(ww.wool_wars.stats.wins || 0),
-      wlr: ratio(ww.wool_wars.stats.wins || 0, (ww.wool_wars.stats.games_played || 0)-(ww.wool_wars.stats.wins || 0)),
-      kills: ww.wool_wars.stats.kills || 0,
-      deaths: ww.wool_wars.stats.deaths || 0,
-      kdr: ratio(ww.wool_wars.stats.kills || 0, ww.wool_wars.stats.deaths || 0),
-      assists: ww.wool_wars.stats.assists || 0,
-      blocks_broken: ww.wool_wars.stats.blocks_broken || 0,
-      blocks_placed: ww.wool_wars.stats.wool_placed || 0,
-      powerups: ww.wool_wars.stats.powerups_gotten || 0,
-      selected_class: ww.wool_wars.selected_class || 0,
+      xp: wwprogress.experience || 0,
+      layers: wwprogress.available_layers || 0,
+      games: wwstats.games_played || 0,
+      wins: wwstats.wins || 0,
+      losses: (wwstats.games_played || 0)-(wwstats.wins || 0),
+      wlr: ratio(wwstats.wins || 0, (wwstats.games_played || 0)-(wwstats.wins || 0)),
+      kills: wwstats.kills || 0,
+      deaths: wwstats.deaths || 0,
+      kdr: ratio(wwstats.kills || 0, wwstats.deaths || 0),
+      assists: wwstats.assists || 0,
+      blocks_broken: wwstats.blocks_broken || 0,
+      blocks_placed: wwstats.wool_placed || 0,
+      powerups: wwstats.powerups_gotten || 0,
+      selected_class: wwexpand.selected_class || "NONE",
       class: {
         archer: {},
         assualt: {},
