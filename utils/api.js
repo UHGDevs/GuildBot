@@ -97,7 +97,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     var mw = hypixel.stats.Walls3 || {}
     var smash = hypixel.stats.SuperSmash || {}
     var warlords = hypixel.stats.Battleground || {}
-    var ww = hypixel.stats.WoolGames || {}
+    var ww = hypixel.stats.WoolGames || {wool_wars: {layouts: {}, stats: {classes: {engineer: {}, golem: {}, tank: {}, swordsman: {}, assualt: {}, archer: {}}}}, progression: {}}
     var tourney = hypixel.tourney || {}
     var ctourney = tourney[currenttourney] || {}
 
@@ -188,7 +188,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
 
     api.hypixel.stats.wins = {
-      total: (skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(uhc.wins || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(achievements.quake_wins || 0)+(pb.wins || 0)+(tkr.wins || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(achievements.blitz_wins_teams || 0)+(achievements.blitz_wins || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0),
+      total: (ww.wool_wars.stats.wins || 0)+(skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(uhc.wins || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(achievements.quake_wins || 0)+(pb.wins || 0)+(tkr.wins || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(achievements.blitz_wins_teams || 0)+(achievements.blitz_wins || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0),
       minigames: {
         skywars: skywars.wins || 0,
         bedwars: bedwars.wins_bedwars || 0,
@@ -210,6 +210,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         megawalls: mw.wins || 0,
         smashheroes: smash.wins || 0,
         warlords: warlords.wins || 0,
+        woolwars: ww.wool_wars.stats.wins || 0,
       },
     }
 
