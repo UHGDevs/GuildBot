@@ -29,6 +29,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   const getLevelByXp = uhg.getLevelByXp
   const getHotmTier = uhg.getHotmTier
   const getGamemode = uhg.getGamemode
+  const getWwLevel = uhg.getWwLevel
 
   /* Empty dictionary */
   let api = {};
@@ -894,6 +895,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.hypixel.stats.ww = {
       coins: ww.coins || 0,
       xp: wwprogress.experience || 0,
+      lvl: getWwLevel(wwprogress.experience || 0),
       layers: wwprogress.available_layers || 0,
       games: wwstats.games_played || 0,
       wins: wwstats.wins || 0,
