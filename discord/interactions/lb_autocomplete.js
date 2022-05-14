@@ -87,7 +87,7 @@ module.exports = async (uhg, interaction) => {
       ])
     } else if (game == 'tkr') {
       return interaction.respond([
-        { name: 'Výhry', value: 'wins' },
+        { name: 'Trofeje', value: 'trophies' },
         { name: 'Zlata', value: 'gold' },
         { name: 'Stříbra', value: 'silver' },
         { name: 'Bronzy', value: 'bronze' },
@@ -120,6 +120,22 @@ module.exports = async (uhg, interaction) => {
         { name: 'KDR', value: 'kdr' },
         { name: 'HeadShots', value: 'headshots' },
         { name: 'Best KillStreak', value: 'bestkillstreak' }
+      ])
+    } else if (game == 'woolwars') {
+      return interaction.respond([
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Prohry', value: 'losses' },
+        { name: 'WLR', value: 'wlr' },
+        { name: 'Hry', value: 'games' },
+        { name: 'Mince', value: 'coins' },
+        { name: 'Layery', value: 'layers' },
+        { name: 'Zabití', value: 'kills' },
+        { name: 'Smrti', value: 'deaths' },
+        { name: 'KDR', value: 'kdr' },
+        { name: 'Assisty', value: 'assists' },
+        { name: 'Vlny zničeno', value: 'blocks_broken' },
+        { name: 'Vlny položeno', value: 'blocks_placed' },
+        { name: 'Powerupů sebráno', value: 'powerups'},
       ])
     }
   } else if (focused.name == 'gamemode') {
@@ -171,6 +187,8 @@ module.exports = async (uhg, interaction) => {
     } else if (game == 'duels') {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     } else if (game == 'quake') {
+      return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+    } else if (game == "woolwars") {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     }
   }

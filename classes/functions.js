@@ -164,7 +164,6 @@ module.exports = class Functions extends EventEmitter {
 
     for (let i = 0; i < 4; ++i) {
         var expForNextLevel = getWwExpForLevel(i)
-        console.log(expForNextLevel)
         if (remainingExp < expForNextLevel) break;
         level++
         remainingExp -= expForNextLevel

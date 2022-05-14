@@ -49,6 +49,10 @@ module.exports = {
         {
           name: 'Quakecraft',
           value: 'quake'
+        },
+        {
+          name: 'Wool Wars',
+          value: 'woolwars'
         }
       ]
     },
