@@ -15,7 +15,7 @@ module.exports = {
 
       let puhg = guildrefresh(uhg, 'UltimateHypixelGuild', names)
       let tkjk = guildrefresh(uhg, 'tkjk', names)
-      if (names || date.getHours() == 5 && date.getMinutes() == 50) guildrefresh(uhg, 'czsk', names)
+      if (names || date.getHours() == 20 && date.getMinutes() == 10) guildrefresh(uhg, 'czsk', names)
       let results = await Promise.all([puhg, tkjk])
       puhg = results[0]
       tkjk = results[1]
