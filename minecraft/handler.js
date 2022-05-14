@@ -16,6 +16,6 @@ module.exports = async (uhg) => {
     uhg.mc.ready = false
     require("./send").write(uhg, uhg.mc.send[0])
     uhg.mc.send.shift()
-  }, 520);
+  }, 700);
 
 }
