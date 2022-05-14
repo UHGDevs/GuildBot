@@ -161,14 +161,22 @@ module.exports = class Functions extends EventEmitter {
     var prestiges = Math.floor(exp / 485000);
     var level = prestiges * 100;
     var remainingExp = exp - (prestiges * 485000);
-
-    for (let i = 0; i < 4; ++i) {
-        var expForNextLevel = getWwExpForLevel(i)
-        if (remainingExp < expForNextLevel) break;
-        level++
-        remainingExp -= expForNextLevel
+    var expForNextLevel;
+    
+    if (exp < 10000) {
+      for (let i = 0; i < 4; ++i) {
+          expForNextLevel = getWwExpForLevel(i)
+          if (remainingExp < expForNextLevel) break;
+          level++
+          remainingExp -= expForNextLevel
+      }
     }
-    var final = parseFloat((level + (remainingExp / 5000)).toFixed(2))
+    else {
+      expForNextLevel = 5000
+      level = Math.floor((exp-10000)/expForNextLevel)
+      remainingExp = ((exp-10000)/expForNextLevel-level)*5000
+      level = level + 4
+    }
 
     return {level: level+1, xpleft: Math.round(expForNextLevel - remainingExp)}
   }
