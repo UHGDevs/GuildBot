@@ -52,7 +52,7 @@ module.exports = {
         },
         {
           name: 'Wool Wars',
-          value: 'woolwars'
+          value: 'ww'
         }
       ]
     },
@@ -87,7 +87,7 @@ module.exports = {
       data.forEach(player => {
         if (game !== 'general' && !player.stats[game]) return //console.log(player)
         let gamemode_api;
-        if (game !== 'general') gamemode_api = player.stats[game][gamemode]  || player.stats[game]
+        if (game !== 'general') gamemode_api = player.stats[game][gamemode] || player.stats[game]
         else gamemode_api = player
         let stats = gamemode_api[stat]
         //let stats2 = gamemode_api[stat+'formatted']

@@ -222,7 +222,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
 
     let sw_main_mode = Object.entries(modes.skywars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
-    
+
     api.hypixel.stats.skywars = {
       levelformatted: uhg.clear(skywars.levelFormatted || "1⋆"),
       level: getSwLevel(skywars.skywars_experience || 0),
@@ -906,7 +906,9 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.hypixel.stats.ww = {
       coins: ww.coins || 0,
       xp: wwprogress.experience || 0,
+      level: getWwLevel(wwprogress.experience || 0).level,
       lvl: getWwLevel(wwprogress.experience || 0),
+      levelformatted: `[${Math.floor(getWwLevel(wwprogress.experience || 0).level)}✫]`,
       layers: wwprogress.available_layers || 0,
       games: wwstats.games_played || 0,
       wins: wwstats.wins || 0,

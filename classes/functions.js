@@ -162,7 +162,7 @@ module.exports = class Functions extends EventEmitter {
     var level = prestiges * 100;
     var remainingExp = exp - (prestiges * 485000);
     var expForNextLevel;
-    
+
     if (exp < 10000) {
       for (let i = 0; i < 4; ++i) {
           expForNextLevel = getWwExpForLevel(i)
@@ -244,6 +244,7 @@ module.exports = class Functions extends EventEmitter {
           .replace("walls", "The Walls")
           .replace("battleground", "Warlords")
           .replace("build_battle", "Build Battle")
+          .replace("ww", "Wool Wars")
       }
     }
 
