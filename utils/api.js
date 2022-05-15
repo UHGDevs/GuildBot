@@ -108,6 +108,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     let wwexpand = ww.wool_wars || {}
     let wwstats = wwexpand.stats || {}
     let wwprogress = ww.progression || {}
+    let wwclasses = wwstats.classes || {archer: {}, assault: {}, swordsman: {}, tank: {}, golem: {}, engineer: {}}
 
     let swrating = {null: 0}
     let swposition = {null: "unknown"}
@@ -892,6 +893,16 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       lootchests: duels.duels_chests || 0,
     }
 
+    const wwclass = {
+      Archer: wwclasses.archer ? wwclasses.archer.games_played || 0 : 0,
+      Assault: wwclasses.assault ? wwclasses.assault.games_played || 0 : 0,
+      Swordsman: wwclasses.swordsman ? wwclasses.swordsman.games_played || 0 : 0,
+      Tank: wwclasses.tank ? wwclasses.tank.games_played || 0 : 0,
+      Golem: wwclasses.golem ? wwclasses.golem.games_played || 0 : 0,
+      Engineer: wwclasses.engineer ? wwclasses.engineer.games_played || 0 : 0,
+    }
+    let ww_main_class = Object.entries(wwclass).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+
     api.hypixel.stats.ww = {
       coins: ww.coins || 0,
       xp: wwprogress.experience || 0,
@@ -909,13 +920,38 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       blocks_placed: wwstats.wool_placed || 0,
       powerups: wwstats.powerups_gotten || 0,
       selected_class: wwexpand.selected_class || "NONE",
-      class: {
-        archer: {},
-        assualt: {},
-        swordsman: {},
-        tank: {},
-        golem: {},
-        engineer: {},
+      main_class: ww_main_class || "None",
+      classes: {
+        archer: {
+          wins: wwclasses.archer ? wwclasses.archer.wins || 0 : 0,
+          games: wwclasses.archer ? wwclasses.archer.games_played || 0 : 0,
+          kills: wwclasses.archer ? wwclasses.archer.kills || 0 : 0,
+        },
+        assault: {
+          wins: wwclasses.assault ? wwclasses.assault.wins || 0 : 0,
+          games: wwclasses.assault ? wwclasses.assault.games_played || 0 : 0,
+          kills: wwclasses.assault ? wwclasses.assault.kills || 0 : 0,
+        },
+        swordsman: {
+          wins: wwclasses.swordsman ? wwclasses.swordsman.wins || 0 : 0,
+          games: wwclasses.swordsman ? wwclasses.swordsman.games_played || 0 : 0,
+          kills: wwclasses.swordsman ? wwclasses.swordsman.kills || 0 : 0,
+        },
+        tank: {
+          wins: wwclasses.tank ? wwclasses.tank.wins || 0 : 0,
+          games: wwclasses.tank ? wwclasses.tank.games_played || 0 : 0,
+          kills: wwclasses.tank ? wwclasses.tank.kills || 0 : 0,
+        },
+        golem: {
+          wins: wwclasses.golem ? wwclasses.golem.wins || 0 : 0,
+          games: wwclasses.golem ? wwclasses.golem.games_played || 0 : 0,
+          kills: wwclasses.golem ? wwclasses.golem.kills || 0 : 0,
+        },
+        engineer: {
+          wins: wwclasses.engineer ? wwclasses.engineer.wins || 0 : 0,
+          games: wwclasses.engineer ? wwclasses.engineer.games_played || 0 : 0,
+          kills: wwclasses.engineer ? wwclasses.engineer.kills || 0 : 0,
+        },
       },
     }
 
