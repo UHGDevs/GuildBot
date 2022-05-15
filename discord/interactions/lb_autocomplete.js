@@ -121,8 +121,9 @@ module.exports = async (uhg, interaction) => {
         { name: 'HeadShots', value: 'headshots' },
         { name: 'Best KillStreak', value: 'bestkillstreak' }
       ])
-    } else if (game == 'woolwars') {
+    } else if (game == 'ww') {
       return interaction.respond([
+        { name: 'Level', value: 'level' },
         { name: 'Výhry', value: 'wins' },
         { name: 'Prohry', value: 'losses' },
         { name: 'WLR', value: 'wlr' },
@@ -188,7 +189,7 @@ module.exports = async (uhg, interaction) => {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     } else if (game == 'quake') {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
-    } else if (game == "woolwars") {
+    } else if (game == "ww") {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     }
   }
