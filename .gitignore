@@ -3,11 +3,6 @@ node_modules
 package-lock.json
 .env
 .DS_Store
-settings/cache
-settings/cache/lb.json
-settings/cache/lb.json
 settings/cache/lb.json
 settings/cache/gexp.json
-settings/cache/gexp.json
-settings/cache/lb.json
 discord/commands/farmanstest.js
