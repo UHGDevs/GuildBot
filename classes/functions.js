@@ -178,7 +178,7 @@ module.exports = class Functions extends EventEmitter {
       level = level + 4
     }
 
-    return {level: level+1, xpleft: Math.round(expForNextLevel - remainingExp)}
+    return {level: parseFloat((level + (remainingExp / 5000)).toFixed(2))+1, levelformatted: level+1, xpleft: Math.round(expForNextLevel - remainingExp)}
   }
 
   getPitPrestige(xp) {
