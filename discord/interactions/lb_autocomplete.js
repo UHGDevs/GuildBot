@@ -54,7 +54,7 @@ module.exports = async (uhg, interaction) => {
       return interaction.respond([
         { name: 'Level', value: 'level' },
         { name: 'Karma', value: 'karma' },
-        { name: 'Aps', value: 'aps' }
+        { name: 'AP', value: 'aps' }
       ])
     } else if (game == 'arena') {
       return interaction.respond([
