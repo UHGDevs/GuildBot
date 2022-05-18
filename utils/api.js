@@ -907,6 +907,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       coins: ww.coins || 0,
       xp: wwprogress.experience || 0,
       level: getWwLevel(wwprogress.experience || 0).level,
+      levelxpleft: getWwLevel(wwprogress.experience || 0).xpleft,
       levelformatted: getWwLevel(wwprogress.experience || 0).levelformatted,
       layers: wwprogress.available_layers || 0,
       games: wwstats.games_played || 0,
