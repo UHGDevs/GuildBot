@@ -2,7 +2,7 @@ const fs = require('fs');
 module.exports = {
   name: "config",
   aliases: ["settings"],
-  allowedids: [],
+  allowedids: ["378928808989949964", "312861502073995265"],
   platform: "dc",
   run: async (uhg, message, content) => {
     try {
