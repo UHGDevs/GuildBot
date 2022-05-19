@@ -1,14 +1,14 @@
 {
-  "prefix": ".",
-  "minecraft": true,
-  "test": false,
-  "time": {
-    "database": true,
-    "finder": true,
-    "elites": true,
-    "guildinfo": true,
-    "gmembers": true,
-    "sniper": false,
-    "badges": false
-  }
+    "prefix": ".",
+    "minecraft": true,
+    "test": false,
+    "time": {
+        "database": true,
+        "finder": true,
+        "elites": true,
+        "guildinfo": true,
+        "gmembers": true,
+        "sniper": false,
+        "badges": false
+    }
 }

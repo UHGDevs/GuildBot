@@ -69,8 +69,7 @@ class Login extends Functions {
   }
 
   restartbot() {
-    if (!this.mc.client) return "Minecraft není zaplý"
-    this.mc.client.end()
+    if (this.mc.client) this.mc.client.end()
     require("../utils/client")(this)
     require("../minecraft/handler.js")(this)
     return "Bot byl úspěšně restartován"

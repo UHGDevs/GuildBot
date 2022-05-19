@@ -6,10 +6,12 @@ module.exports = async (uhg) => {
   for (const file of files) {
     let pull = require(`./events/${file}`);
 
+    uhg.time.ready[pull.name]=true
+
     pull.start = new cron.CronJob(
       pull.time, // time
       async function() { // run the time function
-        if(!uhg.time.ready[pull.name]) return
+        if(!uhg.time.ready[pull.name] || !uhg.settings.time[pull.name]) return
         uhg.time.ready[pull.name]=false
         await pull.run(uhg);
         uhg.time.ready[pull.name]=true
@@ -19,7 +21,8 @@ module.exports = async (uhg) => {
       if (unit == "*") return
       unit.split(",").forEach(t => {delete pull.start.cronTime[getDict(i)][t]});
     });
-    if (uhg.settings.time[pull.name]===true) {pull.start.start();running+=1;}
+    pull.start.start()
+    if (uhg.settings.time[pull.name]===true) {;running+=1;}
     if (uhg.settings.time[pull.name]===true && pull.onstart === true) {
       uhg.time.ready[pull.name]=false
       await pull.run(uhg);
