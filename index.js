@@ -27,4 +27,6 @@ uhg.once("ready", () => {
 
 require("./minecraft/commands.js") (uhg)
 require("./discord/handler.js") (uhg)
-uhg.dc.client.login(process.env.token);
+let token = process.env.token
+if (uhg.settings.dev_mode) token = process.env.token_test
+uhg.dc.client.login(token);
