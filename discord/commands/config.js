@@ -50,13 +50,13 @@ module.exports = {
 
       let settings = uhg.settings
       if (settings[item] !== undefined) {
-        if (settings[item] === toggle) return 'Nastavení tak už je nastaveno'
+        if (settings[item] === task) return 'Nastavení tak už je nastaveno'
         settings[item] = task
       } else if (settings.time[item] !== undefined) {
-        if (settings.time[item] === toggle) return 'Nastavení tak už je nastaveno'
+        if (settings.time[item] === task) return 'Nastavení tak už je nastaveno'
         settings.time[item] = task
       }
-      
+
       await fs.writeFile('settings/config.json', JSON.stringify(settings, null, 4), 'utf8', data =>{})
 
       return 'DONE'
