@@ -1,6 +1,6 @@
 {
   "prefix": ".",
-  "minecraft": true,
+  "minecraft": false,
   "test": false,
   "time": {
     "database": true,
