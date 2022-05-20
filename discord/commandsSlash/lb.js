@@ -90,6 +90,7 @@ module.exports = {
         if (game !== 'general') gamemode_api = player.stats[game][gamemode] || player.stats[game]
         else gamemode_api = player
         let stats = gamemode_api[stat]
+        if (game == 'general' && stat == 'wins') stats = player.stats.wins.total
         //let stats2 = gamemode_api[stat+'formatted']
         if (!stats && stats !== 0) stats = player.stats[game][stat]
       //  if (!stats && stats !== 0) stats2 = player.stats[game][stat+'formatted']
