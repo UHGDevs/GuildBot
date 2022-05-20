@@ -10,7 +10,7 @@ module.exports = {
       let data = await uhg.mongo.run.get("stats", "stats")
       uhg.data.stats = data
       //console.log(data)
-      data = data.filter(n => n.updated<=now-1000*60*60) //n.updated<=now-n.delay ||43000000
+      data = data.filter(n => n.updated<=now-1000*60*60).sort((a, b) => a.updated - b.updated)//n.updated<=now-n.delay ||43000000
       let update = data.slice(0,50)
       update.forEach(async (member) => {
         let api = await uhg.getApi(member.uuid, ["hypixel"])
