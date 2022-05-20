@@ -16,8 +16,7 @@ module.exports = {
 
       verify = verify.filter(n => guild.members.cache.get(n._id))
 
-      let minigames = ['SkyWars', 'Bedwars']
-      let roles = guild.roles.cache.filter(n => uhg.startsWithArray(n.name, minigames) || uhg.endsWithArray(n.name, minigames) )
+      let roles = uhg.dc.cache.badges
       let gmembers = guild.members.cache
 
       let vRoles = {}
@@ -34,7 +33,6 @@ module.exports = {
           to: Number((roztec[1]||'').replace(/[^\d.]/g, '')) || null,
           role: role
         }
-
         if (!vRoles[r.stat]) vRoles[r.stat] = []
         if (!vRoles[r.stat+"_ids"]) vRoles[r.stat+'_ids'] = []
 
