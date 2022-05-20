@@ -84,11 +84,35 @@ module.exports = {
       }
       //console.log(dcUnVer.length)
 
-      for (let member of roleMembers) {
-        let v = dUhg.filter(n => n._id==member[0])
-        if (!v.length) continue;
+      let membersUHG = cache.get("Guild Member").role.guild.members.cache
+      for (let member of membersUHG) {
         member = member[1]
+        let split_guild = uhg.dc.cache.splits.get('guild')
+        if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
+        else if (!member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && member._roles.includes(split_guild.id)) await member.roles.remove(split_guild.role)
+
+        let split_discord = uhg.dc.cache.splits.get('discord')
+        if (member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && !member._roles.includes(split_discord.id)) await member.roles.add(split_discord.role)
+        else if (!member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && member._roles.includes(split_discord.id)) await member.roles.remove(split_discord.role)
+
+        let split_badges = uhg.dc.cache.splits.get('badges')
+        if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
+        else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
+
+        let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
+        if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
+        else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
+
+        let v = dUhg.filter(n => n._id==member.id)
+        if (!v.length) {
+          for (let role of cache) {
+            if (role[0] == "🌙Default🌙") continue
+            if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
+          }
+          continue;
+        }
         v = v[0]
+        if (!member._roles.includes(cache.get('Guild Member').id)) member.roles.add(cache.get('Guild Member').role)
         let grank = "Guild " + v.guildrank
         if (grank == "Guild Guild Master") grank = "Guild Master"
         for (let role of cache) {
