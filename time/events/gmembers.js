@@ -86,6 +86,7 @@ module.exports = {
 
       let membersUHG = cache.get("Guild Member").role.guild.members.cache
       for (let member of membersUHG) {
+        if (member[1].user.bot) continue;
         member = member[1]
         let split_guild = uhg.dc.cache.splits.get('guild')
         if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
