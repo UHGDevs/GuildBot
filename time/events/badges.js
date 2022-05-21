@@ -3,7 +3,7 @@ module.exports = {
   description: "Automatická aktualizace hypixel badges",
   time: '0 */7 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
-  onstart: false,
+  onstart: true,
   run: async (uhg) => {
     let date = new Date()
     try {
@@ -18,56 +18,78 @@ module.exports = {
 
       let roles = uhg.dc.cache.badges
       let gmembers = guild.members.cache
-
-      let vRoles = {}
-
-      for (let role of roles) {
-        role = role[1]
-        //console.log(role.name)
-        let roztec = role.name.split('-')
-        let r = {
-          id: role.id,
-          name: role.name,
-          stat: role.name.replace(/[^a-z]+/gi, ""),
-          from: Number(roztec[0].replace(/[^\d.]/g, '')) || 0,
-          to: Number((roztec[1]||'').replace(/[^\d.]/g, '')) || null,
-          role: role
-        }
-        if (!vRoles[r.stat]) vRoles[r.stat] = []
-        if (!vRoles[r.stat+"_ids"]) vRoles[r.stat+'_ids'] = []
-
-        vRoles[r.stat].push(r)
-        vRoles[r.stat+'_ids'].push(r.id)
-      }
-
-      for (let sort in vRoles) {
+      for (let sort in uhg.dc.cache.bRole) {
         if (sort.endsWith('_ids')) continue;
-        vRoles[sort].sort((a, b) => a.from - b.from)
+        uhg.dc.cache.bRole[sort].sort((a, b) => a.from - b.from)
       }
 
-
+      let whitelist = ['DavidCzPdy', 'Honzu']
       for (let user of verify) {
-        if (user.nickname != 'DavidCzPdy') continue
+        if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
 
         let data = members.filter(n => n.username == user.nickname)
-        for (let stat in vRoles) {
+        if (!data.length) continue;
+        for (let stat in uhg.dc.cache.bRole) {
           if (stat.endsWith('_ids')) continue;
 
+
           let upRole = [];
+          console.log(stat)
           if (stat == 'SkyWars' || stat == 'Bedwars') {
             let staty = data[0].stats[stat.toLowerCase()]
-            upRole = vRoles[stat].filter(n => {
+            upRole = uhg.dc.cache.bRole[stat].filter(n => {
               if (!n.to && staty.level >= n.from) return true
-              else if (n.to && staty.level >= n.from && n.to > staty.level) return true
+              else if (n.to && staty.level >= n.from && n.to >= staty.level) return true
+              else return false
+            })
+          } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls' || stat == 'VampireZ') {
+            let staty = data[0].stats[stat.toLowerCase()]
+            let wins = staty.wins
+            if (wins === undefined) wins = staty.overall.wins || 0
+            console.log(wins)
+            upRole = uhg.dc.cache.bRole[stat].filter(n => {
+              if (!n.to && wins >= n.from) return true
+              else if (n.to && wins >= n.from && n.to >= wins) return true
+              else return false
+            })
+          } else if (stat == 'Quake') {
+            let staty = data[0].stats[stat.toLowerCase()]
+            let kills = staty.kills
+            if (kills === undefined) kills = staty.overall.kills || 0
+            upRole = uhg.dc.cache.bRole[stat].filter(n => {
+              if (!n.to && kills >= n.from) return true
+              else if (n.to && kills >= n.from && n.to >= kills) return true
+              else return false
+            })
+          } else if (stat == 'Blitz') {
+            let wins = data[0].stats.wins.minigames.blitz || 0
+            upRole = uhg.dc.cache.bRole.Blitz.filter(n => {
+              if (!n.to && wins >= n.from) return true
+              else if (n.to && wins >= n.from && n.to >= wins) return true
+              else return false
+            })
+          } else if (stat == 'TKR') {
+            let wins = data[0].stats.tkr.gold || 0
+            console.log(wins)
+            upRole = uhg.dc.cache.bRole.TKR.filter(n => {
+              if (!n.to && wins >= n.from) return true
+              else if (n.to && wins >= n.from && n.to >= wins) return true
               else return false
             })
           }
+            if (!upRole.length) {
+            for (let id of gmember._roles) {
+              if (!uhg.dc.cache.bRole[stat+'_ids'].includes(id)) continue;
+              await gmember.roles.remove(guild.roles.cache.get(id))
+            }
+            continue;
+          }
 
-          if (!upRole.length) continue;
+          console.log(upRole)
           if (!gmember._roles.includes(upRole[0].id)) await gmember.roles.add(upRole[0].role)
-          let remove = gmember._roles.filter(n => vRoles[stat+'_ids'].includes(n) && n != upRole[0].id)
+          let remove = gmember._roles.filter(n => uhg.dc.cache.bRole[stat+'_ids'].includes(n) && n != upRole[0].id)
           for (let id of remove) { await gmember.roles.remove(guild.roles.cache.get(id)) }
         }
       }

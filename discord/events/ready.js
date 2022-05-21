@@ -42,14 +42,58 @@ module.exports = async (uhg) => {
   uhg.dc.cache.split.guild = ["530504032708460584", "537255964898754571", "530504766225383425", "537252847025127424", "475585340762226698", "530504567528620063", "656827910807879696", "807226875411431424", "977141028115058718", "916790046823161956"]
   uhg.dc.cache.split.discord = ["684069130478813226", "456149770847649802", "575052804960288770", "478598933908553730", "478816107222925322", "478811145034137611", "478809710997536768", "475588114732023818", "464872228995989515", "464872228996120617", "475594143448694787", "464872228819959819", "489790082585329669", "481101689550536714", "482898838722707466", "936257245178634261", "934449629800587325", "927992007157252136"]
   uhg.dc.cache.split.badges = []
-  let minigames = ['SkyWars', 'Bedwars', /*'Blitz SG',*/ 'Duels', /*'Build Battle', 'CaC', */'Arena Brawl', 'Paintball', 'Quakecraft', 'The Walls', 'TKR', 'VampireZ', /*'UHC Champions'*/]
+  let minigames = ['SkyWars', 'Bedwars', /*'Blitz SG',*/ 'Duels', /*'Build Battle', 'CaC', */'ArenaBrawl', /*'Paintball', */'Quakecraft', 'The Walls', 'TKR', 'VampireZ', /*'UHC Champions'*/]
   uhg.dc.cache.badges = guild.roles.cache.filter(n => uhg.startsWithArray(n.name, minigames) || uhg.endsWithArray(n.name, minigames))
   uhg.dc.cache.badges.forEach(n => {uhg.dc.cache.split.badges.push(n.id)});
+
+  uhg.dc.cache.bRole = {}
+
+  for (let role of uhg.dc.cache.badges) {
+    role = role[1]
+    let roztec = role.name.split('-')
+    let r = {
+      id: role.id,
+      name: role.name,
+      stat: role.name.replace(/[^a-z]+/gi, ""),
+      from: Number(roztec[0].replace(/[^\d.]/g, '')) || 0,
+      to: Number((roztec[1]||'').replace(/[^\d.]/g, '')) || null,
+      role: role
+    }
+    if (r.stat.startsWith('Duels')) r.stat = 'Duels'
+    else if (r.stat == 'ArenaBrawl') r.stat = 'Arena'
+    else if (r.stat == 'Quakecraft') r.stat = 'Quake'
+    else if (r.stat == 'BlitzSG') r.stat = 'Blitz'
+    else if (r.stat == 'The Walls') r.stat = 'Walls'
+    if (!uhg.dc.cache.bRole[r.stat]) uhg.dc.cache.bRole[r.stat] = []
+    if (!uhg.dc.cache.bRole[r.stat+"_ids"]) uhg.dc.cache.bRole[r.stat+'_ids'] = []
+
+    uhg.dc.cache.bRole[r.stat].push(r)
+    uhg.dc.cache.bRole[r.stat+'_ids'].push(r.id)
+  }
 
   let skyblock = ['Skill Avarage', 'Catacombs', 'Slayer Average', 'Networth', 'Weight)']
   uhg.dc.cache.badges_sb = guild.roles.cache.filter(n => uhg.startsWithArray(n.name, skyblock) || uhg.endsWithArray(n.name, skyblock))
   uhg.dc.cache.split.badges_sb = []
   uhg.dc.cache.badges_sb.forEach(n => {uhg.dc.cache.split.badges_sb.push(n.id)});
+
+  uhg.dc.cache.sbRole = {}
+  for (let role of uhg.dc.cache.badges_sb) {
+    role = role[1]
+    let roztec = role.name.split('-')
+    let r = {
+      id: role.id,
+      name: role.name,
+      stat: role.name.replace(/[^a-z]+/gi, ""),
+      from: Number(roztec[0].replace(/[^\d.]/g, '')) || 0,
+      to: Number((roztec[1]||'').replace(/[^\d.]/g, '')) || null,
+      role: role
+    }
+    if (!uhg.dc.cache.sbRole[r.stat]) uhg.dc.cache.sbRole[r.stat] = []
+    if (!uhg.dc.cache.sbRole[r.stat+"_ids"]) uhg.dc.cache.sbRole[r.stat+'_ids'] = []
+
+    uhg.dc.cache.sbRole[r.stat].push(r)
+    uhg.dc.cache.sbRole[r.stat+'_ids'].push(r.id)
+  }
 
 
   uhg.dc.cache.splits = new Collection()
