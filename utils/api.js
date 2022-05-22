@@ -193,6 +193,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         junk: achievements.general_trashiest_diver || 0,
         treasure: achievements.general_luckiest_of_the_sea || 0,
       },
+      ranksGiven: hypixel.giftingMeta ? hypixel.giftingMeta.ranksGiven || 0 : 0,
+      giftsGiven: hypixel.giftingMeta ? hypixel.giftingMeta.giftsGiven || 0 : 0,
       stats: {}
     }
 
@@ -961,6 +963,20 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
     }
 
+    api.hypixel.stats.bb = {
+      score: bb.score || 0,
+      title: uhg.getBuildBattle(bb.score || 0),
+      coins: bb.coins || 0,
+      overall: {
+        wins: bb.wins || 0,
+        games: bb.games_played || 0
+      },
+      guess: {
+        wins: bb.wins_guess_the_build || 0,
+        guesses: bb.correct_guesses || 0,
+        
+      }
+    }
 }
 
 

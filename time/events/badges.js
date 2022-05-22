@@ -36,7 +36,6 @@ module.exports = {
 
 
           let upRole = [];
-          console.log(stat)
           if (stat == 'SkyWars' || stat == 'Bedwars') {
             let staty = data[0].stats[stat.toLowerCase()]
             upRole = uhg.dc.cache.bRole[stat].filter(n => {
@@ -48,7 +47,6 @@ module.exports = {
             let staty = data[0].stats[stat.toLowerCase()]
             let wins = staty.wins
             if (wins === undefined) wins = staty.overall.wins || 0
-            console.log(wins)
             upRole = uhg.dc.cache.bRole[stat].filter(n => {
               if (!n.to && wins >= n.from) return true
               else if (n.to && wins >= n.from && n.to >= wins) return true
@@ -72,7 +70,6 @@ module.exports = {
             })
           } else if (stat == 'TKR') {
             let wins = data[0].stats.tkr.gold || 0
-            console.log(wins)
             upRole = uhg.dc.cache.bRole.TKR.filter(n => {
               if (!n.to && wins >= n.from) return true
               else if (n.to && wins >= n.from && n.to >= wins) return true
@@ -87,7 +84,6 @@ module.exports = {
             continue;
           }
 
-          console.log(upRole)
           if (!gmember._roles.includes(upRole[0].id)) await gmember.roles.add(upRole[0].role)
           let remove = gmember._roles.filter(n => uhg.dc.cache.bRole[stat+'_ids'].includes(n) && n != upRole[0].id)
           for (let id of remove) { await gmember.roles.remove(guild.roles.cache.get(id)) }

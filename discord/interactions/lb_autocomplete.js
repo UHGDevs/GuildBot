@@ -55,7 +55,9 @@ module.exports = async (uhg, interaction) => {
         { name: 'Level', value: 'level' },
         { name: 'Karma', value: 'karma' },
         { name: 'AP', value: 'aps' },
-        { name: 'Wins', value: 'wins' }
+        { name: 'Wins', value: 'wins' },
+        { name: 'Ranks Gifted', value: 'ranksGiven' },
+        { name: 'Gifts Gifted', value: 'giftsGiven' },
       ])
     } else if (game == 'arena') {
       return interaction.respond([
@@ -139,6 +141,12 @@ module.exports = async (uhg, interaction) => {
         { name: 'Vlny položeno', value: 'blocks_placed' },
         { name: 'Powerupů sebráno', value: 'powerups'},
       ])
+    } else if (game == 'bb') {
+      return interaction.respond([
+        { name: 'Score', value: 'score' },
+        { name: 'Výhry', value: 'wins' },
+        { name: 'Mince', value: 'coins' }
+      ])
     }
   } else if (focused.name == 'gamemode') {
     if (!stat) return
@@ -191,6 +199,8 @@ module.exports = async (uhg, interaction) => {
     } else if (game == 'quake') {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     } else if (game == "ww") {
+      return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
+    } else if (game == "bb") {
       return interaction.respond([ { name: 'Celkové', value: 'overall' } ]);
     }
   }

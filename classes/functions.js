@@ -224,27 +224,32 @@ module.exports = class Functions extends EventEmitter {
       if (game === null || game === undefined) return
       else {
         return game.toLowerCase()
-          .replace("skywars", "SkyWars")
-          .replace("bedwars", "BedWars")
-          .replace("gingerbread", "TKR")
-          .replace("mcgo", "Cops & Crims")
-          .replace("super_smash", "Smash Heroes")
-          .replace("skyblock", "SkyBlock")
-          .replace("murder_mystery", "Murder Mystery")
-          .replace("legacy", "Classic Games")
-          .replace("survival_games", "Blitz SG")
-          .replace("uhc", "UHC")
-          .replace("speed_uhc", "Speed UHC")
-          .replace("tntgames", "TNT Games")
-          .replace("pit", "The Hypixel Pit")
-          .replace("arcade", "Arcade Games")
-          .replace("walls3", "Mega Walls")
-          .replace("arena", "Arena Brawl")
-          .replace("vampirez", "VampireZ")
-          .replace("walls", "The Walls")
-          .replace("battleground", "Warlords")
-          .replace("build_battle", "Build Battle")
-          .replace("ww", "Wool Wars")
+        .replace("skywars", "SkyWars")
+        .replace("bedwars", "BedWars")
+        .replace("gingerbread", "TKR")
+        .replace("mcgo", "Cops & Crims")
+        .replace("super_smash", "Smash Heroes")
+        .replace("skyblock", "SkyBlock")
+        .replace("murder_mystery", "Murder Mystery")
+        .replace("legacy", "Classic Games")
+        .replace("survival_games", "Blitz SG")
+        .replace("uhc", "UHC")
+        .replace("speed_uhc", "Speed UHC")
+        .replace("tntgames", "TNT Games")
+        .replace("pit", "The Hypixel Pit")
+        .replace("arcade", "Arcade Games")
+        .replace("walls3", "Mega Walls")
+        .replace("arena", "Arena Brawl")
+        .replace("vampirez", "VampireZ")
+        .replace("walls", "The Walls")
+        .replace("battleground", "Warlords")
+        .replace("build_battle", "Build Battle")
+        .replace("bb", "Build Battle")
+        .replace("ww", "Build Battle")
+        .replace("wool_wars", "Build Battle")
+        .replace("tkr", "TKR")
+        .replace("bw", "BedWars")
+        .replace("sw", "SkyWars")
       }
     }
 
@@ -423,6 +428,23 @@ module.exports = class Functions extends EventEmitter {
     return rankColor || rankColorMC;
   }
 
+  getBuildBattle(score) {
+    let title = 'Rookie'
+
+    if (score >= 20000) title = 'Master';
+    else if (score >= 15000) title = 'Expert';
+    else if (score >= 10000) title = 'Professional';
+    else if (score >= 7500) title = 'Talented';
+    else if (score >= 5000) title = 'Skilled';
+    else if (score >= 3500) title = 'Trained';
+    else if (score >= 2000) title = 'Seasoned';
+    else if (score >= 1500) title = 'Experienced';
+    else if (score >= 500) title = 'Apprentice';
+    else if (score >= 250) title = 'Amateur';
+    else if (score >= 100) title = 'Untrained';
+
+    return title
+  }
   // Arena Brawl
   getArena(setup) {
     if (!setup) return
@@ -506,6 +528,13 @@ module.exports = class Functions extends EventEmitter {
         .replace("walls", "The Walls")
         .replace("battleground", "Warlords")
         .replace("build_battle", "Build Battle")
+        .replace("bb", "Build Battle")
+        .replace("ww", "Build Battle")
+        .replace("wool_wars", "Build Battle")
+        .replace("tkr", "TKR")
+        .replace("bw", "BedWars")
+        .replace("sw", "SkyWars")
+
     }
   }
 
