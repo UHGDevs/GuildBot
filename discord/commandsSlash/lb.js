@@ -10,7 +10,7 @@ const buttons = new MessageActionRow()
 const guildrefresh = require('../../utils/guildrefresh');
 module.exports = {
   name: 'lb',
-  description: 'testing command',
+  description: 'CZSK Players leaderboards',
   options: [
     {
       name: "minigame",
@@ -53,6 +53,10 @@ module.exports = {
         {
           name: 'Wool Wars',
           value: 'ww'
+        },
+        {
+          name: 'Build Battle',
+          value: 'bb'
         }
       ]
     },
@@ -81,7 +85,8 @@ module.exports = {
 
       let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
 
-      if ((game == 'duels' || game == 'arena') && stat == 'level') stat = 'wins'
+      if ((game == 'duels' || game == 'arena' || game == 'quake' || game == 'murder' || game == 'bb') && stat == 'level') stat = 'wins'
+      else if (game == 'tkr' && stat == 'level') stat = 'gold'
 
       let lb = { players: [], send: [] }
       data.forEach(player => {
@@ -113,6 +118,16 @@ module.exports = {
           .addField('ㅤ', value, false);
         embeds.push(embed)
       })
+
+      if (!embeds.length) {
+        let embed = new MessageEmbed()
+          .setDescription('ㅤ')
+          .setColor(5592575)
+          .setFooter({ text: `${0}/${lb.send.length}` })
+          .setTitle(title)
+          .addField('ㅤ', '**V databázi nejsou uloženi žádní hráči**', false);
+        embeds.push(embed)
+      }
 
       let cache = JSON.parse(fs.readFileSync('settings/cache/lb.json', 'utf8'));
       cache[title] = embeds
