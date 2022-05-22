@@ -1028,8 +1028,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let secrets = skyblocksecrets || 0
         let catacombs = dungeons.dungeon_types.catacombs || {}
         let mastercatacombs = dungeons.dungeon_types.master_catacombs || {}
-        let runscata = catacombs.times_played || {}
-        let runsmm = mastercatacombs.times_played || {}
+        let runscata = catacombs.tier_completions || {}
+        let runsmm = mastercatacombs.tier_completions || {}
         let runs = 0;
         for (let o in runscata) {
           if (runscata.hasOwnProperty(o)) {
