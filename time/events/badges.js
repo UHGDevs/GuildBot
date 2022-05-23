@@ -52,7 +52,7 @@ module.exports = {
               else if (n.to && wins >= n.from && n.to >= wins) return true
               else return false
             })
-          } else if (stat == 'Quake') {
+          } else if (stat == 'Quake' || stat == 'Paintball') {
             let staty = data[0].stats[stat.toLowerCase()]
             let kills = staty.kills
             if (kills === undefined) kills = staty.overall.kills || 0

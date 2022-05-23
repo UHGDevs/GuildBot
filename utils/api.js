@@ -974,9 +974,23 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       guess: {
         wins: bb.wins_guess_the_build || 0,
         guesses: bb.correct_guesses || 0,
-
       }
     }
+
+    api.hypixel.stats.paintball = {
+      coins: pb.coins || 0,
+      wins: pb.wins || 0,
+      kills: pb.kills || 0,
+      deaths: pb.deaths || 0,
+      kdr: ratio(pb.kills || 0, pb.deaths || 0),
+      shots: pb.shots_fired || 0
+    }
+
+    api.hypixel.stats.cac = {
+      coins: cac.coins || 0,
+      wins: (cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)
+    }
+
 }
 
 
