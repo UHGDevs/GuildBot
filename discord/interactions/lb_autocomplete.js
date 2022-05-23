@@ -20,7 +20,7 @@ module.exports = async (uhg, interaction) => {
         { name: 'WLR', value: 'wlr' },
         { name: 'WinStreak', value: 'winstreak' },
         { name: 'Hry', value: 'games' },
-        { name: 'EXP', value: 'exp' },
+        { name: 'EXP', value: 'xp' },
         { name: 'Mince', value: 'coins' },
         { name: 'Zabití', value: 'kills' },
         { name: 'Smrti', value: 'deaths' },
@@ -58,6 +58,8 @@ module.exports = async (uhg, interaction) => {
         { name: 'Wins', value: 'wins' },
         { name: 'Ranks Gifted', value: 'ranksGiven' },
         { name: 'Gifts Gifted', value: 'giftsGiven' },
+        { name: 'Quests', value: 'quests' },
+        { name: 'Challenges', value: 'challenges' },
       ])
     } else if (game == 'arena') {
       return interaction.respond([

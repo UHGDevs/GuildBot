@@ -195,6 +195,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
       ranksGiven: hypixel.giftingMeta ? hypixel.giftingMeta.ranksGiven || 0 : 0,
       giftsGiven: hypixel.giftingMeta ? hypixel.giftingMeta.giftsGiven || 0 : 0,
+      quests: achievements.general_quest_master || 0,
+      challenges: achievements.general_challenger || 0,
       stats: {}
     }
 
