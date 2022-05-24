@@ -96,9 +96,10 @@ module.exports = {
         else gamemode_api = player
         let stats = gamemode_api[stat]
         if (game == 'general' && stat == 'wins') stats = player.stats.wins.total
-        //let stats2 = gamemode_api[stat+'formatted']
-        if (!stats && stats !== 0) stats = player.stats[game][stat]
-      //  if (!stats && stats !== 0) stats2 = player.stats[game][stat+'formatted']
+
+        if (!stats && stats !== 0 && game !== 'general') stats = player.stats[game][stat]
+        if (!stats && stats !== 0) return
+
         lb.players.push({ username: player.username, stat: stats })
       });
 
