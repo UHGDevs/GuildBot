@@ -203,12 +203,14 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       updated: Number(new Date())
     }
 
+    let arcadewins = (arcade.wins_party || 0)+(arcade.wins_dayone || 0)+(arcade.wins_oneinthequiver || 0)+(arcade.wins_dragonwars2 || 0)+(arcade.wins_ender || 0)+(arcade.wins_farm_hunt || 0)+(arcade.wins_soccer || 0)+(arcade.sw_game_wins || 0)+(arcade.hider_wins_hide_and_seek || 0)+(arcade.seeker_wins_hide_and_seek || 0)+(arcade.wins_hole_in_the_wall || 0)+(arcade.wins_simon_says || 0)+(arcade.wins_mini_walls || 0)+(arcade.wins_draw_their_thing || 0)+(arcade.wins_throw_out || 0)+(arcade.wins_zombies || 0)+(arcade.wins_scuba_simulator || 0)+(arcade.wins_easter_simulator || 0)+(arcade.wins_halloween_simulator || 0)+(arcade.wins_grinch_simulator_v2 || 0)
+    let arcadewinsfinal = arcadewins > (achievements.arcade_arcade_winner || 0) ? arcadewins : achievements.arcade_arcade_winner || 0
     api.hypixel.stats.wins = {
-      total: (wwstats.wins || 0)+(skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(achievements.uhc_champion || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(quake.wins || 0)+(quake.wins_teams || 0)+(pb.wins || 0)+(tkr.gold_trophy || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(blitz.wins || 0)+(blitz.wins_teams || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0)+(wwstats.wins || 0)+(cw.wins || 0)+(skyclash.wins || 0),
+      total: arcadewinsfinal+(wwstats.wins || 0)+(skywars.wins || 0)+(bedwars.wins_bedwars || 0)+(achievements.arcade_arcade_winner || 0)+(achievements.duels_duels_winner || 0)+(murder.wins || 0)+(bb.wins || 0)+(achievements.uhc_champion || 0)+(speeduhc.wins || 0)+(tnt.wins || 0)+(vampirez.human_wins || 0)+(vampirez.vampire_wins || 0)+(quake.wins || 0)+(quake.wins_teams || 0)+(pb.wins || 0)+(tkr.gold_trophy || 0)+(walls.wins || 0)+(arena.wins || 0)+(cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(blitz.wins || 0)+(blitz.wins_teams || 0)+(mw.wins || 0)+(smash.wins || 0)+(warlords.wins || 0)+(wwstats.wins || 0)+(cw.wins || 0)+(skyclash.wins || 0),
       minigames: {
         skywars: skywars.wins || 0,
         bedwars: bedwars.wins_bedwars || 0,
-        arcade: achievements.arcade_arcade_winner || 0,
+        arcade: arcadewinsfinal,
         duels: achievements.duels_duels_winner || 0,
         murder: murder.wins || 0,
         buildbattle: bb.wins || 0,
@@ -618,7 +620,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         capturedwools: achievements.arcade_ctw_oh_sheep || 0,
       },
       creeperattack: {
-        bestround: achievements.arcade_team_work || 0,
+        bestround: arcade.max_wave || 0,
       },
       dragonwars: {
         wins: arcade.wins_dragonwars2 || 0,
@@ -656,7 +658,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       },
       hideandseek: {
         overall: {
-          wins: arcade.hider_wins_hide_and_seek+arcade.seeker_wins_hide_and_seek || 0,
+          wins: (arcade.hider_wins_hide_and_seek || 0)+(arcade.seeker_wins_hide_and_seek || 0),
           seekerwins: arcade.seeker_wins_hide_and_seek || 0,
           hiderwins: arcade.hider_wins_hide_and_seek || 0,
         },
