@@ -15,20 +15,7 @@ module.exports = {
       update.forEach(async (member) => {
         let api = await uhg.getApi(member.uuid, ["hypixel"])
         if (api instanceof Object == false) return;
-
-        let staty = {
-              _id: api.uuid,
-              updated: now,
-              username: api.username,
-              uuid: api.uuid,
-              stats: api.hypixel.stats,
-              nicks: api.hypixel.nicks,
-              aps: api.hypixel.aps,
-              level: api.hypixel.level,
-              karma: api.hypixel.karma,
-              rank: api.hypixel.rank
-        }
-        await uhg.mongo.run.update("stats", "stats", {_id: api.uuid}, staty)
+        await uhg.mongo.run.update("stats", "stats", {_id: api.uuid}, api.hypixel)
       });
       //await uhg.delay(5000)
       //uhg.time.ready.database = true

@@ -25,7 +25,7 @@ module.exports = async (uhg, interaction) => {
         { name: 'Zabití', value: 'kills' },
         { name: 'Smrti', value: 'deaths' },
         { name: 'KDR', value: 'kdr' },
-        { name: 'Postele', value: 'beds' },
+        { name: 'Postele', value: 'bedsBroken' },
         { name: 'Ztracené Postele', value: 'bedsLost' },
         { name: 'BBLR', value: 'bblr' },
         { name: 'Sebrané Irony', value: 'iron' },

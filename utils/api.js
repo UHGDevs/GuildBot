@@ -179,7 +179,9 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
 
     api.hypixel = {
+      _id: uuid,
       username: hypixel.displayname,
+      uuid: uuid,
       rank: getRank(hypixel).rank,
       prefix: getRank(hypixel).prefix,
       color: getPlusColor(getRank(hypixel).rank, hypixel.rankPlusColor).hex,
@@ -197,7 +199,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       giftsGiven: hypixel.giftingMeta ? hypixel.giftingMeta.giftsGiven || 0 : 0,
       quests: achievements.general_quest_master || 0,
       challenges: achievements.general_challenger || 0,
-      stats: {}
+      stats: {},
+      updated: Number(new Date())
     }
 
     api.hypixel.stats.wins = {
@@ -1257,7 +1260,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   let test = true
   if (test && api.hypixel) {
     const mongo = require("./mongodb.js")
-    mongo.update("stats", "stats", {_id: api.uuid}, {_id: api.uuid, updated: Number(new Date()), username: api.username, uuid: api.uuid, stats: api.hypixel.stats, nicks: api.hypixel.nicks, aps: api.hypixel.aps, level: api.hypixel.level, karma: api.hypixel.karma, rank: api.hypixel.rank }, false)
+    mongo.update("stats", "stats", {_id: api.uuid}, api.hypixel, false)
   }
 
   return api

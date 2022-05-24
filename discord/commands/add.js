@@ -11,7 +11,7 @@ module.exports = {
 
       let api = await uhg.getApi(args[0], ["key", "hypixel", "mojang"])
       if (api instanceof Object == false) return api
-      uhg.mongo.run.post("stats", "stats", { _id: api.uuid, updated: Number(new Date()), username: api.username, uuid: api.uuid, stats: api.hypixel.stats, nicks: api.hypixel.nicks, aps: api.hypixel.aps, level: api.hypixel.level, karma: api.hypixel.karma, rank: api.hypixel.rank })
+      uhg.mongo.run.post("stats", "stats", api.hypixel)
 
       return `${api.username} byl přidán do databáze`
     } catch (e) {

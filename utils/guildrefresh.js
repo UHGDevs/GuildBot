@@ -55,7 +55,7 @@ module.exports = async (uhg, guildname, names=false, games=false) => {
         if (!update.members[imem].games.total[yesterday]) update.members[imem].games.total[yesterday] = wins
         update.members[imem].games.total[today] = wins
         update.members[imem].games.daily[today] =  wins - update.members[imem].games.total[yesterday] || 0
-        uhg.mongo,run.update("stats", "stats", {_id: gapi.uuid}, {_id: gapi.uuid,updated: Number(new Date()), username: gapi.username, uuid: gapi.uuid, stats: gapi.hypixel.stats, nicks: gapi.hypixel.nicks, aps: gapi.hypixel.aps, level: gapi.hypixel.level, karma: gapi.hypixel.karma, rank: gapi.hypixel.rank }, false)
+        uhg.mongo.run.update("stats", "stats", gapi.hypixel, false)
       }
     }
 
