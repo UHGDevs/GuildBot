@@ -4,13 +4,23 @@ const squid = require('flying-squid');
 module.exports = (uhg) => {
   if (uhg.settings.minecraft === true) {
 
-    uhg.mc.client = minecraft.createClient({
-      host: "mc.hypixel.net",
-      username: process.env.email,
-      password: process.env.password,
-      auth: 'microsoft',
-      onMsaCode: msaCode
-    })
+    if (uhg.settings.dev_mode === true) {
+      uhg.mc.client = minecraft.createClient({
+        host: "mc.hypixel.net",
+        username: process.env.email,
+        password: process.env.password,
+        auth: 'microsoft',
+        onMsaCode: msaCode
+      })
+    } else {
+      uhg.mc.client = minecraft.createClient({
+        host: "mc.hypixel.net",
+        username: process.env.email,
+        auth: 'microsoft',
+        onMsaCode: msaCode
+      })
+    }
+
     uhg.mc.client.setMaxListeners(Infinity)
 
 //     uhg.mc.client.on("success", (packet, a) => {
