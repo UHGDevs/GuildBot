@@ -1045,6 +1045,22 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     //console.log(`https://api.hypixel.net/player/ranked/skywars?key=${api_key}&uuid=${uuid}`)
   }
 
+  if (call.includes("gamecounts")) {
+    var gamecounts = await fetch(`https://api.hypixel.net/gameCounts?key=${api_key}`).then(api => api.json())
+    if (!gamecounts.success) gamecounts = {games: {}}
+    api.gamecounts = {
+      games: {
+        limbo: (gamecounts.games.LIMBO.players || 0)+(gamecounts.games.IDLE.players || 0),
+        skyblock: {
+          crimson_isle: gamecounts.games.SKYBLOCK.modes.crimson_isle || 0,
+          dungeons: gamecounts.games.SKYBLOCK.modes.dungeon || 0,
+          hollows: gamecounts.games.SKYBLOCK.modes.crystal_hollows || 0,
+        }
+      },
+      playerCount: gamecounts.playerCount || 0,
+    } 
+  }
+
   if (call.includes("skyblock")||skyblocki.length) {
     api.skyblock = {}
     api.skyblock.dungeons = {}

@@ -529,11 +529,12 @@ module.exports = class Functions extends EventEmitter {
         .replace("battleground", "Warlords")
         .replace("build_battle", "Build Battle")
         .replace("bb", "Build Battle")
-        .replace("ww", "Build Battle")
-        .replace("wool_wars", "Build Battle")
         .replace("tkr", "TKR")
         .replace("bw", "BedWars")
         .replace("sw", "SkyWars")
+        .replace("ww", "Wool Wars")
+        .replace("woolgame", "Wool Wars")
+        .replace("wool_game", "Wool Wars")
 
     }
   }
@@ -556,6 +557,7 @@ module.exports = class Functions extends EventEmitter {
         .replace("crystal hollows", "Crystal Hollows")
         .replace("dungeon", "Catacombs")
         .replace("dark auction", "Dark Auction")
+        .replace("crimson isle", "Crimson Isle")
 
         .replace("pit", "")
         .replace("housing", "Housing")
