@@ -80,13 +80,13 @@ module.exports = {
       for (let i=0; i<add.length; i++) {
         let mjg = await uhg.getApi(add[i], ["mojang"])
         send(uhg, {send:`/g promote ${mjg.username}`})
-        await uhg.delay(500)
+        await uhg.delay(600)
       }
 
       for (let i=0; i<remove.length; i++) {
         let mjg = await uhg.getApi(remove[i], ["mojang"])
         send(uhg, {send:`/g demote ${mjg.username}`})
-        await uhg.delay(500)
+        await uhg.delay(600)
       }
 
 

@@ -200,6 +200,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       quests: achievements.general_quest_master || 0,
       challenges: achievements.general_challenger || 0,
       stats: {},
+      lastLogin: hypixel.lastLogin || 0,
       updated: Number(new Date())
     }
 
@@ -1058,7 +1059,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         }
       },
       playerCount: gamecounts.playerCount || 0,
-    } 
+    }
   }
 
   if (call.includes("skyblock")||skyblocki.length) {
