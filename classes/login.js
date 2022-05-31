@@ -29,7 +29,7 @@ class Login extends Functions {
     await mongo.connect()
     await require("../utils/mongodb").setup(mongo)
     this.mongo = {client: mongo, run: require("../utils/mongodb")}
-    await this.reload(["mongo"])
+    await this.reload(["mongo", "commands"])
   }
 
   async reload(reload=[]) {
@@ -65,6 +65,10 @@ class Login extends Functions {
 
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
       this.data.uhg = await this.mongo.run.get("general", "uhg")
+    }
+
+    if (reload.includes("commands") || !reload.length ) {
+      this.cache.cmd_whitelist = JSON.parse(fs.readFileSync('settings/commands_whitelist.json', 'utf8'))
     }
   }
 

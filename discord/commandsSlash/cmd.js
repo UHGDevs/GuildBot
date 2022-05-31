@@ -31,6 +31,17 @@ module.exports = {
   run: async (uhg, interaction, args) => {
     await interaction.deferReply({ ephemeral: true }).catch(() => {});
     try {
+      let command = interaction.options.getString('command')
+
+      if (command == 'notmember') return interaction.editReply({ content: 'Připoj se do UHG, nebo si nějak jinak sežeň commandy!!' })
+
+      if (command == 'unverified') {
+        if (!uhg.data.unverified) return interaction.editReply({ content: "Nenalezena unverified database" })
+        let send = []
+        uhg.data.unverified.forEach(player => {send.push(`${player.name} - ${player.joined}D`)});
+        return interaction.editReply({ content: send.join("\n") })
+      }
+
 
       await interaction.editReply({ content: 'coming soon' })
       return
