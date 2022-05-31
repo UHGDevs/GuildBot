@@ -1,6 +1,6 @@
 {
   "name": "uhg-bot",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Hypixel minecraft & discord bot for UHG",
   "main": "./index.js",
   "dependencies": {

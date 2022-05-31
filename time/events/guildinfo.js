@@ -25,6 +25,46 @@ module.exports = {
       let tkjklevel_channel = uhg.dc.client.channels.cache.get("928569528676392980");
       let rozdil_channel = uhg.dc.client.channels.cache.get("928671490436648980");
 
+      let mCount = Number(gmembers_channel.name.replace('Members: ', '').split('/')[0])
+      if (mCount !== 125 && puhg.data.members.length === 125) {
+        let kick_channel = uhg.dc.client.channels.cache.get("530496801782890527");
+
+        let updated = await guildrefresh(uhg, 'UltimateHypixelGuild')
+        if (typeof updated !== 'object') return
+
+        let api = updated.api
+        let data = updated.data
+
+        let mesic = Object.keys(data.members[0].exp.daily).slice(0,30)
+
+        let msgfrag = []
+        let sort = []
+
+        for (let member of data.members) {
+          for (let gmember of api.members) {
+            if (member.uuid == gmember.uuid && !gmember.rank.includes("Member")) break;
+            if (member.uuid != gmember.uuid) continue;
+            if (Number(date) - member.joined < 604800000) break;
+
+            let mxp = 0
+            for (let t=0;t<mesic.length;t++) {
+              let xp = member.exp.daily[mesic[t]] || 0
+              mxp += xp
+            }
+            sort.push({nickname:member.name, exp:mxp, uuid: member.uuid, joined: member.joined})
+          }
+        }
+
+
+        let sorted = sort.sort(function(a, b){ return a.exp - b.exp }).slice(0,10)
+
+        for(let b=0; b<sorted.length; b++) {
+          msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp)}`)
+        }
+
+        let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za 30 dní:**\n\n${msgfrag.join("\n")}`).setFooter('Jen guild membeři, kteří jsou v guildě více jak 7 dní')
+        kick_channel.send({ embeds: [embed] })
+      }
 
       let uhglvl = uhg.getGuildLevel(puhg.data.totalxp)
       let tkjklvl = uhg.getGuildLevel(tkjk.data.totalxp)

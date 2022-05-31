@@ -3,7 +3,7 @@ const { MessageEmbed, MessageButton, MessageActionRow } = require("discord.js");
 module.exports = async (uhg, interaction) => {
   //await interaction.deferReply({ ephemeral: false }).catch(() => {});
   const cmd = uhg.dc.slash.get(interaction.commandName);
-  if (!cmd) return interaction.followUp({ content: "An error has occured " });
+  if (!cmd) return interaction.followUp({ content: "An error has occured ", ephemeral: true });
 
   const args = [];
   for (let option of interaction.options.data) {
