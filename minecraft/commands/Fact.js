@@ -13,7 +13,7 @@ module.exports = {
         if (api.username == "zmikisek" || api.username == "0hBlood" || api.username == "unisdynasty") fact9 = `SIMP CHECK >>>>> PROCESSING RESULTS -+-+- RESULTS: POSITIVE`
 
         let facts = [
-            "Fact #0 - Označili byste fakt č. 0 jako nultý fakt, nebo první fakt?",
+            "Fact #0 - Označili byste fakt č. 0 jako nultý fakt nebo první fakt?",
             "Fact #1 - Vývojáři tohoto bota jsou DavidCzPdy a Farmans.. Můžete hádat, kdo z nich dělal tento zbytečný příkaz",
             `Fact #2 - ${fact2}`,
             `Fact #3 - Momentálně se v Limbu nachází ${uhg.f(api.gamecounts.games.limbo || 0)} hráčů`,

@@ -8,7 +8,7 @@ module.exports = async (uhg, pmsg) => {
   if (pmsg.command) {
     let command = uhg.mc.commands.get(pmsg.command)
     if(!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(pmsg.command.toLowerCase()));
-    let res = "Neznámý command"
+    let res = "Neznámý příkaz"
     if (command) res = await command.run(uhg, pmsg);
     pmsg.send = res
     await bridge.send(uhg, pmsg.send, "Officer")
