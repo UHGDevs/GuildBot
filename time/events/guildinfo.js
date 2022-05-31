@@ -26,7 +26,6 @@ module.exports = {
       let rozdil_channel = uhg.dc.client.channels.cache.get("928671490436648980");
 
       let mCount = Number(gmembers_channel.name.replace('Members: ', '').split('/')[0])
-      mCount = 124
       if (mCount !== 125 && puhg.data.members.length === 125) {
         let kick_channel = uhg.dc.client.channels.cache.get("530496801782890527");
 
@@ -63,7 +62,7 @@ module.exports = {
           let uApi = await uhg.getApi(sorted[b].uuid, ["hypixel"])
           let timing = '';
           try {
-            if (uApi.hypixel.lastLogin) timing = ` <t:${uApi.hypixel.lastLogin/1000}:R>`
+            if (uApi.hypixel.lastLogin) timing = ` <t:${Math.round(uApi.hypixel.lastLogin/1000)}:R>`
           } catch (e) {}
           msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp) + timing}`)
         }
