@@ -14,15 +14,15 @@ module.exports = {
       autocomplete: true
     },
     {
-      name: 'player',
-      description: 'Vyber si hráče',
+      name: 'option1',
+      description: 'Vyber option 1',
       type: 'STRING',
       required: false,
       autocomplete: true
     },
     {
-      name: 'reason',
-      description: 'Vyber důvod',
+      name: 'option2',
+      description: 'Vyber option 2',
       type: 'STRING',
       required: false,
       //autocomplete: true
@@ -34,33 +34,13 @@ module.exports = {
       let command = interaction.options.getString('command')
 
       if (command == 'notmember') return interaction.editReply({ content: 'Připoj se do UHG, nebo si nějak jinak sežeň commandy!!' })
+      else if (command == 'err') return interaction.editReply({ content: 'Počkej prosím chvíli (než se zapne bot)' })
 
-      if (command == 'unverified') {
-        if (!uhg.data.unverified) {
-          let unUuid = []
-          let dVerify = await uhg.mongo.run.get("general", "verify")
-          uhg.data.verify = dVerify
-          let api = await uhg.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
-          if (api instanceof Object == false) return console.log(api)
-          for (let member of api.guild.all.members) {
-            let vMember = dVerify.filter(n => n.uuid == member.uuid)
-            if (!vMember.length) unUuid.push(member.uuid);
-          }
-          unNames = []
-          for (let uuid of unUuid) {
-            let uApi = await uhg.getApi(uuid, ["mojang", "guild"])
-            if (uApi instanceof Object == false) {unNames.push({name:uuid, joined: null, date: null}); continue;}
-            let joined = Math.floor((new Date().getTime()-uApi.guild.member.joined)/ 86400000)
-            unNames.push( {name:uApi.username, joined: joined, date: `<t:${Math.round(uApi.guild.member.joined/1000)}:R>`} )
-          }
-          uhg.data.unverified = unNames
-        }
-        let send = []
-        uhg.data.unverified.forEach(player => {send.push(`${player.name} - ${player.joined}D`)});
-        let embed = new MessageEmbed().setTitle(`**UNVERIFIED UHG members**`)//.addField()
-        //message.channel.send({ embeds: [embed] })
-        return interaction.editReply({ content: send.join("\n") })
-      }
+      let cmd = uhg.dc.cmd.get(command)
+      if (cmd) cmd.run(uhg, interaction)
+      else interaction.editReply({ content: 'coming soon' })
+      return
+
 
 
       await interaction.editReply({ content: 'coming soon' })

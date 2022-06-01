@@ -15,6 +15,13 @@ module.exports = (uhg) => {
             if (pull.name) uhg.dc.slash.set(pull.name, pull);
         }
         console.log(`${uhg.dc.slash.size} Discord Slash Commands`.brightGreen);
+
+        const cmd = fs.readdirSync(`discord/commandsCmd/`).filter((file) => file.endsWith(".js"));
+        for (let file of cmd) {
+            let pull = require(`./commandsCmd/${file}`);
+            if (pull.name) uhg.dc.cmd.set(pull.name, pull);
+        }
+        console.log(`${uhg.dc.slash.size} Discord cmd Commands`.brightGreen);
     } catch (e) {
         console.log(String(e.stack).bgRed)
     }

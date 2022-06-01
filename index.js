@@ -18,7 +18,6 @@ uhg.once("ready", () => {
   require("./time/handler.js") (uhg)
 
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
-  fs.watchFile('settings/commands_whitelist.json', (curr, prev) => uhg.reload(["commands"]));
 
   console.log("Guild bot je připraven!".bold.brightGreen)
 

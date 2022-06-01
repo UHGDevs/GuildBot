@@ -6,7 +6,7 @@ const Functions = require('./functions.js')
 class Login extends Functions {
   constructor(dc) {
     super()
-    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), slash: new Collection(), cache: {}}
+    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), slash: new Collection(), cmd: new Collection(),cache: {}}
     this.mc = {client: null, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:null}
     this.ignore = []
@@ -65,10 +65,6 @@ class Login extends Functions {
 
     if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
       this.data.uhg = await this.mongo.run.get("general", "uhg")
-    }
-
-    if (reload.includes("commands") || !reload.length ) {
-      this.cache.cmd_whitelist = JSON.parse(fs.readFileSync('settings/commands_whitelist.json', 'utf8'))
     }
   }
 

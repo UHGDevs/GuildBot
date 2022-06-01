@@ -27,6 +27,7 @@ module.exports = async (uhg) => {
     uhg.dc.cache.channels.set("officer", uhg.dc.client.channels.cache.get(uhg.getDiscordIds().channels.botofficer))
   }
   uhg.dc.cache.channels.set("bot", uhg.dc.client.channels.cache.get("875503798733385779"))
+  uhg.dc.cache.channels.set("achat", uhg.dc.client.channels.cache.get("530496801782890527"))
 
   uhg.dc.cache.uhgroles = new Collection()
   //await guild.members.fetch()
