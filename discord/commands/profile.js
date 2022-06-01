@@ -20,7 +20,7 @@ module.exports = {
             { name: `UUID`, value: `${api.hypixel.uuid}`, inline: true },
             { name: `Level`, value: `${uhg.f(api.hypixel.level)}` },
             { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
-            { name: `Last online`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`}
+            { name: `Last login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`}
         )
         message.channel.send({ embeds: [embed] })
 
