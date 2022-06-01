@@ -66,4 +66,37 @@ module.exports = async (uhg) => {
 
   let badges_sb_split = guild.roles.cache.get('973948440881025034')
   uhg.dc.cache.splits.set('badges_sb', {name: badges_sb_split.name, id: badges_sb_split.id, color: badges_sb_split.color, role: badges_sb_split})
+
+  uhg.dc.cache.bRoles = {}
+     for (let role of uhg.dc.cache.badges) {
+       role = role[1]
+       let roztec = role.name.split('-')
+       let r = {
+         id: role.id,
+         name: role.name,
+         stat: role.name.replace(/[^a-z]+/gi, ""),
+         from: Number(roztec[0].replace(/[^\d.]/g, '')) || 0,
+         to: Number((roztec[1]||'').replace(/[^\d.]/g, '')) || null,
+         role: role
+       }
+       if (r.stat.startsWith('Duels')) r.stat = 'Duels'
+       if (r.stat.startsWith('Arena')) r.stat = 'Arena'
+       if (r.stat.startsWith('Quake')) r.stat = 'Quake'
+       if (r.stat.startsWith('Murder')) r.stat = 'Murder'
+       if (r.stat.startsWith('TheWalls')) r.stat = 'Walls'
+       if (r.stat.startsWith('Build')) r.stat = 'bb'
+       if (r.stat.startsWith('Wool')) r.stat = 'ww'
+
+       if (!uhg.dc.cache.bRoles[r.stat]) uhg.dc.cache.bRoles[r.stat] = []
+       if (!uhg.dc.cache.bRoles[r.stat+"_ids"]) uhg.dc.cache.bRoles[r.stat+'_ids'] = []
+
+       uhg.dc.cache.bRoles[r.stat].push(r)
+       uhg.dc.cache.bRoles[r.stat+'_ids'].push(r.id)
+     }
+
+     for (let sort in uhg.dc.cache.bRoles) {
+       if (sort.endsWith('_ids')) continue;
+       uhg.dc.cache.bRoles[sort] = uhg.dc.cache.bRoles[sort].sort((a, b) => a.from - b.from)
+     }
+
 }
