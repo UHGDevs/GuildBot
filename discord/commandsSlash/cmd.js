@@ -14,18 +14,18 @@ module.exports = {
       autocomplete: true
     },
     {
+      name: 'player',
+      description: 'Napiš jméno nebo uuid hráče',
+      type: 'STRING',
+      required: false,
+      //autocomplete: true
+    },
+    {
       name: 'option1',
       description: 'Vyber option 1',
       type: 'STRING',
       required: false,
       autocomplete: true
-    },
-    {
-      name: 'option2',
-      description: 'Vyber option 2',
-      type: 'STRING',
-      required: false,
-      //autocomplete: true
     }
   ],
   run: async (uhg, interaction, args) => {
