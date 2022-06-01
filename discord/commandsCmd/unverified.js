@@ -5,7 +5,7 @@ module.exports = {
   allowedids: ["378928808989949964"],
   allowedroles: ["475585340762226698", "537252847025127424", "530504766225383425"],
   platform: "cmd",
-  queue: { name: 'UHG Unverified', value: 'unverified', sort: 1 },
+  queue: { name: 'UHG Unverified', value: 'unverified', sort: 10 },
   run: async (uhg, interaction) => {
     try {
       let unDC = []
