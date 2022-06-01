@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     name: "profile",
-    aliases: ["profile", "p"],
+    aliases: ["p"],
     allowedids: [],
     platform: "dc",
     run: async (uhg, message, content) => {
@@ -30,5 +30,3 @@ module.exports = {
       }
     }
   }
-
-  

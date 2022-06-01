@@ -40,9 +40,9 @@ module.exports = {
       unNames = []
       for (let uuid of unUuid) {
         let uApi = await uhg.getApi(uuid, ["mojang", "guild"])
-        if (uApi instanceof Object == false) {unNames.push({name:uuid, joined: null}); continue;}
+        if (uApi instanceof Object == false) {unNames.push({name:uuid, joined: null, date: null}); continue;}
         let joined = Math.floor((new Date().getTime()-uApi.guild.member.joined)/ 86400000)
-        unNames.push( {name:uApi.username, joined: joined} )
+        unNames.push( {name:uApi.username, joined: joined, date: `<t:${Math.round(uApi.guild.member.joined/1000)}:R>`} )
       }
       uhg.data.unverified = unNames
 
