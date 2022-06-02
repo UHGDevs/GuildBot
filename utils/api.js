@@ -1036,6 +1036,11 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       assists: speeduhc.assists || 0,
       score: speeduhc.score_normal || 0
     }
+
+    api.hypixel.stats.blitz = {
+      coins: blitz.coins || 0,
+    }
+
 }
 
 
