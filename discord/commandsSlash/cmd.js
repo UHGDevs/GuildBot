@@ -26,10 +26,17 @@ module.exports = {
       type: 'STRING',
       required: false,
       autocomplete: true
+    },
+    {
+      name: 'visibility',
+      description: 'Chceš, aby odpověď byla viditělná pro ostatní?',
+      type: 'BOOLEAN',
+      required: false
     }
   ],
   run: async (uhg, interaction, args) => {
-    await interaction.deferReply({ ephemeral: true }).catch(() => {});
+    let ephemeral = !interaction.options.getBoolean('visibility')
+    await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
     try {
       let command = interaction.options.getString('command')
 
