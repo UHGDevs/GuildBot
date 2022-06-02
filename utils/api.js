@@ -998,9 +998,44 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
     api.hypixel.stats.cac = {
       coins: cac.coins || 0,
-      wins: (cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)
+      wins: (cac.game_wins_deathmatch || 0)+(cac.game_wins || 0)+(cac.game_wins_gungame || 0),
+      roundwins: cac.round_wins || 0,
+      kills: (cac.kills || 0)+(cac.headshot_kills || 0),
+      headshotkills: cac.headshot_kills || 0,
+      nadekills: cac.grenade_kills || 0,
+      deaths: cac.deaths || 0,
+      assists: cac.assists || 0,
+      bombsplanted: cac.bombs_planted || 0,
+      bombsdefused: cac.bombs_defused || 0
     }
 
+    api.hypixel.stats.uhc = {
+      coins: uhc.coins || 0,
+      wins: (uhc.wins || 0)+(uhc.wins_solo || 0),
+      kills: (uhc.kills || 0)+(uhc.kills_solo || 0),
+      deaths: (uhc.deaths || 0)+(deaths_solo || 0),
+      kdr: ratio((uhc.kills || 0)+(uhc.kills_solo || 0), (uhc.deaths || 0)+(deaths_solo || 0)),
+      kit: uhc.equippedKit || "NONE",
+      score: uhc.score || 0,
+      ultimates: (uhc.ultimates_crafted || 0)+(uhc.ultimates_crafted_solo || 0),
+      extraultimates: (uhc.extra_ultimates_crafted_solo || 0)+(uhc.extra_ultimates_crafted || 0)
+    }
+
+    api.hypixel.stats.speeduhc = {
+      coins: speeduhc.coins || 0,
+      winstreak: speeduhc.win_streak || speeduhc.winstreak || 0,
+      highestwinstreak: speeduhc.highestWinstreak || 0,
+      killstreak: speeduhc.killstreak || 0,
+      highestkillstreak: speeduhc.highestKillstreak || 0,
+      wins: speeduhc.wins || 0,
+      losses: speeduhc.losses || 0,
+      wlr: ratio(speeduhc.wins || 0, speeduhc.losses || 0),
+      kills: speeduhc.kills || 0,highestKillstreak
+      deaths: speeduhc.deaths || 0,
+      kdr: ratio(speeduhc.kills || 0, speeduhc.deaths || 0),
+      assists: speeduhc.assists || 0,
+      score: speeduhc.score_normal || 0
+    }
 }
 
 
