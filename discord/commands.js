@@ -21,7 +21,7 @@ module.exports = (uhg) => {
             let pull = require(`./commandsCmd/${file}`);
             if (pull.name) uhg.dc.cmd.set(pull.name, pull);
         }
-        console.log(`${uhg.dc.slash.size} Discord cmd Commands`.brightGreen);
+        console.log(`${uhg.dc.cmd.size} Discord cmd Commands`.brightGreen);
     } catch (e) {
         console.log(String(e.stack).bgRed)
     }

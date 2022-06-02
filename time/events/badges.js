@@ -17,12 +17,8 @@ module.exports = {
       verify = verify.filter(n => guild.members.cache.get(n._id))
 
       let gmembers = guild.members.cache
-      for (let sort in uhg.dc.cache.bRoles) {
-        if (sort.endsWith('_ids')) continue;
-        uhg.dc.cache.bRoles[sort].sort((a, b) => a.from - b.from)
-      }
 
-      let whitelist = ['DavidCzPdy']
+      let whitelist = ['DavidCzPdy', 'Farmans', 'macek2005']
       for (let user of verify) {
         if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
@@ -34,25 +30,26 @@ module.exports = {
         for (let stat in uhg.dc.cache.bRoles) {
           if (stat.endsWith('_ids')) continue;
 
-          if (stat == 'SkyWars' || stat == 'Bedwars') {
+          if (stat == 'SkyWars' || stat == 'Bedwars' || stat == 'UHC' || stat == 'SpeedUHC') {
             let staty = data[0].stats[stat.toLowerCase()]
+            let level = Math.floor(staty.level)
             let up = uhg.dc.cache.bRoles[stat].filter(n => {
-              if (!n.to && staty.level >= n.from) return true
-              else if (n.to && staty.level >= n.from && n.to >= staty.level) return true
+              if (!n.to && level >= n.from) return true
+              else if (n.to && level >= n.from && n.to >= level) return true
               else return false
             })[0]
             if (up) upRole.push(up)
-          } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls' || stat == 'VampireZ') {
+          } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls') {
             let staty = data[0].stats[stat.toLowerCase()]
             let wins = staty.wins
             if (wins === undefined) wins = staty.overall.wins || 0
             let up = uhg.dc.cache.bRoles[stat].filter(n => {
               if (!n.to && wins >= n.from) return true
-              else if (n.to && wins >= n.from && n.to >= wins) return true
+              else if (n.to && wins >= n.from && n.to > wins) return true
               else return false
             })[0]
             if (up) upRole.push(up)
-          } else if (stat == 'Quake' || stat == 'Paintball') {
+          } else if (stat == 'Quake' || stat == 'Paintball' || stat == 'VampireZ') {
             let staty = data[0].stats[stat.toLowerCase()]
             let kills = staty.kills
             if (kills === undefined) kills = staty.overall.kills || 0
@@ -86,10 +83,6 @@ module.exports = {
             let color = data[0].stats.cac.color || "dAvID"
             let up = uhg.dc.cache.bRoles[stat].filter(n => n.name.endsWith(color + " Rank"))[0]
             if (up) upRole.push(up)
-          } else if (stat == 'UHC') {
-            let level = data[0].stats.uhc.level || 1
-            let up = uhg.dc.cache.bRoles[stat].filter(n => n.name.includes(`[${level}✫]`))[0]
-            if (up) upRole.push(up)
           }
         }
 
@@ -121,7 +114,7 @@ module.exports = {
         if (gmember._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !gmember._roles.includes(split_badges_sb.id)) await gmember.roles.add(split_badges_sb.role)
         else if (!gmember._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && gmember._roles.includes(split_badges_sb.id)) await gmember.roles.remove(split_badges_sb.role)
 
-
+        console.log(user.nickname)
       }
 
       return

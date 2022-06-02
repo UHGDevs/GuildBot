@@ -445,7 +445,23 @@ module.exports = class Functions extends EventEmitter {
     else if (score >= 60) stars = 3;
     else if (score >= 10) stars = 2;
 
-    return stars  
+    return stars
+  }
+
+  getSpeedUHC(score) {
+    let stars = 1
+
+    if (score >= 85550) stars = 10;
+    else if (score >= 55550) stars = 9;
+    else if (score >= 30550) stars = 8;
+    else if (score >= 15550) stars = 7;
+    else if (score >= 5550) stars = 6;
+    else if (score >= 2560) stars = 5;
+    else if (score >= 1050) stars = 4;
+    else if (score >= 300) stars = 3;
+    else if (score >= 50) stars = 2;
+
+    return stars
   }
 
   getCaC(score) {

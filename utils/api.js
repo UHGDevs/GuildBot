@@ -1039,7 +1039,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       deaths: speeduhc.deaths || 0,
       kdr: ratio(speeduhc.kills || 0, speeduhc.deaths || 0),
       assists: speeduhc.assists || 0,
-      score: speeduhc.score_normal || 0
+      score: speeduhc.score_normal || 0,
+      level: uhg.getSpeedUHC(speeduhc.score_normal || 0)
     }
 
     api.hypixel.stats.blitz = {
