@@ -428,6 +428,37 @@ module.exports = class Functions extends EventEmitter {
     return rankColor || rankColorMC;
   }
 
+  getUHC(score) {
+    let stars = 1
+    if (score >= 25210) stars = 15;
+    else if (score >= 22210) stars = 14;
+    else if (score >= 19210) stars = 13;
+    else if (score >= 16210) stars = 12;
+    else if (score >= 13210) stars = 11;
+    else if (score >= 10210) stars = 10;
+    else if (score >= 5210) stars = 9;
+    else if (score >= 2710) stars = 8;
+    else if (score >= 1710) stars = 7;
+    else if (score >= 960) stars = 6;
+    else if (score >= 460) stars = 5;
+    else if (score >= 210) stars = 4;
+    else if (score >= 60) stars = 3;
+    else if (score >= 10) stars = 2;
+
+    return stars  
+  }
+
+  getCaC(score) {
+    let title = 'Gray'
+    if (score >= 100000) title = 'Red';
+    else if (score >= 50000) title = 'Dark Aqua';
+    else if (score >= 20000) title = 'Gold';
+    else if (score >= 5000) title = 'Yellow';
+    else if (score >= 2500) title = 'White';
+
+    return title
+  }
+
   getBuildBattle(score) {
     let title = 'Rookie'
 

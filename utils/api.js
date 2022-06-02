@@ -1006,20 +1006,25 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       deaths: cac.deaths || 0,
       assists: cac.assists || 0,
       bombsplanted: cac.bombs_planted || 0,
-      bombsdefused: cac.bombs_defused || 0
+      bombsdefused: cac.bombs_defused || 0,
+      shots: cac.shots_fired || 0,
     }
+    api.hypixel.stats.cac.score = Math.round(api.hypixel.stats.cac.kills/2 + (api.hypixel.stats.cac.bombsdefused + api.hypixel.stats.cac.bombsplanted)/3 + api.hypixel.stats.cac.wins + api.hypixel.stats.cac.kills / api.hypixel.stats.cac.shots * 200)
+    api.hypixel.stats.cac.color = uhg.getCaC(api.hypixel.stats.cac.score)
 
     api.hypixel.stats.uhc = {
       coins: uhc.coins || 0,
       wins: (uhc.wins || 0)+(uhc.wins_solo || 0),
       kills: (uhc.kills || 0)+(uhc.kills_solo || 0),
-      deaths: (uhc.deaths || 0)+(deaths_solo || 0),
-      kdr: ratio((uhc.kills || 0)+(uhc.kills_solo || 0), (uhc.deaths || 0)+(deaths_solo || 0)),
+      deaths: (uhc.deaths || 0)+(uhc.deaths_solo || 0),
+      kdr: ratio((uhc.kills || 0)+(uhc.kills_solo || 0), (uhc.deaths || 0)+(uhc.deaths_solo || 0)),
       kit: uhc.equippedKit || "NONE",
       score: uhc.score || 0,
       ultimates: (uhc.ultimates_crafted || 0)+(uhc.ultimates_crafted_solo || 0),
       extraultimates: (uhc.extra_ultimates_crafted_solo || 0)+(uhc.extra_ultimates_crafted || 0)
     }
+    api.hypixel.stats.uhc.score = api.hypixel.stats.uhc.kills + api.hypixel.stats.uhc.wins * 10
+    api.hypixel.stats.uhc.level = uhg.getUHC(api.hypixel.stats.uhc.score)
 
     api.hypixel.stats.speeduhc = {
       coins: speeduhc.coins || 0,
@@ -1030,7 +1035,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       wins: speeduhc.wins || 0,
       losses: speeduhc.losses || 0,
       wlr: ratio(speeduhc.wins || 0, speeduhc.losses || 0),
-      kills: speeduhc.kills || 0,highestKillstreak,
+      kills: speeduhc.kills || 0,
       deaths: speeduhc.deaths || 0,
       kdr: ratio(speeduhc.kills || 0, speeduhc.deaths || 0),
       assists: speeduhc.assists || 0,

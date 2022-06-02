@@ -28,7 +28,7 @@ module.exports = {
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
 
-        let data = members.filter(n => n.username == user.nickname)
+        let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
         let upRole = [];
         for (let stat in uhg.dc.cache.bRoles) {
@@ -64,7 +64,7 @@ module.exports = {
             if (up) upRole.push(up)
           } else if (stat == 'Blitz') {
             let wins = data[0].stats.wins.minigames.blitz || 0
-            let up = uhg.dc.cache.bRoles.Blitz.filter(n => {
+            let up = uhg.dc.cache.bRoles[stat].filter(n => {
               if (!n.to && wins >= n.from) return true
               else if (n.to && wins >= n.from && n.to >= wins) return true
               else return false
@@ -72,11 +72,23 @@ module.exports = {
             if (up) upRole.push(up)
           } else if (stat == 'TKR') {
             let wins = data[0].stats.tkr.gold || 0
-            let up = uhg.dc.cache.bRoles.TKR.filter(n => {
+            let up = uhg.dc.cache.bRoles[stat].filter(n => {
               if (!n.to && wins >= n.from) return true
               else if (n.to && wins >= n.from && n.to >= wins) return true
               else return false
             })[0]
+            if (up) upRole.push(up)
+          } else if (stat == 'bb') {
+            let title = data[0].stats.bb.title || "DAviD"
+            let up = uhg.dc.cache.bRoles.bb.filter(n => n.name.endsWith(title))[0]
+            if (up) upRole.push(up)
+          } else if (stat == 'CaC') {
+            let color = data[0].stats.cac.color || "dAvID"
+            let up = uhg.dc.cache.bRoles[stat].filter(n => n.name.endsWith(color + " Rank"))[0]
+            if (up) upRole.push(up)
+          } else if (stat == 'UHC') {
+            let level = data[0].stats.uhc.level || 1
+            let up = uhg.dc.cache.bRoles[stat].filter(n => n.name.includes(`[${level}✫]`))[0]
             if (up) upRole.push(up)
           }
         }
