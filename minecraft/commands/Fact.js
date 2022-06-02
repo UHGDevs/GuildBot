@@ -3,7 +3,7 @@ module.exports = {
     aliases: ["fact", "facts", "hypixelfact", "hypixelfacts", "funfact", "funfacts", "fakt", "fakty"],
     run: async (uhg, pmsg) => {
       try{
-        let api = await uhg.getApi(pmsg.nickname, ["api", "skyblock", "hypixel", "mojang", "online", "gamecounts"])
+        let api = await uhg.getApi(pmsg.username, ["api", "skyblock", "hypixel", "mojang", "online", "gamecounts", "guild"])
         if (api instanceof Object == false) return api
 
         let fact2 = "Vypadá to, že momentálně hraješ.. vypadá to, že momentálně nic nehraješ :/"
