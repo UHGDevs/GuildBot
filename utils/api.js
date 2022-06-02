@@ -1030,7 +1030,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       wins: speeduhc.wins || 0,
       losses: speeduhc.losses || 0,
       wlr: ratio(speeduhc.wins || 0, speeduhc.losses || 0),
-      kills: speeduhc.kills || 0,highestKillstreak
+      kills: speeduhc.kills || 0,highestKillstreak,
       deaths: speeduhc.deaths || 0,
       kdr: ratio(speeduhc.kills || 0, speeduhc.deaths || 0),
       assists: speeduhc.assists || 0,
