@@ -39,7 +39,7 @@ module.exports = {
               else return false
             })[0]
             if (up) upRole.push(up)
-          } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls') {
+          } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls' || stat == 'VampireZ') {
             let staty = data[0].stats[stat.toLowerCase()]
             let wins = staty.wins
             if (wins === undefined) wins = staty.overall.wins || 0
@@ -49,7 +49,7 @@ module.exports = {
               else return false
             })[0]
             if (up) upRole.push(up)
-          } else if (stat == 'Quake' || stat == 'Paintball' || stat == 'VampireZ') {
+          } else if (stat == 'Quake' || stat == 'Paintball') {
             let staty = data[0].stats[stat.toLowerCase()]
             let kills = staty.kills
             if (kills === undefined) kills = staty.overall.kills || 0
