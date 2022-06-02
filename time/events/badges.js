@@ -114,7 +114,6 @@ module.exports = {
         if (gmember._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !gmember._roles.includes(split_badges_sb.id)) await gmember.roles.add(split_badges_sb.role)
         else if (!gmember._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && gmember._roles.includes(split_badges_sb.id)) await gmember.roles.remove(split_badges_sb.role)
 
-        console.log(user.nickname)
       }
 
       return
