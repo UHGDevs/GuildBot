@@ -908,14 +908,16 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     }
 
     const wwclass = {
-      Archer: wwclasses.archer ? wwclasses.archer.games_played || 0 : 0,
-      Assault: wwclasses.assault ? wwclasses.assault.games_played || 0 : 0,
-      Swordsman: wwclasses.swordsman ? wwclasses.swordsman.games_played || 0 : 0,
-      Tank: wwclasses.tank ? wwclasses.tank.games_played || 0 : 0,
-      Golem: wwclasses.golem ? wwclasses.golem.games_played || 0 : 0,
-      Engineer: wwclasses.engineer ? wwclasses.engineer.games_played || 0 : 0,
+      kills: {
+        Archer: wwclasses.archer ? wwclasses.archer.kills || 0 : 0,
+        Assault: wwclasses.assault ? wwclasses.assault.kills || 0 : 0,
+        Swordsman: wwclasses.swordsman ? wwclasses.swordsman.kills || 0 : 0,
+        Tank: wwclasses.tank ? wwclasses.tank.kills || 0 : 0,
+        Golem: wwclasses.golem ? wwclasses.golem.kills || 0 : 0,
+        Engineer: wwclasses.engineer ? wwclasses.engineer.kills || 0 : 0,
+      }
     }
-    let ww_main_class = Object.entries(wwclass).reduce((a, b) => a[1] > b[1] ? a : b)[0]
+    let ww_main_class = Object.entries(wwclass.kills).reduce((a, b) => a[1] > b[1] ? a : b)
 
     api.hypixel.stats.ww = {
       coins: ww.coins || 0,
@@ -936,7 +938,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       blocks_placed: wwstats.wool_placed || 0,
       powerups: wwstats.powerups_gotten || 0,
       selected_class: wwexpand.selected_class || "NONE",
-      main_class: ww_main_class || "None",
+      main_class: ww_main_class || [ 'None', 0 ],
       classes: {
         archer: {
           wins: wwclasses.archer ? wwclasses.archer.wins || 0 : 0,
