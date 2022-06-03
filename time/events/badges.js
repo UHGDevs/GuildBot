@@ -20,7 +20,7 @@ module.exports = {
 
       let whitelist = ['DavidCzPdy', 'Farmans', 'macek2005']
       for (let user of verify) {
-        if (!whitelist.includes(user.nickname)) continue;
+        ///if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
 
