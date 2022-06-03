@@ -4,7 +4,7 @@ const fs = require('fs');
 
 module.exports = {
   name: 'cmd',
-  description: 'Hypixel in-game commands',
+  description: 'Cool commands (even some in-game commands)',
   options: [
     {
       name: "command",
