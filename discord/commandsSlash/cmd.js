@@ -44,6 +44,10 @@ module.exports = {
       else if (command == 'err') return interaction.editReply({ content: 'Počkej prosím chvíli (než se zapne bot)' })
 
       let cmd = uhg.dc.cmd.get(command)
+      if (!cmd) return interaction.editReply({ content: 'Nevymýšlej si :D' })
+      let guild_member = uhg.dc.client.guilds.cache.get('455751845319802880').members.cache.get(interaction.user.id)
+      if (!(cmd.allowedids.includes(interaction.user.id) || (guild_member && cmd.allowedroles.some(a => guild_member._roles.includes(a) )) || cmd.allowedroles.some(a => interaction.member._roles.includes(a) ) || (!cmd.allowedroles.length && !cmd.allowedids.length))) return interaction.editReply({ content: 'Do not try to hack in! But nice try!' })
+
       if (cmd) cmd.run(uhg, interaction)
       else interaction.editReply({ content: 'coming soon' })
       return

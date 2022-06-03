@@ -15,7 +15,7 @@ module.exports = async (uhg, interaction) => {
     if (focused.name == 'command') {
 
       uhg.dc.cmd.forEach(n => {
-        if ( n.allowedids.includes(id) || (guild_member && n.allowedroles.some(a => guild_member._roles.includes(a) )) || n.allowedroles.some(n => interaction.member._roles.includes(a) ) || (!n.allowedroles.length && !n.allowedids.length)) respond.push(n.queue)
+        if ( n.allowedids.includes(id) || (guild_member && n.allowedroles.some(a => guild_member._roles.includes(a) )) || n.allowedroles.some(a => interaction.member._roles.includes(a) ) || (!n.allowedroles.length && !n.allowedids.length)) respond.push(n.queue)
       });
 
       //
