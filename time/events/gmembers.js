@@ -114,7 +114,8 @@ module.exports = {
         else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
 
         let v = dUhg.filter(n => n._id==member.id)
-        if (!v.length) {
+        let v2 = dVerify.filter(n => n._id==member.id)
+        if (!v.length || !v2.length) {
           for (let role of cache) {
             if (role[0] == "🌙Default🌙") continue
             if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
