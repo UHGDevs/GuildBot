@@ -21,11 +21,11 @@ module.exports = {
       //autocomplete: true
     },
     {
-      name: 'option1',
-      description: 'Vyber option 1',
-      type: 'STRING',
+      name: 'user',
+      description: 'Vyber hráče na discordu',
+      type: 'USER',
       required: false,
-      autocomplete: true
+      //autocomplete: true
     },
     {
       name: 'visibility',
