@@ -53,7 +53,7 @@ module.exports = {
       return interaction.editReply({ embeds: [embed] })
     } catch (e) {
         console.log(String(e.stack).bgRed)
-        interaction.editReply({ content: 'Chyba v cmd profile příkazu: '+ String(e.stack).splice(0, 50) })
+        interaction.editReply({ content: 'Chyba v cmd profile příkazu: ' + String(e.stack).split('    ')[0] })
         return "Chyba v cmd profile příkazu!"
     }
   }
