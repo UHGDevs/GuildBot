@@ -92,8 +92,7 @@ module.exports = {
 
       let embed = new MessageEmbed().setTitle(`**Profil hráče ${api.hypixel.username}**`).setURL(`https://plancke.io/hypixel/player/stats/${api.hypixel.username}`)
     } catch (e) {
-        console.log(String(e.stack).bgRed)
-        interaction.editReply({ content: 'Chyba v cmd verify příkazu: ' + String(e.stack).split('    ')[0] })
+        interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'VERIFY command')] })
         return "Chyba v cmd verify příkazu!"
     }
   }

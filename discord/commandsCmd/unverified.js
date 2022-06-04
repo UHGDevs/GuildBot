@@ -62,8 +62,7 @@ module.exports = {
       embed.setDescription(desc.join('\n'))
       return interaction.editReply({ /*content: send.join("\n"),*/ embeds: [embed] })
     } catch (e) {
-        console.log(String(e.stack).bgRed)
-        interaction.editReply({ content: 'Chyba v cmd unverified příkazu: ' + String(e.stack).split('    ')[0] })
+        interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'UNVERIFIED command')] })
         return "Chyba v cmd unverified příkazu!"
     }
   }

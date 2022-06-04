@@ -14,6 +14,7 @@ class Login extends Functions {
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
     this.snipe = new Collection()
+    this.info = {path: require.main.path + '/'}
     this.ready = this.load()
   }
   async load() {
@@ -21,6 +22,7 @@ class Login extends Functions {
     this.reload(["settings"])
     await Promise.all([this.createMongo()]);
     require("../utils/client.js")(this)
+    require('../utils/embeds.js')(this)
     this.emit("ready")
   }
 

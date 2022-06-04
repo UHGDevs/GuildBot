@@ -10,7 +10,7 @@ module.exports = {
     try {
       let user = interaction.options.getString('player') || interaction.member.nickname || interaction.user.username
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
-      if (api instanceof Object == false) return interaction.editReply({ content: api })
+      if (api instanceof Object == false) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
 
       let dUhg = uhg.mongo.run.get("general", "uhg", {uuid: api.uuid})
       let verify = await uhg.mongo.run.get("general", "verify")
@@ -24,6 +24,10 @@ module.exports = {
           { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
           { name: `Last login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`, inline: true}
       )
+
+      if (api.hypixel.nicks.length > 1) {
+        embed.addField(`${api.hypixel.nicks.length} nicks`, api.hypixel.nicks.join(', '), false)
+      }
 
       if (api.guild.guild) embed.addFields(
         { name: `ㅤ`, value: `ㅤ`, inline: false},
@@ -45,16 +49,15 @@ module.exports = {
 
       embed.addField('Verified', verify.length ? '✅':'🟥', true)
 
-      if (api.guild.name == 'UltimateHypixelGuild') {
+      if (api.guild.name == 'UltimateHypixelGuild' || dUhg) {
         embed.addField('UHG Database', dUhg ? '✅':'🟥' , true)
       }
 
 
       return interaction.editReply({ embeds: [embed] })
     } catch (e) {
-        console.log(String(e.stack).bgRed)
-        interaction.editReply({ content: 'Chyba v cmd profile příkazu: ' + String(e.stack).split('    ')[0] })
-        return "Chyba v cmd profile příkazu!"
+        interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'PROFILE command')] })
+        return
     }
   }
 }

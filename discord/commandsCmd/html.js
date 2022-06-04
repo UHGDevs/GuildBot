@@ -4,10 +4,10 @@ const fs = require('fs');
 
 module.exports = {
   name: "html",
-  allowedids: ["378928808989949964", "312861502073995265"],
+  allowedids: ["378928808989949964"],
   allowedroles: [],
   platform: "cmd",
-  queue: { name: 'html', value: 'html', sort: -100 },
+  queue: { name: 'html', value: 'html', sort: 101 },
   run: async (uhg, interaction) => {
     try {
       let data = require('../html/data.js')
@@ -28,8 +28,7 @@ module.exports = {
       //interaction.editReply({ content: 'Soon: ' })
 
     } catch (e) {
-      console.log(String(e.stack).bgRed)
-      interaction.editReply({ content: 'Chyba v cmd html příkazu: ' + String(e.stack).split('    ')[0] })
+      interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'HTML command')] })
       return "Chyba v cmd html příkazu!"
     }
   }
