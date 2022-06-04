@@ -11,11 +11,10 @@ module.exports = {
   run: async (uhg, interaction) => {
     try {
       let data = require('../html/data.js')
-console.log(data)
+
       let user = interaction.options.getString('player') || interaction.member.nickname || interaction.user.username
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
       if (api instanceof Object == false) return interaction.editReply({ content: api })
-console.log(api.hypixel.rank)
 
       const image = await html({
         html: data.test_index,
