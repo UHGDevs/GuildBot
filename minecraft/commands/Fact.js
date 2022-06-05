@@ -16,7 +16,7 @@ module.exports = {
             `Fact #0 - Označili byste fakt č. 0 jako nultý fakt nebo první fakt?`,
             `Fact #1 - Vývojáři tohoto bota jsou DavidCzPdy a Farmans.. Můžete hádat, kdo z nich dělal tento zbytečný příkaz`,
             `Fact #2 - ${fact2}`,
-            `Fact #3 - Momentálně se v Limbu nachází ${uhg.f(api.gamecounts.games.limbo || 0)} hráčů`,
+            `Fact #3 - Momentálně se v Limbu nachází ${uhg.f((api.gamecounts.games.limbo || 0)+(api.gamecounts.games.idle || 0))} hráčů`,
             `Fact #4 - Momentálně na serveru hraje ${uhg.f(api.gamecounts.playerCount || 0)} hráčů`,
             `Fact #5 - Víte, že MVP++ má na lobby Speed II, ale ostatní ranky mají jen Speed I? P2W server, confirmed`,
             `Fact #6 - Momentálně na Hypixelu je přes 50 možných her, dokážeš je všechny vymasterovat?`,
