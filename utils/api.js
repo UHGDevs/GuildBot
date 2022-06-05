@@ -1100,16 +1100,53 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     if (!gamecounts.success) gamecounts = {games: {}}
     api.gamecounts = {
       games: {
-        limbo: (gamecounts.games.LIMBO.players || 0)+(gamecounts.games.IDLE.players || 0),
+        mainlobby: gamecounts.games.MAIN_LOBBY.players || 0,
+        tourneylobby: gamecounts.games.TOURNAMENT_LOBBY.players || 0,
+        smp: gamecounts.games.SMP.players || 0,
+        legacy: {
+          players: gamecounts.games.LEGACY.players || 0,
+          vampirez: gamecounts.games.LEGACY.modes.VAMPIREZ || 0,
+          tkr: gamecounts.games.LEGACY.modes.GINGERBREAD || 0,
+          arena: gamecounts.games.LEGACY.modes.ARENA || 0,
+          quake: gamecounts.games.LEGACY.modes.QUAKECRAFT || 0,
+          paintball: gamecounts.games.LEGACY.modes.PAINTBALL || 0,
+          walls: gamecounts.games.LEGACY.modes.WALLS || 0,
+        },
+        supersmash: gamecounts.games.SUPER_SMASH.players || 0,
+        duels: gamecounts.games.DUELS.players || 0,
+        pit: gamecounts.games.PIT.players || 0,
+        woolwars: gamecounts.games.WOOL_GAMES.players || 0,
+        replay: gamecounts.games.REPLAY.players || 0,
+        blitz: gamecounts.games.SURVIVAL_GAMES.players || 0,
+        speeduhc: gamecounts.games.SPEED_UHC.players || 0,
+        buildbattle: gamecounts.games.BUILD_BATTLE.players || 0,
+        prototype: {
+          players: gamecounts.games.PROTOTYPE.players || 0,
+          pixelparty: gamecounts.games.PROTOTYPE.modes.PIXEL_PARTY || 0,
+        },
+        tntgames: gamecounts.games.TNTGAMES.players || 0,
+        cac: gamecounts.games.MCGO.players || 0,
+        housing: gamecounts.games.HOUSING.players || 0,
+        bedwars: gamecounts.games.BEDWARS.players || 0,
+        murder: gamecounts.games.MURDER_MYSTERY.players || 0,
+        uhc: gamecounts.games.UHC.players || 0,
+        mw: gamecounts.games.WALLS3.players || 0,
+        arcade: gamecounts.games.ARCADE.players || 0,
+        warlords: gamecounts.games.BATTLEGROUND.players || 0,
+        queue: gamecounts.games.QUEUE.players || 0,
+        limbo: gamecounts.games.LIMBO.players || 0,
+        idle: gamecounts.games.IDLE.players || 0,
         skyblock: {
+          players: gamecounts.games.SKYBLOCK.players || 0,
           crimson_isle: gamecounts.games.SKYBLOCK.modes.crimson_isle || 0,
           dungeons: gamecounts.games.SKYBLOCK.modes.dungeon || 0,
           hollows: gamecounts.games.SKYBLOCK.modes.crystal_hollows || 0,
-        }
+        },
       },
       playerCount: gamecounts.playerCount || 0,
-    }
+    
   }
+}
 
   if (call.includes("skyblock")||skyblocki.length) {
     api.skyblock = {}
