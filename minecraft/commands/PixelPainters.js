@@ -1,6 +1,6 @@
 module.exports = {
   name: "PixelPainters",
-  aliases: ["pixelpainters", "pixel", "painters"],
+  aliases: ["pixelpainters", "pixel", "painters", "pp"],
   run: async (uhg, pmsg) => {
     try{
       let api = await uhg.getApi(pmsg.nickname)
