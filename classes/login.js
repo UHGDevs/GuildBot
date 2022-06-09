@@ -10,7 +10,7 @@ class Login extends Functions {
     this.mc = {client: null, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:null}
     this.ignore = []
-    this.data = {guild:{}, verify:{}, stats:{}, uhg:{}}
+    this.data = {guild:[], verify:[], stats:[], uhg:[]}
     this.cache = {guildjoin: new Collection()}
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
     this.snipe = new Collection()
