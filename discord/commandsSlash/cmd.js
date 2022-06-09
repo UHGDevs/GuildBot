@@ -28,6 +28,12 @@ module.exports = {
       //autocomplete: true
     },
     {
+      name: 'amount',
+      description: 'pocet na odstranenie?',
+      type: 'NUMBER',
+      required: false
+    },
+    {
       name: 'visibility',
       description: 'Chceš, aby odpověď byla viditělná pro ostatní?',
       type: 'BOOLEAN',
