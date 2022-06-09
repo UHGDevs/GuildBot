@@ -6,3 +6,4 @@ package-lock.json
 settings/cache/lb.json
 settings/cache/gexp.json
 discord/commands/farmanstest.js
+.vscode/
