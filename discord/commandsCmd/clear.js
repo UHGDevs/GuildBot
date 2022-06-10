@@ -10,9 +10,14 @@ module.exports = {
     try {
       let amount = interaction.options.getNumber("amount")
       if (!amount) { return interaction.editReply({ embeds: [new MessageEmbed().setTitle("Missing amount")] })}
-     // interaction.channel.bulkDelete(amount, true)
+      let actualAmount = amount
+      while (actualAmount > 100) {
+        //interaction.channel.bulkDelete(100, true)
+        actualAmount = actualAmount - 100
+      }
+      //interaction.channel.bulkDelete(actualAmount, true)
       interaction.editReply({ embeds: [new MessageEmbed().setTitle(`(ne)Odstranil jsi ${amount} zpráv`)] })
-      //return interaction.editReply({ embeds: [embed] })
+      //return interaction.editReply({ embeds: [embed] })                                                             naco tu je toto?   
     } catch (e) {
         interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'CLEAR command')] })
         return
