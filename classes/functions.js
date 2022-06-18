@@ -147,40 +147,6 @@ module.exports = class Functions extends EventEmitter {
     return parseFloat((level + (remainingExp / 5000)).toFixed(2))
   }
 
-  /*getWwLevel(exp = 0) {
-    function getWwExpForLevel(level) {
-      var progress = level % 100
-      if (progress > 3) return 5000;
-      return {
-        0: 1000,
-        1: 2000,
-        2: 3000,
-        3: 4000
-      }[progress]
-    }
-    var prestiges = Math.floor(exp / 485000);
-    var level = prestiges * 100;
-    var remainingExp = exp - (prestiges * 485000);
-    var expForNextLevel;
-
-    if (exp < 10000) {
-      for (let i = 0; i < 4; ++i) {
-          expForNextLevel = getWwExpForLevel(i)
-          if (remainingExp < expForNextLevel) break;
-          level++
-          remainingExp -= expForNextLevel
-      }
-    }
-    else {
-      expForNextLevel = 5000
-      level = Math.floor((exp-10000)/expForNextLevel)
-      remainingExp = ((exp-10000)/expForNextLevel-level)*5000
-      level = level + 4
-    }
-
-    return {level: parseFloat((level + (remainingExp / 5000)).toFixed(2))+1, levelformatted: level+1, xpleft: Math.round(expForNextLevel - remainingExp)}
-  }*/
-
   getWwLevel(exp = 0) {
     let level = 0;
     let xpleft = 0;
@@ -192,7 +158,6 @@ module.exports = class Functions extends EventEmitter {
       for (let i = 0; i<4; i++) {
         if (exp - 485000 * hundred > 0) {
           exp = exp - 485000 * hundred - levels[i]
-          //levelmod = exp / levels[i+1]
           level++
           o = levels[i]
           finalexp = exp + levels[i]
@@ -207,8 +172,6 @@ module.exports = class Functions extends EventEmitter {
       level = hundred * 100 + x
       xpleft = 5000-((level - Math.floor(level))*5000)
     }
-    console.log(level)
-    console.log(Math.floor(level))
     return {level: level, levelformatted: Math.floor(level), xpleft: xpleft}
   }
 
