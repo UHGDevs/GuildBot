@@ -147,7 +147,7 @@ module.exports = class Functions extends EventEmitter {
     return parseFloat((level + (remainingExp / 5000)).toFixed(2))
   }
 
-  getWwLevel(exp = 0) {
+  /*getWwLevel(exp = 0) {
     function getWwExpForLevel(level) {
       var progress = level % 100
       if (progress > 3) return 5000;
@@ -179,6 +179,37 @@ module.exports = class Functions extends EventEmitter {
     }
 
     return {level: parseFloat((level + (remainingExp / 5000)).toFixed(2))+1, levelformatted: level+1, xpleft: Math.round(expForNextLevel - remainingExp)}
+  }*/
+
+  getWwLevel(exp = 0) {
+    let level = 0;
+    let xpleft = 0;
+    let hundred = Math.floor(exp / 485000)
+    if (exp - 485000 * hundred < 10000) {
+      let o = 0;
+      let finalexp = 0;
+      let levels = {0: 1000, 1: 2000, 2: 3000, 3: 4000}
+      for (let i = 0; i<4; i++) {
+        if (exp - 485000 * hundred > 0) {
+          exp = exp - 485000 * hundred - levels[i]
+          //levelmod = exp / levels[i+1]
+          level++
+          o = levels[i]
+          finalexp = exp + levels[i]
+        }
+        else break
+      }
+      level += hundred * 100 + finalexp / o
+      xpleft = (1 - finalexp / o)*o
+    }
+    else {
+      let x = ((exp - 485000 * hundred) - 10000) / 5000 + 5
+      level = hundred * 100 + x
+      xpleft = 5000-((level - Math.floor(level))*5000)
+    }
+    console.log(level)
+    console.log(Math.floor(level))
+    return {level: level, levelformatted: Math.floor(level), xpleft: xpleft}
   }
 
   getPitPrestige(xp) {
