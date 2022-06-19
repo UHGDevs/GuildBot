@@ -8,7 +8,7 @@ module.exports = {
         let api = await uhg.getApi(nickname)
         if (api instanceof Object == false) return api
         let uhc = api.hypixel.stats.uhc
-        let message = `**UHC**: [${uhc.score} SCORE (WIP)] ${api.username} - ${f(uhc.wins)}Wins ${f(uhc.kills)}Kills ${f(uhc.kdr)}KDR`
+        let message = `**UHC**: [${uhc.level}✫] ${api.username} - ${f(uhc.wins)}Wins ${f(uhc.kills)}Kills ${f(uhc.kdr)}KDR`
         return message
       } catch (e) {
           console.log(String(e.stack).bgRed)
