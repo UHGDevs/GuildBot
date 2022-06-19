@@ -1024,7 +1024,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       ultimates: (uhc.ultimates_crafted || 0)+(uhc.ultimates_crafted_solo || 0),
       extraultimates: (uhc.extra_ultimates_crafted_solo || 0)+(uhc.extra_ultimates_crafted || 0)
     }
-    api.hypixel.stats.uhc.score = api.hypixel.stats.uhc.kills + api.hypixel.stats.uhc.wins * 10
+    //api.hypixel.stats.uhc.score = api.hypixel.stats.uhc.kills + api.hypixel.stats.uhc.wins * 10
     api.hypixel.stats.uhc.level = uhg.getUHC(api.hypixel.stats.uhc.score)
 
     api.hypixel.stats.speeduhc = {
