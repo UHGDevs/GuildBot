@@ -379,6 +379,100 @@ module.exports = class Functions extends EventEmitter {
     }; */
   }
 
+  getCrimson(quests = [], profile) {
+    let fancyquests = []
+    for (let i in quests) {
+      console.log(quests)
+      console.log(profile)
+      let quest = i.split("_")
+      let quantity = 1
+      let rarity = (quest[quest.length-1]).toUpperCase()
+      if (quest[2] == "kill") {
+        let boss;
+        if (rarity == "A") quantity = 2
+        else if (rarity == "S") quantity = 3
+        switch (quest[3]) {
+          case "ashfang":
+            boss = "Ashfang"
+            break
+          case "bladesoul":
+            boss = "Bladesoul"
+            break
+          case "magma":
+            boss = "Magma Boss"
+            break
+          case "barbarian":
+            boss = "Barbarian Duke X"
+            break
+          case "mage":
+            boss = "Mage Outlaw"
+            break
+        }
+        fancyquests.push(`(${rarity})`, quantity + "x", boss)
+        console.log(fancyquests)
+        console.log(quests)
+      }
+      else if (quest[2] == "fight") {
+        let type;
+        switch (quest[4]) {
+          default:
+            type = "Basic"
+            break
+          case "hot":
+            type = "Hot"
+            break
+          case "burning":
+            type = "Burning"
+            break
+          case "fiery":
+            type = "Fiery"
+          case "infernal":
+            type = "Infernal"
+        }
+        fancyquests.push(`(${rarity})`, type, "Kuudra")
+      }
+      else if (quest[2] == "dojo") {
+        let type;
+        let difficulty = (quest[quest.length-2])[0].toUpperCase()
+        switch (quest[5]) {
+          case "snake":
+            type = "Swiftness"
+            break
+          case "archer":
+            type = "Mastery"
+            break
+          case "sword":
+            type = "Discipline"
+            break
+          case "wall":
+            type = "Stamina"
+            break
+          case "mob":
+            type = "Force"
+            break
+          case "fireball":
+            type = "Tenacity"
+            break
+          default:
+            type = "Control"
+            break
+        }
+        fancyquests.push(`(${rarity})`, type, "Rank", difficulty)
+      }
+      else if (quest[2] == "rescue") fancyquests.push(`(${rarity})`, "Rescue Mission")
+      else if (quest[2] == "fetch") {
+        let material = quest[3].charAt(0).toUpperCase() + str.slice(1)
+        //WIP
+        fancyquests.push(`(${rarity})`, "undefined" + "x", material)
+      }
+      else {
+        fancyquests.push(`(${rarity})`, "undefined" + "x"/*, quest[2].charAt(0).toUpperCase() + str.slice(1)*/)
+      } //WIP
+    }
+    console.log(fancyquests)
+    return fancyquests
+  }
+
   getRank(json) {
     function replaceRank (rank) { return rank.replace(/§.|\[|]/g, '').replace('SUPERSTAR', "MVP++").replace('VIP_PLUS', 'VIP+').replace('MVP_PLUS', 'MVP+').replace('NONE', 'MVP+').replace("GAME_MASTER", "GM").replace("YOUTUBER", "YOUTUBE").replace("OWNER", "OWNER").replace("EVENTS", "EVENTS").replace("MOJANG", "MOJANG").replace("ADMIN", "ADMIN")}
     let rank = json.prefix || json.rank || json.monthlyPackageRank || json.packageRank || json.newPackageRank || false

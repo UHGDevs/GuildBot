@@ -30,6 +30,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   const getHotmTier = uhg.getHotmTier
   const getGamemode = uhg.getGamemode
   const getWwLevel = uhg.getWwLevel
+  const getCrimson = uhg.getCrimson
 
   /* Empty dictionary */
   let api = {};
@@ -1155,6 +1156,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     api.skyblock.skills = {}
     api.skyblock.main = {}
     api.skyblock.mining = {}
+    api.skyblock.nether = {}
 
     var skyblock = await fetch(`https://api.hypixel.net/skyblock/profiles?key=${api_key}&uuid=${uuid}`).then(api => api.json())
     if (!skyblock.success) return "Chyba v skyblock api"
@@ -1249,8 +1251,8 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let skills = profiles[i].members[uuid] || null
         if (!skills) continue
         let achievs = false;
-        if (!skills.experience_skill_taming || !skills.experience_skill_mining || !skills.experience_skill_foraging || !skills.experience_skill_enchanting || !skills.experience_skill_carpentry || !skills.experience_skill_farming || !skills.experience_skill_combat || !skills.experience_skill_fishing || !skills.experience_skill_alchemy || !skills.experience_skill_runecrafting) achievs = true
-        let overallxp = (skills.experience_skill_taming || 0)+(skills.experience_skill_mining || 0)+(skills.experience_skill_foraging || 0)+(skills.experience_skill_enchanting || 0)+(skills.experience_skill_carpentry || 0)+(skills.experience_skill_farming || 0)+(skills.experience_skill_combat || 0)+(skills.experience_skill_fishing || 0)+(skills.experience_skill_alchemy || 0)+(skills.experience_skill_runecrafting || 0)
+        if (!skills.experience_skill_taming || !skills.experience_skill_mining || !skills.experience_skill_foraging || !skills.experience_skill_enchanting || !skills.experience_skill_carpentry || !skills.experience_skill_farming || !skills.experience_skill_combat || !skills.experience_skill_fishing || !skills.experience_skill_alchemy || !skills.experience_skill_runecrafting || !skills.experience_skill_social2) achievs = true
+        let overallxp = (skills.experience_skill_taming || 0)+(skills.experience_skill_mining || 0)+(skills.experience_skill_foraging || 0)+(skills.experience_skill_enchanting || 0)+(skills.experience_skill_carpentry || 0)+(skills.experience_skill_farming || 0)+(skills.experience_skill_combat || 0)+(skills.experience_skill_fishing || 0)+(skills.experience_skill_alchemy || 0)+(skills.experience_skill_runecrafting || 0)+(skills.experience_skill_social2 || 0)
         let taming = getLevelByXp(skills.experience_skill_taming || 0, "taming", "50")
         let mining = getLevelByXp(skills.experience_skill_mining || 0, "mining", "60")
         let foraging = getLevelByXp(skills.experience_skill_foraging || 0, "foraging", "50")
@@ -1261,6 +1263,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let fishing = getLevelByXp(skills.experience_skill_fishing || 0, "fishing", "50")
         let alchemy = getLevelByXp(skills.experience_skill_alchemy || 0, "alchemy", "50")
         let runecrafting = getLevelByXp(skills.experience_skill_runecrafting || 0, "runecrafting", "25")
+        let social = getLevelByXp(skills.experience_skill_social2 || 0, "social", "25")
         if (achievs == true) {
           taming = achievements.skyblock_domesticator || 0
           mining = achievements.skyblock_excavator || 0
@@ -1284,6 +1287,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
          fishing: fishing,
          alchemy: alchemy,
          runecrafting: runecrafting,
+         social: social,
          apioff: achievs,
        }
       }
@@ -1350,6 +1354,46 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
          nucleus: nucleus,
          comms: commissions,
          scatha: scatha,
+       }
+      }
+    }
+    if (skyblocki.includes("nether")) {
+      for (let i=0;i<profiles.length; i++) {
+        let profilname = profiles[i].cute_name
+        let nether = profiles[i].members[uuid] || null
+        if (!nether) continue
+        let netherdata = nether.nether_island_player_data || null
+        let quests = ["NONE"];
+        let kuudras = 0;
+        let dojo = 0;
+        let faction = "žádná";
+        let reputation = 0;
+        let trophies = 0;
+        if (netherdata) {
+          quests = netherdata.quest_list || []
+          for (let i in netherdata.kuudra_completed_tiers) {
+            kuudras += netherdata.kuudra_completed_tiers[i]
+          }
+          for (let i in netherdata.dojo) {
+            if (i.includes("points")) dojo++
+            else continue
+          }
+          faction = netherdata.selected_faction || "žádná"
+          if (faction == "barbarians") reputation = netherdata.barbarians_reputation || 0
+          else if (faction == "mages") reputation = netherdata.mages_reputation || 0
+        }
+        let trophy = nether.trophy_fish || null
+        if (trophy) {
+          trophies = trophy.total_caught || 0
+        }
+
+       api.skyblock.nether[profilname] = {
+        quests: getCrimson(quests, profilname),
+        trophies: trophies,
+        kuudras: kuudras,
+        dojo: dojo,
+        faction: faction,
+        rep: reputation,
        }
       }
     }

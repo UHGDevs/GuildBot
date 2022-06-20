@@ -28,10 +28,11 @@ module.exports = {
       let fishing = profil.fishing || 0
       let alchemy = profil.alchemy || 0
       let runecrafting = profil.runecrafting || 0
+      let social = profil.social || 0
       let apioff = "";
       if (profil.apioff == true) apioff = "(API OFF)"
 
-      let message = `Skills: [${uhg.f(skillavg)} SA] **${api.username}** - Tam ${taming}, Mine ${mining}, Forag ${foraging}, Ench ${enchanting}, Carp ${carpentry}, Farm ${farming}, Combat ${combat}, Fish ${fishing}, Alch ${alchemy}, Rune ${runecrafting} ${apioff}`
+      let message = `Skills: [${uhg.f(skillavg)} SA] **${api.username}** - Tam ${taming}, Mine ${mining}, Forag ${foraging}, Ench ${enchanting}, Carp ${carpentry}, Farm ${farming}, Combat ${combat}, Fish ${fishing}, Alch ${alchemy}, Rune ${runecrafting}, Social ${social} ${apioff}`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
