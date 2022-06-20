@@ -381,10 +381,11 @@ module.exports = class Functions extends EventEmitter {
 
   getCrimson(quests = [], profile) {
     let fancyquests = []
+    console.log(quests)
     for (let i in quests) {
-      console.log(quests)
-      console.log(profile)
-      let quest = i.split("_")
+      console.log(i)
+      let quest = quests[i].split("_")
+      console.log(quest)
       let quantity = 1
       let rarity = (quest[quest.length-1]).toUpperCase()
       if (quest[2] == "kill") {
@@ -408,7 +409,7 @@ module.exports = class Functions extends EventEmitter {
             boss = "Mage Outlaw"
             break
         }
-        fancyquests.push(`(${rarity})`, quantity + "x", boss)
+        fancyquests.push(`(${rarity}) ${quantity}x ${boss}`)
         console.log(fancyquests)
         console.log(quests)
       }
@@ -429,7 +430,7 @@ module.exports = class Functions extends EventEmitter {
           case "infernal":
             type = "Infernal"
         }
-        fancyquests.push(`(${rarity})`, type, "Kuudra")
+        fancyquests.push(`(${rarity}) ${type} Kuudra`)
       }
       else if (quest[2] == "dojo") {
         let type;
@@ -457,16 +458,16 @@ module.exports = class Functions extends EventEmitter {
             type = "Control"
             break
         }
-        fancyquests.push(`(${rarity})`, type, "Rank", difficulty)
+        fancyquests.push(`(${rarity}) ${type} Rank ${difficulty}`)
       }
-      else if (quest[2] == "rescue") fancyquests.push(`(${rarity})`, "Rescue Mission")
+      else if (quest[2] == "rescue") fancyquests.push(`(${rarity}) Rescue Mission`)
       else if (quest[2] == "fetch") {
-        let material = quest[3].charAt(0).toUpperCase() + str.slice(1)
+        let material = quest[3].charAt(0).toUpperCase() + quest[3].slice(1)
         //WIP
-        fancyquests.push(`(${rarity})`, "undefined" + "x", material)
+        fancyquests.push(`(${rarity}) undefinedx ${material}`)
       }
-      else {
-        fancyquests.push(`(${rarity})`, "undefined" + "x"/*, quest[2].charAt(0).toUpperCase() + str.slice(1)*/)
+      else if (quest[2]) {
+        fancyquests.push(`(${rarity}) undefinedx ${quest[2].charAt(0).toUpperCase() + quest[2].slice(1)}`)
       } //WIP
     }
     console.log(fancyquests)

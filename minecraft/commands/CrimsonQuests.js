@@ -18,10 +18,15 @@ module.exports = {
         }
         let profil = nether[profile]
         let final = "";
+        console.log("ZDE ZAČÍNÁ NOVÁ KAPITOLA")
         for (let i in quests) {
-            final =+ i, "|"
+            console.log(quests)
+            console.log(i)
+            console.log(quests[i])
+            final += `${quests[i]} | `
+            console.log(final)
         }
-        let message = `**${api.username}** - ${final}`
+        let message = `**${api.username}** - ${final.substring(0, final.length - 2)}`
         return message
       } catch (e) {
           console.log(String(e.stack).bgRed)

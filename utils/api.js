@@ -1360,6 +1360,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     if (skyblocki.includes("nether")) {
       for (let i=0;i<profiles.length; i++) {
         let profilname = profiles[i].cute_name
+        console.log(profilname)
         let nether = profiles[i].members[uuid] || null
         if (!nether) continue
         let netherdata = nether.nether_island_player_data || null
@@ -1370,7 +1371,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let reputation = 0;
         let trophies = 0;
         if (netherdata) {
-          quests = netherdata.quest_list || []
+          quests = netherdata.quests.quest_data.quest_list || []
           for (let i in netherdata.kuudra_completed_tiers) {
             kuudras += netherdata.kuudra_completed_tiers[i]
           }
