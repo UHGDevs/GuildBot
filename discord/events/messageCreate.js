@@ -49,7 +49,9 @@ module.exports = async (uhg, message) => {
     if (content == "gfind") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Honzu §e[Gnrl]§f: někdo bedwars? je to nejlepší hra`)
     if (content == "gcmd") await uhg.test.server.broadcast(`§2Guild > §b[MVP§8+§b] Farmans §e[Gnrl]§f: !level Honzu`)
     if (content == "gchat") await uhg.test.server.broadcast(`§2Guild > §a[VIP§6+§a] The_AntiFrost_SK§f [Elite]: necham drakov`);
+    if (content == "mvp") await uhg.test.server.broadcast(`§2Guild > §b[MVP] Zayoo§f: necham drakov`)
     if (content == "pchat") await uhg.test.server.broadcast(`§2Party > §a[VIP§6+§a] AntreX95§f: necham drakov`);
+    if (content == "non") await uhg.test.server.broadcast(`§2Guild > §7Drunter6§f [Elite]: necham drakov`)
     if (content == "msg") await uhg.test.server.broadcast(`From §6[MVP§9+§6] Farmans: !online Honzu`)
     if (content == "join") await uhg.test.server.broadcast(`§2Guild >  Farmans joined.`)
     if (content == "gjoin") await uhg.test.server.broadcast(`§b[MVP§8+§b] JkGalaktus§f has requested to join the Guild!`)

@@ -4,7 +4,7 @@ exports.chat = async function (uhg, pmsg) {
   if (pmsg.channel==="Officer" || pmsg.channel==="/go") channel = uhg.dc.cache.channels.get("officer")
   else channel = uhg.dc.cache.channels.get("guild")
   if (!channel) return console.log("Nenašel se kanál (bridge.js)")
-  await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"", pmsg.pluscolor)) + " **" + pmsg.username + ":** " +msg).trim())
+  await channel.send(((getEmoji(uhg.dc.client, pmsg.rank||"non", pmsg.pluscolor)) + " **" + pmsg.username + ":** " +msg).trim())
   return
 }
 
@@ -84,7 +84,7 @@ function getEmoji(client, emoji, barva="c") {
     em = ["mvp1", "mvp2", "mvp3", `mvp_${color}`]
     g = "_ _"
   } else if (emoji == "[MVP]") {
-    g = "_ _ _ _"
+    g = "_ _ _ _ _ _"
     em =  ["mvp1b", "mvp2b", "mvp3b"]
   } else if (emoji == "[VIP+]") {
     g = "_ _ _ _ _ _ _ _"
@@ -92,7 +92,7 @@ function getEmoji(client, emoji, barva="c") {
   } else if (emoji == "[VIP]") {
     g = "_ _ _ _"
     em = ["vip1", "vip2", "vip3"]
-  } else if (emoji == "non") return "_ _ _ _ _ _"
+  } else if (emoji == "non") return "_ _ _ _ _ _ _ _"
   else if (emoji == "[YOUTUBE]") {
     //g = "_ _ _ _"
     em = ["yt1", "yt2", "yt3", "yt4", "yt5"]
