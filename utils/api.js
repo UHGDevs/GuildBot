@@ -70,7 +70,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
   if (call.includes("hypixel")) {
     hypixel = await fetch(`https://api.hypixel.net/player?key=${api_key_2}&uuid=${uuid}`).then(api => api.json())
-    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(uuid, mojang.id || "UUID NOT FOUND", nickname))
+    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(`${uuid} ${(mojang.id || "UUID NOT FOUND")} ${nickname}`))
     if (!hypixel.success) return `Hypixel API: ${hypixel.cause || "error"}`
     if (!hypixel.player) return "Hráč nikdy nebyl na hypixelu"
     if (!hypixel.player.stats || false) return "Hráč nehrál žádnou minihru"
