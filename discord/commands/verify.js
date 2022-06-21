@@ -75,7 +75,7 @@ module.exports = {
       else if (user) msg = await message.channel.send(`Úspěšně jsi verifikoval ${user||`<@${id}>`} na \`${api.username}\`!`)
       else msg = await message.channel.send(`Změnil sis jméno z \`${(member.nickname||member.user.username).replace("[Admin] ", "").replace("[Mod] ", "").replace("[YOUTUBE] ", "")}\` na \`${api.username}\`!`);
 
-      uhg.mongo.run.post("stats", "stats", api.hypixel)
+      /*uhg.mongo.run.post("stats", "stats", api.hypixel)*/
 
       let split_guild = uhg.dc.cache.splits.get('guild')
       if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
