@@ -44,11 +44,10 @@ module.exports = class Functions extends EventEmitter {
     try {Number(n)} catch {return n}
     console.log(n)
     let d = String(n).length
-    let p = Math.pow
     let s;
-    d = p(10,d)
+    d = Math.pow(10,d)
     let i=7
-    while(i)(s=p(10,i--*3))<=n&&(n=Math.floor(Math.round(n*d/s)/d)+"kMGTPE"[i])
+    while(i)(s=Math.pow(10,i--*3))<=n&&(n=Math.floor(Math.round(n*d/s)/d)+"kMGTPE"[i])
     return n
   }
 

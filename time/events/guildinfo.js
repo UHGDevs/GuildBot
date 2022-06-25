@@ -24,6 +24,8 @@ module.exports = {
       let uhglevel_channel = uhg.dc.client.channels.cache.get("825659339028955196");
       let tkjklevel_channel = uhg.dc.client.channels.cache.get("928569528676392980");
       let rozdil_channel = uhg.dc.client.channels.cache.get("928671490436648980");
+      let uhg_weekly_channel = uhg.dc.client.channels.cache.get("990233565314826300");
+      let tkjk_weekly_channel = uhg.dc.client.channels.cache.get("990234306746138684");
 
       let mCount = Number(gmembers_channel.name.replace('Members: ', '').split('/')[0])
       if (mCount !== 125 && puhg.data.members.length === 125) {
@@ -73,17 +75,47 @@ module.exports = {
       let uhglvl = uhg.getGuildLevel(puhg.data.totalxp)
       let tkjklvl = uhg.getGuildLevel(tkjk.data.totalxp)
       let rozdil = Math.abs(tkjklvl-uhglvl)
+      
+      let uhg_weekly_gexp = 0
+      let tkjk_weekly_gexp = 0
+
+      let week = Object.keys(puhg.data.members[0].exp.daily).slice(0, date.getDay() || 7)
+      puhg.data.members.forEach(member => {
+        for (let den of week) {
+          uhg_weekly_gexp += member.exp.daily[den] || 0
+        }
+      });
+      puhg.data.left.forEach(member => {
+        for (let den of week) {
+          uhg_weekly_gexp += member.exp.daily[den] || 0
+        }
+      });
+
+      tkjk.data.members.forEach(member => {
+        for (let den of week) {
+          tkjk_weekly_gexp += member.exp.daily[den] || 0
+        }
+      });
+      tkjk.data.left.forEach(member => {
+        for (let den of week) {
+          tkjk_weekly_gexp += member.exp.daily[den] || 0
+        }
+      });
 
       let gmembers_message = `Members: ${puhg.data.members.length}/125`;
       let uhglevel_message = `Guild Level: ${Math.round(uhglvl*100)/100}`;
       let tkjklevel_message = `TKJK: ${Math.round(tkjklvl*100)/100}`;
       let rozdil_message = `Rozdíl: ${Math.round(rozdil*10000)/10000}`;
+      let uhg_weekly_message = `Weekly GEXP: ${uhg.f(uhg_weekly_gexp)}`;
+      let tkjk_weekly_message = `TKJK Weekly GEXP: ${uhg.f(tkjk_weekly_gexp)}`;
 
       try {
         if (gmembers_channel.name !== gmembers_message) await gmembers_channel.setName(gmembers_message)
         if (uhglevel_channel.name !== uhglevel_message) await uhglevel_channel.setName(uhglevel_message)
         if (tkjklevel_channel.name !== tkjklevel_message) await tkjklevel_channel.setName(tkjklevel_message)
         if (rozdil_channel.name !== rozdil_message) await rozdil_channel.setName(rozdil_message)
+        if (uhg_weekly_channel.name !== uhg_weekly_message) await uhg_weekly_channel.setName(uhg_weekly_message)
+        if (tkjk_weekly_channel.name !== tkjk_weekly_message) await tkjk_weekly_channel.setName(tkjk_weekly_message)
       } catch (e) {
         console.log(e)
         console.log('Chyba v time/events/guildinfo.js:38 - nenalezen kanál')
