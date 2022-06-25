@@ -379,7 +379,7 @@ module.exports = class Functions extends EventEmitter {
     }; */
   }
 
-  getCrimson(quests = [], profile) {
+  getCrimson(quests = []) {
     let fancyquests = []
     console.log(quests)
     for (let i in quests) {

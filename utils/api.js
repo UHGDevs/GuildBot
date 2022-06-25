@@ -1389,7 +1389,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         }
 
        api.skyblock.nether[profilname] = {
-        quests: getCrimson(quests, profilname),
+        quests: getCrimson(quests),
         trophies: trophies,
         kuudras: kuudras,
         dojo: dojo,
