@@ -94,6 +94,34 @@ module.exports = {
       24: 15300,
       25: 19050
     },
+
+    social_xp: {
+      1: 50,
+      2: 150,
+      3: 300,
+      4: 550,
+      5: 1050,
+      6: 1800,
+      7: 2800,
+      8: 4050,
+      9: 5550,
+      10: 7550,
+      11: 10050,
+      12:	13050,
+      13:	16800,
+      14:	21300,
+      15:	27300,
+      16:	35300,
+      17:	45300,
+      18:	57800,
+      19:	72800,
+      20:	92800,
+      21:	117800,
+      22:	147800,
+      23:	182800,
+      24:	222800,
+      25: 272800
+    },
   
     skills: [
       'farming',
@@ -105,7 +133,8 @@ module.exports = {
       'alchemy',
       'taming',
       'carpentry',
-      'runecrafting'
+      'runecrafting',
+      'social'
     ],
   
     skills_achievements: {
@@ -130,7 +159,8 @@ module.exports = {
       alchemy: 50,
       carpentry: 50,
       runecrafting: 25,
-      dungeons: 50
+      dungeons: 50,
+      social: 25
     },
   
     dungeon_xp: {
@@ -552,6 +582,12 @@ module.exports = {
       runecrafting_skill: {
         1: {
   
+        }
+      },
+
+      social_skill: {
+        1: {
+
         }
       },
   

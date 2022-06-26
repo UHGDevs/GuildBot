@@ -334,6 +334,9 @@ module.exports = class Functions extends EventEmitter {
       case 'dungeons':
         xpTable = constants.dungeon_xp;
         break;
+      case 'social':
+        xpTable = constants.social_xp;
+        break;
       default:
         xpTable = constants.leveling_xp;
     }
