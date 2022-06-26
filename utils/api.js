@@ -1371,7 +1371,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let reputation = 0;
         let trophies = 0;
         if (netherdata) {
-          quests = netherdata.quests.quest_data.quest_list || []
+          if (netherdata.quests && netherdata.quests.quest_data) quests = netherdata.quests.quest_data.quest_list || []
           for (let i in netherdata.kuudra_completed_tiers) {
             kuudras += netherdata.kuudra_completed_tiers[i]
           }
