@@ -1047,6 +1047,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
     api.hypixel.stats.blitz = {
       coins: blitz.coins || 0,
+      wins: (blitz.wins || 0)+(blitz.wins_teams || 0),
+      deaths: blitz.deaths || 0,
+      kills: blitz.kills || 0,
+      kdr: func.radio(blitz.kills, blitz.dealth, 2),
+      damage: blitz.damage || 0,
+      games: blitz.games_played || 0,
     }
 
 }
