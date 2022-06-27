@@ -80,27 +80,10 @@ module.exports = {
       let tkjk_weekly_gexp = 0
 
       let week = Object.keys(puhg.data.members[0].exp.daily).slice(0, date.getDay() || 7)
-      puhg.data.members.forEach(member => {
-        for (let den of week) {
-          uhg_weekly_gexp += member.exp.daily[den] || 0
-        }
-      });
-      puhg.data.left.forEach(member => {
-        for (let den of week) {
-          uhg_weekly_gexp += member.exp.daily[den] || 0
-        }
-      });
-
-      tkjk.data.members.forEach(member => {
-        for (let den of week) {
-          tkjk_weekly_gexp += member.exp.daily[den] || 0
-        }
-      });
-      tkjk.data.left.forEach(member => {
-        for (let den of week) {
-          tkjk_weekly_gexp += member.exp.daily[den] || 0
-        }
-      });
+      for (let day of week) {
+        uhg_weekly_gexp += puhg.data.dailyxp[day]
+        tkjk_weekly_gexp += tkjk.data.dailyxp[day]
+      }
 
       let gmembers_message = `Members: ${puhg.data.members.length}/125`;
       let uhglevel_message = `Guild Level: ${Math.round(uhglvl*100)/100}`;
