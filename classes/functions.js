@@ -384,11 +384,8 @@ module.exports = class Functions extends EventEmitter {
 
   getCrimson(quests = []) {
     let fancyquests = []
-    console.log(quests)
     for (let i in quests) {
-      console.log(i)
       let quest = quests[i].split("_")
-      console.log(quest)
       let quantity = 1
       let rarity = (quest[quest.length-1]).toUpperCase()
       if (quest[2] == "kill") {
@@ -413,8 +410,6 @@ module.exports = class Functions extends EventEmitter {
             break
         }
         fancyquests.push(`(${rarity}) ${quantity}x ${boss}`)
-        console.log(fancyquests)
-        console.log(quests)
       }
       else if (quest[2] == "fight") {
         let type;
@@ -473,7 +468,6 @@ module.exports = class Functions extends EventEmitter {
         fancyquests.push(`(${rarity}) undefinedx ${quest[2].charAt(0).toUpperCase() + quest[2].slice(1)}`)
       } //WIP
     }
-    console.log(fancyquests)
     return fancyquests
   }
 
