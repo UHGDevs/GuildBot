@@ -12,7 +12,6 @@
     "flying-squid": "^1.5.0",
     "fs": "^0.0.1-security",
     "mongodb": "^4.4.1",
-    "node-html-to-image": "^3.2.4",
     "request": "^2.88.2"
   }
 }
