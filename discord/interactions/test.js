@@ -1,30 +1,39 @@
-const { MessageEmbed, MessageButton, MessageActionRow, CommandInteraction } = require("discord.js");
-const { Modal, TextInputComponent, showModal } = require("discord-modals");
-const client = require("../../utils/client");
+const { MessageEmbed, MessageButton, MessageActionRow, CommandInteraction, Modal, TextInputComponent, showModal, MessageSelectMenu } = require("discord.js");
 
-module.exports = {
-    id: "test",
-    /**
-     * 
-     * @param {CommandInteraction} interaction
-     */
-    async (uhg, interaction) {
-        const modal = new Modal()
-        .setCustomId('test-modal')
-        .setTitle('TEST')
-        .addComponents(
-            new TextInputComponent()
-            .setCustomId('test-modal')
-            .setLabel('TEST')
-            .setStyle('SHORT')
-            .setMinLength(1)
-            .setMaxLength(2)
-            .setPlaceholder("Provide the test.")
-            .setRequired(true)
-        );
+module.exports = async (uhg, interaction) => {
+    console.log('we are in')
+    const modal = new Modal()
+    .setCustomId('verify_modal')
+    .setTitle('UHG Verifikace');
 
-        showModal(modal, {
-            client: client
-        })
-    }
+    const usernameInput = new MessageActionRow().addComponents(new TextInputComponent()
+        .setCustomId('modal_test_username')
+        .setLabel("Username:")
+        .setStyle('SHORT'));
+    const languageInput = new MessageActionRow()
+        .addComponents(new MessageSelectMenu()
+        .setCustomId('modal_test_language')
+        .setPlaceholder('Select language')
+        .addOptions([
+                {
+                    label: 'CZECH',
+                    description: '',
+                    value: 'czech',
+                },
+                {
+                    label: 'SLOVAK',
+                    description: '',
+                    value: 'slovak',
+                },
+                {
+                    label: 'ENGLISH',
+                    description: 'Or any other language',
+                    value: 'english',
+                },
+            ]),
+    );
+   
+modal.addComponents(usernameInput, languageInput);
+// Show the modal to the user
+await interaction.showModal(modal);
 }
