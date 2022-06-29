@@ -13,7 +13,7 @@ module.exports = {
 
 
       let embed = new MessageEmbed().setTitle(`MODAL test! Klikni na button`)
-      const buttons = new MessageActionRow().addComponents(new MessageButton().setCustomId('activate_modal_test').setStyle('PRIMARY').setLabel('Otestuj ZDE modal'));
+      const buttons = new MessageActionRow().addComponents(new MessageButton().setCustomId('create_modal_verify').setStyle('PRIMARY').setLabel('Otestuj ZDE modal'));
       interaction.editReply({ embeds: [embed], components: [buttons] })
     } catch (e) {
         interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'TEST command')] })

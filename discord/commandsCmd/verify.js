@@ -64,7 +64,7 @@ module.exports = {
       verified = verified.filter(n => n._id == id)
       if (verified.length && verified[0].nickname.toLowerCase() == nickname.toLowerCase()) return interaction.editReply({ content: `Už ${user ? 'je':'jsi'} verifikovaný` })
 
-      let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username })
+      let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username, names: api.hypixel.nicks })
       if (!post.acknowledged) return interaction.editReply({ content: 'Někde nastala chyba!' })
 
       if (!user && !verified.length && post.insertedId==id) await interaction.editReply({ content: `Úspěšná verifikace jako \`${api.username}\`!` });

@@ -53,7 +53,7 @@ module.exports = {
               let xp = member.exp.daily[mesic[t]] || 0
               mxp += xp
             }
-            sort.push({nickname:member.name, exp:mxp, uuid: member.uuid, joined: member.joined})
+            sort.push({nickname:member.name, exp:mxp, uuid: member.uuid, joined: gmember.joined, firstJoined: member.joined})
           }
         }
 
@@ -63,10 +63,12 @@ module.exports = {
         for(let b=0; b<sorted.length; b++) {
           let uApi = await uhg.getApi(sorted[b].uuid, ["hypixel"])
           let timing = '';
+          let timing1 = '';
           try {
             if (uApi.hypixel.lastLogin) timing = ` <t:${Math.round(uApi.hypixel.lastLogin/1000)}:R>`
+            if (sorted[b].joined !== sorted[b].firstJoined) timing1 = ` (joined <t:${Math.round(sorted[b].joined/1000)}:R>)`
           } catch (e) {}
-          msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp) + timing}`)
+          msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp) + timing + timing1}`)
         }
         let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za 30 dní:**\n\n${msgfrag.join("\n")}`).setFooter('Jen guild membeři, kteří jsou v guildě více jak 7 dní')
         kick_channel.send({ embeds: [embed] })
