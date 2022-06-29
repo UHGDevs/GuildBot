@@ -1,7 +1,6 @@
 const { MessageEmbed, MessageButton, MessageActionRow, CommandInteraction, Modal, TextInputComponent, showModal, MessageSelectMenu } = require("discord.js");
 
 exports.send = async (uhg, interaction) => {
-    console.log(interaction.customId)
     const modal = new Modal().setCustomId('get_modal_verify').setTitle('UHG Verifikace');
     const usernameInput = new MessageActionRow().addComponents(new TextInputComponent().setCustomId('modal_test_username').setLabel("Username:").setStyle('SHORT'));
     const languageInput = new MessageActionRow().addComponents(new MessageSelectMenu().setCustomId('modal_test_language').setPlaceholder('Select language').addOptions([
@@ -52,5 +51,5 @@ exports.send = async (uhg, interaction) => {
 exports.get = async (uhg, interaction) => {
     console.log(interaction.fields.getTextInputValue('modal_verfiy_username'))
     console.log(interaction.fields.getTextInputValue('modal_verfiy_language'))
-    await interaction.reply({ content: 'Your submission was recieved successfully!', ephemeral: true });
+    await interaction.reply({ content: 'Your submission was recieved successfully!\nstill, it doesn\'t work yet...', ephemeral: true });
 }
