@@ -3,7 +3,8 @@ module.exports = {
     aliases: ["gamecount", "gc", "game", "playercount", "pc", "players"],
     run: async (uhg, pmsg) => {
       try{
-        let args = pmsg.args.toLowerCase().split()[0]
+        let args = pmsg.args.split(" ")
+        args = args[0].toLowerCase()
         let api = await uhg.getApi("fb811b92561e434eb5b6ef04695cc49a", ["gamecounts"])
         if (api instanceof Object == false) return api
         let gc = api.gamecounts.games
