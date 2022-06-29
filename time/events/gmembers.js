@@ -13,7 +13,20 @@ module.exports = {
 
       // dUhg.filter(n => typeof n._id !== 'string').forEach(i => {
       //   uhg.mongo.run.delete("general", "uhg", {_id: i._id})
-      // });
+      // }
+
+      if (date.getHours() == 3 && date.getMinutes() == 0) {
+        for (let verified of dVerify) {
+          console.log(verified)
+          let api = await uhg.getApi(verified.uuid, ['hypixel'])
+          if (api instanceof Object == false) continue
+          if (api.username !== verified.nickname) uhg.mongo.run.update("general", "verify", {_id:verified._id, nickname: api.username, names: api.hypixel.nicks })
+          await uhg.delay(700)
+        }
+        dVerify = await uhg.mongo.run.get("general", "verify")
+        uhg.data.verify = dVerify
+      }
+      
 
       let api = await uhg.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
       if (api instanceof Object == false) return console.log(api)
@@ -33,9 +46,9 @@ module.exports = {
         if (!vMember.length) unUuid.push(member.uuid);
         else if (!uMember.length) uhg.mongo.run.post("general", "uhg", {_id:vMember[0]._id, username:vMember[0].nickname, uuid: vMember[0].uuid, guildrank: member.rank })
         else if (uMember[0].guildrank != member.rank) uhg.mongo.run.update("general", "uhg", {_id:uMember[0]._id, guildrank: member.rank })
+        else if (uMember[0].username != vMember[0].nickname) uhg.mongo.run.update("general", "uhg", {_id:uMember[0]._id, username: vMember[0].nickname })
       }
       dUhg.filter(n => !allUuids.includes(n.uuid)).forEach(notuhg => { uhg.mongo.run.delete("general", "uhg", {_id: notuhg._id})});
-
       /* get UNVERIFIED members */
       unNames = []
       for (let uuid of unUuid) {
