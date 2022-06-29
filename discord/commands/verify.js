@@ -66,7 +66,7 @@ module.exports = {
       let verified = await uhg.mongo.run.get("general", "verify", {_id:id})
       if (verified.length && verified[0].nickname.toLowerCase() == args[0].toLowerCase()) return "Už jsi verifikovaný"
 
-      let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username, updated: Number(new Date()) })
+      let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username, names: api.hypixel.nicks })
       if (!post.acknowledged) return "Někde nastala chyba!"
 
       let msg;
