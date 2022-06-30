@@ -22,7 +22,7 @@ module.exports = {
         id = user.id
       }
 
-      if (!nickname) return "Nezadal jsi jméno, a nebo jsi blbej a neumíš pořádně oddělovat slova jednou mezerou"
+      if (!nickname) return "Nezadal jsi jméno"
 
       let api = await uhg.getApi(nickname, ["key", "hypixel", "mojang", "guild"])
       if (api instanceof Object == false) return api
@@ -64,8 +64,10 @@ module.exports = {
 
 
       let verified = await uhg.mongo.run.get("general", "verify", {_id:id})
-      if (verified.length && verified[0].nickname.toLowerCase() == args[0].toLowerCase()) return "Už jsi verifikovaný"
-
+      if (verified.length && verified[0].nickname.toLowerCase() == args[0].toLowerCase()) {
+        uhg.mongo.run.post("stats", "stats", api.hypixel)
+        return "Už jsi verifikovaný"
+      }
       let post = await uhg.mongo.run.post("general", "verify", { _id: id, uuid: api.uuid, nickname: api.username, names: api.hypixel.nicks })
       if (!post.acknowledged) return "Někde nastala chyba!"
 
@@ -73,7 +75,7 @@ module.exports = {
 
       if (!user && !verified.length && post.insertedId==id) msg = await message.channel.send(`Úspěšná verifikace jako \`${api.username}\`!`);
       else if (user) msg = await message.channel.send(`Úspěšně jsi verifikoval ${user||`<@${id}>`} na \`${api.username}\`!`)
-      else msg = await message.channel.send(`Změnil sis jméno z \`${(member.nickname||member.user.username).replace("[Admin] ", "").replace("[Mod] ", "").replace("[YOUTUBE] ", "")}\` na \`${api.username}\`!`);
+      else msg = await message.channel.send(`Změnil sis jméno na \`${api.username}\`!`); /*z \`${(member.nickname||member.user.username).replace("[Admin] ", "").replace("[Mod] ", "").replace("[YOUTUBE] ", "")}\`*/
 
       /*uhg.mongo.run.post("stats", "stats", api.hypixel)*/
 
