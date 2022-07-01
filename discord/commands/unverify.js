@@ -18,7 +18,8 @@ module.exports = {
         user = api.hypixel.links.DISCORD || null
         if (!user) return "Hráč nemá propojený Discord s Hypixelem"
         user = uhg.dc.client.users.cache.find(u => u.tag === user)
-        id = user.id
+        if (!user) return "Hráč nemá propojený Discord s Hypixelem"
+        id = user.id 
         custom = true
       }
       else if ((message.mentions.members.first() || Number(args[0]) && args[0].length >= 17 ) && auth.includes(id)) {
