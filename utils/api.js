@@ -44,7 +44,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   if (call.includes("mojang")) {
     try {
       /* uuid / nickname */
-      if (nickname.length > 20) {
+      /*if (nickname.length > 20) {
         mojang = await fetch(`https://api.mojang.com/user/profiles/${nickname}/names`).then(mjg => mjg.json())
         if ("error" in mojang) return "Neplatné uuid"
         mojang = mojang[mojang.length-1]
@@ -53,7 +53,12 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         mojang = await mjg.json()
       }
       uuid = mojang.id || nickname
-      nickname = mojang.name
+      nickname = mojang.name*/
+
+      mojang = await fetch(`https://api.ashcon.app/mojang/v2/user/${nickname}`).then(mjg => mjg.json())
+      uuid = mojang.uuid || nickname
+      uuid = uuid.replace(/-/g, "")
+      nickname = mojang.username || nickname
     } catch { return "Neplatné minecraft jméno" }
   } else { if (nickname.length > 20) {uuid = nickname; nickname = null;} else return "UUID nenalezeno (kontaktuj developera)"}
 
@@ -70,7 +75,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
   if (call.includes("hypixel")) {
     hypixel = await fetch(`https://api.hypixel.net/player?key=${api_key_2}&uuid=${uuid}`).then(api => api.json())
-    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(`${uuid} ${(mojang.id || "UUID NOT FOUND")} ${nickname} - ${mojang} | ${mjg}`))
+    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(`${uuid} - ${hypixel.cause || "error"}`))
     if (!hypixel.success) return `Hypixel API: ${hypixel.cause || "error"}`
     if (!hypixel.player) return "Hráč nikdy nebyl na hypixelu"
     if (!hypixel.player.stats || false) return "Hráč nehrál žádnou minihru"
@@ -329,7 +334,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         highestpos: swposition[swhighestpos] || null,
       }
     }
-    //console.log(api.hypixel.stats.skywars.ranked.highestpos)
 
     let bw_main_mode = Object.entries(modes.bedwars).reduce((a, b) => a[1] > b[1] ? a : b)[0]
 
@@ -1098,8 +1102,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     if (!skywars.success) skywars = {}
     else skywars = skywars.result
     api.rsw = {position:skywars.position || 0, rating: skywars.score || 0, div: getRankedPosition(skywars.position || 0)}
-    //console.log(api.rsw)
-    //console.log(`https://api.hypixel.net/player/ranked/skywars?key=${api_key}&uuid=${uuid}`)
   }
 
   if (call.includes("gamecounts")) {
@@ -1313,9 +1315,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         }
         if (banking) bank = banking.balance
         if (!banking) apioff = true
-        //console.log(purse)
-        //console.log(bank)
-        //console.log(profilname)
 
        api.skyblock.main[profilname] = {
          cakes: cakes,
@@ -1366,7 +1365,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
     if (skyblocki.includes("nether")) {
       for (let i=0;i<profiles.length; i++) {
         let profilname = profiles[i].cute_name
-        console.log(profilname)
         let nether = profiles[i].members[uuid] || null
         if (!nether) continue
         let netherdata = nether.nether_island_player_data || null
@@ -1411,7 +1409,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
   api.skin = `https://mc-heads.net/body/${uuid}.png`
   api.plancke = `https://plancke.io/hypixel/player/stats/${nickname || hypixel.displayname || "hypixel"}`
   api.hypixellogo = `https://cdn.discordapp.com/attachments/875503784086892617/896765939285114960/hypixel.png`
-  //console.log(api.hypixel.stats)
 
   let test = true
   if (test && api.hypixel) {
