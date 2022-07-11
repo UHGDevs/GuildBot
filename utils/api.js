@@ -1421,6 +1421,6 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
 } catch (e) {
   console.log(String(e.stack).bgRed)
-  return "Blbá api fetch chyba"
+  return "Chyba v API, kontaktujte vývojáře (<@!312861502073995265>)"
 }
 }
