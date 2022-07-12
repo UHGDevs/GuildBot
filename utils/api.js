@@ -211,11 +211,11 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       lastLogin: hypixel.lastLogin || 0,
       updated: Number(new Date()),
       seasonal: {
-        summer: {
+        summer: hypixel.seasonal.summer ? {
           experience: hypixel.seasonal.summer["2022"].levelling.experience || 0,
           level: (hypixel.seasonal.summer["2022"].levelling.experience || 0)/25000,
           xpleft: 25000-((hypixel.seasonal.summer["2022"].levelling.experience || 0)/25000-Math.floor((hypixel.seasonal.summer["2022"].levelling.experience || 0)/25000))*25000
-        },
+        } : {},
         silver: hypixel.seasonal.silver || 0,
       }
     }
