@@ -56,6 +56,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       nickname = mojang.name*/
 
       mojang = await fetch(`https://api.ashcon.app/mojang/v2/user/${nickname}`).then(mjg => mjg.json())
+      if (mojang.code) return `${mojang.code}: ${mojang.error}`
       uuid = mojang.uuid || nickname
       uuid = uuid.replace(/-/g, "")
       nickname = mojang.username || nickname
@@ -75,7 +76,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
   if (call.includes("hypixel")) {
     hypixel = await fetch(`https://api.hypixel.net/player?key=${api_key_2}&uuid=${uuid}`).then(api => api.json())
-    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(`${uuid} - ${hypixel.cause || "error"}`))
+    if (!hypixel.success) uhg.dc.cache.channels.get('bot').send(String(`${uuid} - ${hypixel.cause || "error"} | ${mojang.code || -1}: ${mojang.error || undefined} (${mojang.reason || undefined})`))
     if (!hypixel.success) return `Hypixel API: ${hypixel.cause || "error"}`
     if (!hypixel.player) return "Hráč nikdy nebyl na hypixelu"
     if (!hypixel.player.stats || false) return "Hráč nehrál žádnou minihru"
