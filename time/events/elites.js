@@ -12,6 +12,15 @@ module.exports = {
     let now = Number(new Date())
     try {
       let {api, data} = 'David > ALL'
+     
+      api = await uhg.getApi("fb811b92561e434eb5b6ef04695cc49a", ["online"])
+      if (api instanceof Object == false) return
+      if (api.online.title === "Offline") {
+        let embed = new MessageEmbed().setTitle('NEJSEM ONLINE').setDescription('BOT není online na serveru, nastavte Elite Members za mě')
+        let channel = await uhg.dc.client.channels.cache.get('530496801782890527')
+        channel.send({ embeds: [embed] })
+        return
+      }
       let updated = await guildrefresh(uhg, 'UltimateHypixelGuild')
       if (typeof updated !== 'object') {
         api = await uhg.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
