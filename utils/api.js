@@ -208,7 +208,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       quests: achievements.general_quest_master || 0,
       challenges: achievements.general_challenger || 0,
       stats: {},
-      lastLogin: hypixel.lastLogin || 0,
+      lastLogin: hypixel.lastLogin || -1,
       updated: Number(new Date()),
       seasonal: {
         summer: hypixel.seasonal.summer ? {

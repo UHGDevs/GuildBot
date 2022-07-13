@@ -11,7 +11,7 @@ module.exports = {
       if (api.online.game) onlinegame = " - " + api.online.game + " "
       if (api.online.mode) onlinemode = api.online.mode + " "
       if (api.online.map) onlinemap = `(${api.online.map})`
-      if (api.hypixel.lastLogin == 0) apioff = "- (API OFF)"
+      if (api.hypixel.lastLogin == -1) apioff = "- (API OFF)"
       let message = `[${api.online.title||"error"}] **${api.username}**${onlinegame||""}${uhg.getStatus(onlinemode)||""}${onlinemap||""} ${apioff}`
       return message
     } catch (e) {
