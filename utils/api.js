@@ -217,7 +217,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
           xpleft: 25000-((hypixel.seasonal.summer["2022"].levelling.experience || 0)/25000-Math.floor((hypixel.seasonal.summer["2022"].levelling.experience || 0)/25000))*25000
         } : {},
         silver: hypixel.seasonal.silver || 0,
-      } : {},
+      } : {summer: {}},
     }
 
     let arcadewins = (arcade.wins_party || 0)+(arcade.wins_dayone || 0)+(arcade.wins_oneinthequiver || 0)+(arcade.wins_dragonwars2 || 0)+(arcade.wins_ender || 0)+(arcade.wins_farm_hunt || 0)+(arcade.wins_soccer || 0)+(arcade.sw_game_wins || 0)+(arcade.hider_wins_hide_and_seek || 0)+(arcade.seeker_wins_hide_and_seek || 0)+(arcade.wins_hole_in_the_wall || 0)+(arcade.wins_simon_says || 0)+(arcade.wins_mini_walls || 0)+(arcade.wins_draw_their_thing || 0)+(arcade.wins_throw_out || 0)+(arcade.wins_zombies || 0)+(arcade.wins_scuba_simulator || 0)+(arcade.wins_easter_simulator || 0)+(arcade.wins_halloween_simulator || 0)+(arcade.wins_grinch_simulator_v2 || 0)
