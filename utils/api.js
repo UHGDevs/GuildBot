@@ -1154,6 +1154,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         queue: gamecounts.games.QUEUE.players || 0,
         limbo: gamecounts.games.LIMBO.players || 0,
         idle: gamecounts.games.IDLE.players || 0,
+        skywars: gamecounts.games.SKYWARS.players || 0,
         skyblock: {
           players: gamecounts.games.SKYBLOCK.players || 0,
           crimson_isle: gamecounts.games.SKYBLOCK.modes.crimson_isle || 0,

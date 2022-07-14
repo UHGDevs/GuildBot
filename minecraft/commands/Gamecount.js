@@ -10,14 +10,14 @@ module.exports = {
         let gc = api.gamecounts.games
         let minigame;
         let players;
-        if (!args) return "Nezadal jsi žádnou minihru"
+        if (!args) {minigame = "Hypixel Network"; players = api.gamecounts.playerCount}
         else if (args == "bedwars" || args == "bw" || args == "bed") {minigame = "Bed Wars"; players = gc.bedwars}
         else if (args == "skywars" || args == "sw") {minigame = "SkyWars"; players = gc.skywars}
         else if (args == "skyblock" || args == "sb") {minigame = "SkyBlock"; players = gc.skyblock.players}
         else if (args == "murder" || args == "mm" || args == "murdermystery") {minigame = "Murder Mystery"; players = gc.murder}
         else if (args == "legacy" || args == "classic" || args == "classicgames") {minigame = "Classic Games"; players = gc.legacy.players}
         else if (args == "arena" || args == "ab" || args == "arenabrawl" || args == "brawl") {minigame = "Arena Brawl"; players = gc.legacy.arena}
-        else if (args == "vampirez" || args == "vampire" || args == "vampires") {minigame = "VampireZ"; players = gc.legacy.vampirez}
+        else if (args == "vampirez" || args == "vampire" || args == "vampires" || args == "vz") {minigame = "VampireZ"; players = gc.legacy.vampirez}
         else if (args == "tkr" || args == "gingerbread" || args == "turbokartracers") {minigame = "TKR"; players = gc.legacy.tkr}
         else if (args == "quake" || args == "qc" || args == "quakecraft") {minigame = "Quakecraft"; players = gc.legacy.quake}
         else if (args == "walls" || args == "thewalls") {minigame = "The Walls"; players = gc.legacy.walls}
@@ -31,7 +31,7 @@ module.exports = {
         else if (args == "tourney" || args == "tournamentlobby" || args == "tourneylobby" || args == "tournament" || args == "tour" || args == "tourlobby") {minigame = "Tournament Lobby"; players = gc.tourneylobby}
         else if (args == "supersmash" || args == "supersmashheroes" || args == "ssh") {minigame = "Super Smash Heroes"; players = gc.supersmash}
         else if (args == "replay") {minigame = "Replay"; players = gc.replay}
-        else if (args == "blitz" || args == "blitzsg" || args == "survivalgames" || args == "sg" || args == "blitzsurvivalgames") {minigame = "Blitz SG"; players = gc.blitz}
+        else if (args == "blitz" || args == "blitzsg" || args == "survivalgames" || args == "sg" || args == "blitzsurvivalgames" || args == "bsg") {minigame = "Blitz SG"; players = gc.blitz}
         else if (args == "buildbattle" || args == "bb" || args == "build") {minigame = "Build Battle"; players = gc.buildbattle}
         else if (args == "uhc" || args == "ultrahardcore" || args == "uhcchampions") {minigame = "UHC"; players = gc.uhc}
         else if (args == "speeduhc" || args == "speedultrahardcore") {minigame = "SpeedUHC"; players = gc.speeduhc}
