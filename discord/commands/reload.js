@@ -5,6 +5,7 @@ module.exports = {
   platform: "dc",
   run: async (uhg, message, content) => {
     try {
+      return "mimo provoz"
       let args = content.toLowerCase().split(" ").filter(n => n)
       if (!args.length) return "Napiš jméno commandu nebo kategorie!"
 
