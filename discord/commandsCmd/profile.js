@@ -8,12 +8,18 @@ module.exports = {
   queue: { name: 'Profile', value: 'profile', sort: 2 },
   run: async (uhg, interaction) => {
     try {
-      console.log("a")
       let user = interaction.options.getString('player') || interaction.member.nickname || interaction.user.username
+      let dcuser = interaction.options.getUser('user')
+      if (dcuser) {
+        user = uhg.data.verify.find(n => n._id == dcuser.id)
+        if (!user) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error**`).setColor('RED').setDescription(`${dcuser} není verifikovaný`)] })
+        user = user.uuid
+      }
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
       if (api instanceof Object == false) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
 
       let dUhg = uhg.mongo.run.get("general", "uhg", {uuid: api.uuid})
+      let dGuilds = uhg.mongo.run.get("stats", "guild")
       let verify = await uhg.mongo.run.get("general", "verify")
       uhg.data.verify = verify
 
@@ -37,6 +43,30 @@ module.exports = {
         { name: `Joined`, value: `<t:${Math.round(api.guild.member.joined/1000)}:R>`, inline: true}
       )
 
+      dGuilds = await dGuilds
+      uhg.data.guild = dGuilds
+      if (api.guild.name == 'UltimateHypixelGuild' || api.guild.name == 'TKJK' || api.guild.name == 'Czech Team') {
+        let pGuild = dGuilds.filter(n => n.name == api.guild.name)[0]
+        let member = pGuild.members.filter(n => n.uuid == api.uuid)
+        if (member.length) {
+          member = member[0]
+          let monthlyGEXPkeys = Object.keys(member.exp.daily).filter(n => n.startsWith(new Date().toISOString().slice(0, 7)))
+          let monthlyGEXP = 0
+          for (let den of monthlyGEXPkeys) {
+            monthlyGEXP += member.exp.daily[den] || 0
+          }
+          let weeklyGEXPkeys = Object.keys(pGuild.members[0].exp.daily).slice(0, new Date().getDay() || 7)
+          let weeklyGEXP = 0
+          for (let den of weeklyGEXPkeys) {
+            weeklyGEXP += member.exp.daily[den] || 0
+          }
+          embed.addFields(
+            { name: `WEEKLY GEXP`, value: `\`${uhg.f(weeklyGEXP)}\``, inline: true},
+            { name: `MONTHLY GEXP`, value: `\`${uhg.f(monthlyGEXP)}\``, inline: true},
+            { name: `TOTAL GEXP`, value: `\`${uhg.f(Object.values(member.exp.daily).reduce((a, b) => a + b))}\``, inline: true}
+          )
+        }
+      }
       dUhg = await dUhg
       dUhg = dUhg[0]
 
