@@ -23,6 +23,10 @@ module.exports = class Functions extends EventEmitter {
     return array.some(n => str.startsWith(n));
   }
 
+  includesWithArray(str, array) {
+    return array.some(n => str.includes(n));
+  }
+
   endsWithArray(str, array) {
     return array.some(n => str.endsWith(n));
   }

@@ -8,8 +8,9 @@
         "elites": true,
         "guildinfo": true,
         "gmembers": true,
-        "sniper": false,
-        "badges": false
+        "sniper": true,
+        "badges": true,
+        "bwroles": false
     },
     "dev_mode": false
 }
