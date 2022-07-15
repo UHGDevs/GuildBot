@@ -56,11 +56,21 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       nickname = mojang.name*/
 
       mojang = await fetch(`https://api.ashcon.app/mojang/v2/user/${nickname}`).then(mjg => mjg.json())
-      if (mojang.code) return `${mojang.code}: ${mojang.error}`
-      uuid = mojang.uuid || nickname
-      uuid = uuid.replace(/-/g, "")
-      nickname = mojang.username || nickname
-    } catch { return "Neplatné minecraft jméno" }
+      if (mojang.code && uhg.data.verify) {
+        let info = uhg.data.verify.filter(n => n.nickname.toLowerCase() == nickname.toLowerCase() || n.uuid.toLowerCase() == uuid.toLowerCase())
+        let oldname;
+        if (!info.length) oldname = uhg.data.verify.filter(n => { if (n.names && n.names.find(a => a.toLowerCase() == nickname.toLowerCase())) return true; return n.uuid.toLowerCase() == uuid.toLowerCase()})
+        if (!info.length && oldname.length) {uuid = oldname[0].uuid; nickname = oldname[0].nickname} 
+        else if (!info.length) return `${mojang.code}: ${mojang.error}`
+        else {uuid = info[0].uuid; nickname = info[0].nickname} 
+        mojang = {}
+      } else if (mojang.code) return `${mojang.code}: ${mojang.error}`
+      else {
+        uuid = mojang.uuid || nickname
+        uuid = uuid.replace(/-/g, "")
+        nickname = mojang.username || nickname
+      }
+    } catch (e) {return "Neplatné minecraft jméno" }
   } else { if (nickname.length > 20) {uuid = nickname; nickname = null;} else return "UUID nenalezeno (kontaktuj developera)"}
 
   if (call.includes("key"||"api")) {
