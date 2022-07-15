@@ -88,7 +88,7 @@ exports.bw = async (uhg) => {
     let guild = uhg.dc.client.guilds.cache.get('874337528621191251')
     if (!guild) return console.log('Nejsem na bw dc')
 
-    let allroles = ["FKDR", "WLR", "BBLR", "wins", "Final Kills", "Beds Broken", "Challenges Completed", "Prestige"]
+    let allroles = ["FKDR", "WLR", "BBLR", "wins", "Final Kills", "Beds Broken", "Prestige"] //"Challenges Completed"
     let pres = ["Stone", "Iron", "Gold", "Diamond", "Emerald", "Sapphire", "Ruby", "Crystal", "Opal", "Amethyst", "Rainbow"]
     let roles = guild.roles.cache.filter(n => uhg.includesWithArray(n.name, allroles))
 
@@ -101,13 +101,17 @@ exports.bw = async (uhg) => {
         role: role
       }
       if (r.name.includes('Prestige')){
-        r.stat = 'Level'
+        r.stat = 'level'
         r.from = pres.indexOf(r.name.split(' ')[0].replace(/[^a-z]+/gi, "")) * 100
       }
       else {
-        r.stat = role.name.split('[')[1].replace(/[^a-z]+/gi, "")
+        r.stat = role.name.split('[')[1].replace(/[^a-z]+/gi, "").toLowerCase()
         r.from = Number(role.name.replace(',', '.').replace(/[^\d.]/g, '')) || 0
       }
+
+      if (r.stat == 'finalkills') r.stat = r.stat.replace('finalkills', 'finalKills')
+      else if (r.stat == 'bedsbroken') r.stat = r.stat.replace('bedsbroken', 'bedsBroken')
+
       if (!uhg.dc.cache.bw.roles[r.stat])uhg.dc.cache.bw.roles[r.stat] = []
       uhg.dc.cache.bw.roles[r.stat].push(r)
     }

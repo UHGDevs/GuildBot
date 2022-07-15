@@ -20,28 +20,25 @@ module.exports = {
 
       let whitelist = ['DavidCzPdy']
       for (let user of verify) {
-        ///if (!whitelist.includes(user.nickname)) continue;
+        if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
         let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
+        
         let upRole = [];
         for (let stat in uhg.dc.cache.bw.roles) {
-          let staty = data[0].stats[stat.toLowerCase()]
-          let level = Math.floor(staty.level)
-          let up = uhg.dc.cache.bw.roles[stat].filter(n => {
-            if (!n.to && level >= n.from) return true
-            else if (n.to && level >= n.from && n.to >= level) return true
-            else return false
-          })[0]
+          console.log(stat)
+          let staty = data[0].stats.bedwars[stat] || data[0].stats.bedwars.overall[stat]
+          console.log(staty)
+          let up = uhg.dc.cache.bw.roles[stat].filter(n => staty >= n.from )[0]
           if (up) upRole.push(up)
-          
         }
-        console.log(upRole)
-return
+
         let remove = gmember._roles.filter(n => uhg.dc.cache.bw.ids.includes(n) && !upRole.filter(i => i.id == n).length)
         let add = upRole.filter(n => !gmember._roles.includes(n.id))
-
+console.log(remove)
+console.log(add)
         for (let r_id of remove) {
           await gmember.roles.remove(guild.roles.cache.get(r_id))
           await uhg.delay(1000)
@@ -51,6 +48,7 @@ return
           await uhg.delay(1000)
         }
 
+        try { if (!gmember.nickname || gmember.nickname !== `[${Math.round(data[0].stats.bedwars.level)}☆] ${user.nickname}`) {await gmember.setNickname(`[${Math.floor(data[0].stats.bedwars.level)}☆] ${user.nickname}`)} } catch (e) {}
       }
 
       return
