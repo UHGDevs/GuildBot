@@ -60,7 +60,7 @@ module.exports = {
 
         let sorted = sort.sort(function(a, b){ return a.exp - b.exp }).slice(0,10)
 
-        for(let b=0; b<sorted.length; b++) {
+        for (let b=0; b<sorted.length; b++) {
           let uApi = await uhg.getApi(sorted[b].uuid, ["hypixel"])
           let timing = '';
           let timing1 = '';
