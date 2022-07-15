@@ -12,7 +12,8 @@ module.exports = {
         let players;
         if (!args) {minigame = "Hypixel Network"; players = api.gamecounts.playerCount}
         else if (args == "bedwars" || args == "bw" || args == "bed") {minigame = "Bed Wars"; players = gc.bedwars}
-        else if (args == "skywars" || args == "sw") {minigame = "SkyWars"; players = gc.skywars}
+        else if (args == "skywars" || args == "sw") {minigame = "SkyWars"; players = gc.skywars.players}
+        else if (args == "megasw" || args == "megaskywars" || args == "msw" || args == "swmega" || args == "mega") {minigame = "SkyWars Mega"; players = gc.skywars.mega}
         else if (args == "skyblock" || args == "sb") {minigame = "SkyBlock"; players = gc.skyblock.players}
         else if (args == "murder" || args == "mm" || args == "murdermystery") {minigame = "Murder Mystery"; players = gc.murder}
         else if (args == "legacy" || args == "classic" || args == "classicgames") {minigame = "Classic Games"; players = gc.legacy.players}
