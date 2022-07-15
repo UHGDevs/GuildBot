@@ -13,10 +13,11 @@ module.exports = {
       let updated = await guildrefresh(uhg, 'UltimateHypixelGuild')
       if (typeof updated !== 'object') return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
 
+      let amount = interaction.options.getNumber('amount') || 30
       let api = updated.api
       let data = updated.data
 
-      let mesic = Object.keys(data.members[0].exp.daily).slice(0,30)
+      let mesic = Object.keys(data.members[0].exp.daily).slice(0,amount)
 
       let msgfrag = []
       let sort = []
@@ -49,7 +50,7 @@ module.exports = {
         } catch (e) {}
         msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp) + timing + timing1}`)
       }
-      let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za 30 dní:**\n\n${msgfrag.join("\n")}`).setFooter('Jen guild membeři, kteří jsou v guildě více jak 7 dní')
+      let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za ${amount} dní:**\n\n${msgfrag.join("\n")}`).setFooter('Jen guild membeři, kteří jsou v guildě více jak 7 dní')
       interaction.editReply({ embeds: [embed] })
       
     } catch (e) {
