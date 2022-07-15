@@ -12,7 +12,7 @@ module.exports = {
         .addComponents(new MessageButton().setCustomId('uhg_rules_elites')/*.setLabel('Elite membeři')*/.setStyle('SECONDARY').setDisabled(false).setEmoji('<:elitemember:979390144153018428>'))
         .addComponents(new MessageButton().setCustomId('uhg_rules_events')/*.setLabel('Guild eventy')*/.setStyle('SECONDARY').setDisabled(false).setEmoji('🎲'))
         .addComponents(new MessageButton().setCustomId('uhg_rules_bot')/*.setLabel('Guild bot')*/.setStyle('SECONDARY').setDisabled(true).setEmoji('<:botuhg:979390792747581460>'))
-        .addComponents(new MessageButton().setCustomId('uhg_rules_splashes')/*.setLabel('Bingo splashes')*/.setStyle('SECONDARY').setDisabled(false).setEmoji('<:splashpotionlarge:979391424086818818>'));
+        //.addComponents(new MessageButton().setCustomId('uhg_rules_splashes')/*.setLabel('Bingo splashes')*/.setStyle('SECONDARY').setDisabled(false).setEmoji('<:splashpotionlarge:979391424086818818>'));
 
       let op = ["312861502073995265", "379640544143343618", "427198829935460353", "378928808989949964"]
       if (content == 'rules' && op.includes(message.author.id)) uhg.dc.client.channels.cache.get('784326140227616769').send({ embeds: [embed], components: [buttons]});
