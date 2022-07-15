@@ -7,7 +7,11 @@ module.exports = async (uhg) => {
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
   let botSlashCmds = []
-  uhg.dc.slash.forEach(cmd => { botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
+  uhg.dc.slash.forEach(cmd => { if (cmd.name !== 'loot') botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
+  await uhg.dc.client.application.commands.set(botSlashCmds)
+  
+  let lootCmd = uhg.dc.slash.get('loot')
+  botSlashCmds.push({ name: lootCmd.name, description: lootCmd.description||"", options: lootCmd.options || [], permissions: lootCmd.permissions||[], type: lootCmd.type })
   await uhg.dc.client.guilds.cache.get("758650512827613195").commands.set(botSlashCmds)
 
   //let uhgSlashCmds = []
@@ -15,7 +19,7 @@ module.exports = async (uhg) => {
   //commands.forEach(cmd => { uhgSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
   //await guild.commands.set(uhgSlashCmds)
 
-  await uhg.dc.client.application.commands.set(botSlashCmds)
+  
 
   uhg.dc.cache.channels = new Collection()
   if (uhg.settings.minecraft === true) {

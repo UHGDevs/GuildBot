@@ -6,7 +6,7 @@ const Functions = require('./functions.js')
 class Login extends Functions {
   constructor(dc) {
     super()
-    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), slash: new Collection(), cmd: new Collection(),cache: {}}
+    this.dc = {client: dc, commands: new Collection(), aliases: new Collection(), slash: new Collection(), cmd: new Collection(), loot: new Collection(), cache: {}}
     this.mc = {client: null, commands: new Collection(), aliases: new Collection(), send: [], ready: false}
     this.test = {server:null}
     this.ignore = []
@@ -15,11 +15,12 @@ class Login extends Functions {
     this.time = {events: new Collection(), ready:JSON.parse(fs.readFileSync('settings/config.json', 'utf8')).time}
     this.snipe = new Collection()
     this.info = {path: require.main.path + '/'}
+    this.loot = {}
     this.ready = this.load()
   }
   async load() {
     delete this.ready
-    this.reload(["settings"])
+    this.reload(["settings", 'loot'])
     await Promise.all([this.createMongo()]);
     require("../utils/client.js")(this)
     require('../utils/embeds.js')(this)
@@ -31,7 +32,7 @@ class Login extends Functions {
     await mongo.connect()
     await require("../utils/mongodb").setup(mongo)
     this.mongo = {client: mongo, run: require("../utils/mongodb")}
-    await this.reload(["mongo", "commands"])
+    await this.reload(["mongo"])
   }
 
   async reload(reload=[]) {
@@ -65,8 +66,15 @@ class Login extends Functions {
       this.data.stats = await this.mongo.run.get("stats", "stats")
     }
 
-    if (reload.includes("uhg") || reload.includes("mongo" || !reload.length )) {
+    if (reload.includes("uhg") || reload.includes("mongo") || !reload.length ) {
       this.data.uhg = await this.mongo.run.get("general", "uhg")
+    }
+
+    if (reload.includes("loot") || !reload.length ) {
+      let req = Object.keys(require.cache).filter(n => n == require.main.path+'/settings/values/lootBoxes.js')
+      if (req.length) delete require.cache[req[0]]
+      let lootData = require('../settings/values/lootBoxes')
+      this.loot.data = lootData 
     }
   }
 

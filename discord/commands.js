@@ -22,6 +22,13 @@ module.exports = (uhg) => {
             if (pull.name) uhg.dc.cmd.set(pull.name, pull);
         }
         console.log(`${uhg.dc.cmd.size} Discord cmd Commands`.brightGreen);
+
+        const loot = fs.readdirSync(`discord/lootBoxes/commands/`).filter((file) => file.endsWith(".js"));
+        for (let file of loot) {
+            let pull = require(`./lootBoxes/commands/${file}`);
+            if (pull.name) uhg.dc.loot.set(pull.name, pull);
+        }
+        console.log(`${uhg.dc.loot.size} Discord loot Commands`.brightGreen);
     } catch (e) {
         console.log(String(e.stack).bgRed)
     }

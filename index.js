@@ -18,6 +18,7 @@ uhg.once("ready", () => {
   require("./time/handler.js") (uhg)
 
   fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
+  fs.watchFile('settings/values/lootBoxes.js', (curr, prev) => uhg.reload(["loot"]));
 
   console.log("Guild bot je připraven!".bold.brightGreen)
 
