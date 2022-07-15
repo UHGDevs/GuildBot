@@ -1,9 +1,12 @@
 const { MessageEmbed } = require('discord.js');
 module.exports = async (uhg, message) => {
   if (message.channel.id == "928007600115703808") {
-      setTimeout(() => message.delete().catch((error) => {{console.log("zpráva už je smazána")}}), 30000)
-      message.guild.channels.cache.get("548772550386253824").send(`Autor: ${message.author} Zpráva: ${message.content}`)
-  }
+      setTimeout(() => message.delete().catch((error) => {}), 30000)
+      message.guild.channels.cache.get("548772550386253824").send({content: `Autor: ${message.author} Zpráva: ${message.content}`, allowedMentions: {parse: []} })
+  } else if (message.channel.id == "877257855084924949") {
+    setTimeout(() => message.delete().catch((error) => {}), 30000)
+    message.guild.channels.cache.get("877432655954706473").send({content: `Autor: ${message.author} Zpráva: ${message.content}`, allowedMentions: { parse: [] }})
+}
   if (!message.guild || !message.channel || message.author.bot) return;
   if (message.channel.partial) await message.channel.fetch();
   if (message.partial) await message.fetch();

@@ -17,15 +17,15 @@ module.exports = {
       verify = verify.filter(n => guild.members.cache.get(n._id))
 
       let gmembers = guild.members.cache
-
+let ids = []
       let whitelist = ['DavidCzPdy']
       for (let user of verify) {
-        if (!whitelist.includes(user.nickname)) continue;
+        //if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
         let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
-        
+ids.push(user.id)
         let upRole = [];
         for (let stat in uhg.dc.cache.bw.roles) {
           console.log(stat)
@@ -37,8 +37,7 @@ module.exports = {
 
         let remove = gmember._roles.filter(n => uhg.dc.cache.bw.ids.includes(n) && !upRole.filter(i => i.id == n).length)
         let add = upRole.filter(n => !gmember._roles.includes(n.id))
-console.log(remove)
-console.log(add)
+
         for (let r_id of remove) {
           await gmember.roles.remove(guild.roles.cache.get(r_id))
           await uhg.delay(1000)
@@ -51,6 +50,7 @@ console.log(add)
         try { if (!gmember.nickname || gmember.nickname !== `[${Math.round(data[0].stats.bedwars.level)}☆] ${user.nickname}`) {await gmember.setNickname(`[${Math.floor(data[0].stats.bedwars.level)}☆] ${user.nickname}`)} } catch (e) {}
       }
 
+let unverified = guild.members.cache.filter(n => !ids.includes(n.id))
       return
 
     } catch(e) {
