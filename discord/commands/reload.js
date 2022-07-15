@@ -5,7 +5,6 @@ module.exports = {
   platform: "dc",
   run: async (uhg, message, content) => {
     try {
-      return "mimo provoz"
       let args = content.toLowerCase().split(" ").filter(n => n)
       if (!args.length) return "Napiš jméno commandu nebo kategorie!"
 
@@ -27,21 +26,24 @@ module.exports = {
           if (item.includes("/discord/commands/")) uhg.dc.commands.set(newcmd.name, newcmd)
           else if (item.includes("/minecraft/commands/")) uhg.mc.commands.set(newcmd.name, newcmd)
           else if (item.includes("/time/events/")) uhg.time.events.set(newcmd.name, newcmd)
+          else if (item.includes("discord/commandsCmd")) uhg.dc.cmd.set(cmd.name, newcmd);
         });
 
         return `Success reload -> ${args[0]}`
       }
 
-      let cmd = await uhg.dc.commands.get(args[0]) || await uhg.dc.commands.get(uhg.dc.aliases.get(args[0])) || await uhg.mc.commands.get(uhg.mc.aliases.get(args[0]));
+      let cmd = uhg.dc.commands.get(args[0]) || uhg.dc.commands.get(uhg.dc.aliases.get(args[0])) || uhg.mc.commands.get(uhg.mc.aliases.get(args[0])) || uhg.dc.cmd.get(args[0]);
       if (!cmd) return "neplatný command"
       let path = "../../minecraft/commands/"
       if (cmd.platform == "dc") path = "./"
+      else if (cmd.platform == "cmd") path = "../commandsCmd"
 
       try {
         delete require.cache[require.resolve(`${path}/${cmd.name}.js`)]
 
         let newcmd = require(`${path}/${cmd.name}.js`) || {name: "error"}
         if (path == "./") uhg.dc.commands.set(cmd.name, newcmd)
+        else if (path == "../commandsCmd") uhg.dc.cmd.set(cmd.name, newcmd);
         else uhg.mc.commands.set(cmd.name, newcmd)
 
         return `Command ${newcmd.name} se podařilo aktualizovat`

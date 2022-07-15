@@ -4,7 +4,7 @@ module.exports = {
   name: "sniper",
   aliases: [],
   description: "UHG, the snipers",
-  allowedids: ["378928808989949964"],
+  allowedids: ["378928808989949964", "540800781524402197"],
   platform: "dc",
   run: async (uhg, message, content) => {
     try {

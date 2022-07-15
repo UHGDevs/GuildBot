@@ -8,6 +8,7 @@ module.exports = {
   queue: { name: 'Profile', value: 'profile', sort: 2 },
   run: async (uhg, interaction) => {
     try {
+      console.log("a")
       let user = interaction.options.getString('player') || interaction.member.nickname || interaction.user.username
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
       if (api instanceof Object == false) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
