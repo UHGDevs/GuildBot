@@ -84,7 +84,7 @@ exports.uhg = async (uhg) => {
 
 exports.bw = async (uhg) => {
   try {
-    uhg.dc.cache.bw = {roles: [], ids: []}
+    uhg.dc.cache.bw = {roles: [], ids: [], allroles: []}
     let guild = uhg.dc.client.guilds.cache.get('874337528621191251')
     if (!guild) return console.log('Nejsem na bw dc')
 
@@ -92,8 +92,10 @@ exports.bw = async (uhg) => {
     let pres = ["Stone", "Iron", "Gold", "Diamond", "Emerald", "Sapphire", "Ruby", "Crystal", "Opal", "Amethyst", "Rainbow"]
     let roles = guild.roles.cache.filter(n => uhg.includesWithArray(n.name, allroles))
 
+    uhg.dc.cache.bw.allroles.push(guild.roles.cache.get('877239217795768340'))
     for (let role of roles) {
       role = role[1]
+      uhg.dc.cache.bw.allroles.push(role)
       uhg.dc.cache.bw.ids.push(role.id)
       let r = {
         id: role.id,
@@ -292,6 +294,52 @@ exports.bw_refresh = async (uhg, member, api) => {
     await member.roles.add(aRole.role)
     await uhg.delay(1000)
   }
-
-
 }
+
+
+exports.unverify = async (uhg, user) => {
+  let uGuild = uhg.dc.client.guilds.cache.get('455751845319802880')
+  let bwGuild = uhg.dc.client.guilds.cache.get('874337528621191251')
+
+  let uMember = uGuild.members.cache.get(user.id)
+  let bwMember = bwGuild.members.cache.get(user.id)
+  if (uMember) {
+    if (uMember.nickname) {try { await uMember.setNickname(null) } catch (e) {}}
+    for (let role of uhg.dc.cache.uhgroles) { if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1].role) } catch (e) {}}}
+    for (let role of uhg.dc.cache.badges) {if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1]) } catch (e) {}}}
+    for (let role of uhg.dc.cache.badges_sb) { if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1]) } catch (e) {}}}
+  }
+
+  if (bwMember) {
+    if (bwMember.nickname) {try { await bwMember.setNickname(null) } catch (e) {}}
+    for (let role of uhg.dc.cache.bw.allroles) {
+      if (bwMember._roles.includes(role.id)) {try { await bwMember.roles.remove(role) } catch (e) {}}
+    }
+  }
+
+    /* ---- UHG Split role ---- */
+    try {
+      /* -- Guild Split -- */
+      let split_guild = uhg.dc.cache.splits.get('guild')
+      if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
+      else if (!member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && member._roles.includes(split_guild.id)) await member.roles.remove(split_guild.role)
+  
+      /* -- Discord Split -- */
+      let split_discord = uhg.dc.cache.splits.get('discord')
+      if (member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && !member._roles.includes(split_discord.id)) await member.roles.add(split_discord.role)
+      else if (!member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && member._roles.includes(split_discord.id)) await member.roles.remove(split_discord.role)
+  
+      /* -- Badges Split -- */
+      let split_badges = uhg.dc.cache.splits.get('badges')
+      if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
+      else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
+  
+      /* -- SbBadges Split -- */
+      let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
+      if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
+      else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
+  
+    } catch (e) {}
+  
+}
+

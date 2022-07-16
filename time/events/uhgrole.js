@@ -49,7 +49,7 @@ module.exports = {
         else if (uMember[0].username != vMember[0].nickname) uhg.mongo.run.update("general", "uhg", {_id:uMember[0]._id, username: vMember[0].nickname })
       }
       dUhg.filter(n => !allUuids.includes(n.uuid)).forEach(notuhg => { uhg.mongo.run.delete("general", "uhg", {_id: notuhg._id})});
-      
+
       /* get UNVERIFIED members */
       unNames = []
       for (let uuid of unUuid) {
@@ -111,7 +111,7 @@ module.exports = {
       for (let member of membersUHG) {
         if (member[1].user.bot) continue;
         member = member[1]
-        if (member.user.username !== 'DavidCzPdy') continue
+        //if (member.user.username !== 'DavidCzPdy') continue
         
         let v = dUhg.filter(n => n._id==member.id)
         let v2 = dVerify.filter(n => n._id==member.id) 

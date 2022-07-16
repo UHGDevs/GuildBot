@@ -25,6 +25,7 @@ let ids = []
         //if (!whitelist.includes(user.nickname)) continue;
         let gmember = gmembers.get(user._id)
         if (!gmember) continue;
+        if (gmember.user.bot) continue;
         let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
 ids.push(user.id)
@@ -33,6 +34,11 @@ ids.push(user.id)
       }
 
 let unverified = guild.members.cache.filter(n => !ids.includes(n.id))
+return
+      for (let member of unverified) {
+        member = member[1]
+
+      }
       return
 
     } catch(e) {

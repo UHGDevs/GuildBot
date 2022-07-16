@@ -54,9 +54,9 @@ exports.get = async (uhg, interaction) => {
     let username = interaction.fields.getTextInputValue('modal_verfiy_username')
     let language = interaction.fields.getTextInputValue('modal_verfiy_language') || ''//.toLowerCase()
     let custom = interaction.fields.getTextInputValue('modal_verfiy_custom')
-    console.log(username)
-    console.log(language)
-    console.log(custom)
+    // console.log(username)
+    // console.log(language)
+    // console.log(custom)
     if (!language.match(/cz|sk|en/i)) {return interaction.reply({ content: 'Invalid language! CZ/SK/EN', ephemeral: true })}
     
     let gUhg = uhg.dc.client.guilds.cache.get('455751845319802880')

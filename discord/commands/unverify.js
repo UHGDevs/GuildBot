@@ -1,3 +1,5 @@
+const refresh = require('../../utils/serverroles.js')
+
 module.exports = {
   name: "unverify",
   aliases: [],
@@ -9,7 +11,7 @@ module.exports = {
       if (!uhg.data.verify) uhg.data.verify = await uhg.mongo.run.get("general", "verify")
       let args = content.split(" ").filter(n => n)
       let id = message.author.id;
-      let user;
+      let user = uhg.dc.client.users.cache.get(id);
       let custom = false;
 
       if (args.length && auth.includes(id)) {
@@ -20,6 +22,8 @@ module.exports = {
         custom = true
       }
 
+      await refresh.unverify(uhg, user)
+
       let unverify = await uhg.mongo.run.delete("general", "verify", {_id:id})
 
       if (unverify.deletedCount && custom == false) message.channel.send(`Už nejsi verifikovaný!`)
@@ -27,17 +31,6 @@ module.exports = {
       else if (unverify.deletedCount==0 &&  custom == false) return `Nejsi verifikovaný!`
       else if (unverify.deletedCount==0 && custom == true) return `${user} není verifikovaný`
       else return "Někde nastala chyba!"
-
-      let guild = uhg.dc.client.guilds.cache.get('455751845319802880')
-      if (guild.members.cache.has(id)) {
-        let member = guild.members.cache.get(id)
-        try { await member.setNickname(null) } catch (e) { if (message.guild.name == guild.name) message.reply("Nemám práva na změnu nickname")}
-
-        for (let role of uhg.dc.cache.uhgroles) {
-          role = role[1]
-          if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {console.log(e)}}
-        }
-      }
 
 
     } catch (e) {
