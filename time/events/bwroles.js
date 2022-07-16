@@ -1,7 +1,9 @@
+const refresh = require('../../utils/serverroles.js')
+
 module.exports = {
   name: "bwroles",
   description: "Automatická aktualizace rolí na bedwars serveru",
-  time: '0 */10 * * * *', //'*/10 * * * * *'
+  time: '0 */7 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,
   run: async (uhg) => {
@@ -26,28 +28,8 @@ let ids = []
         let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
 ids.push(user.id)
-        let upRole = [];
-        for (let stat in uhg.dc.cache.bw.roles) {
-          console.log(stat)
-          let staty = data[0].stats.bedwars[stat] || data[0].stats.bedwars.overall[stat]
-          console.log(staty)
-          let up = uhg.dc.cache.bw.roles[stat].filter(n => staty >= n.from )[0]
-          if (up) upRole.push(up)
-        }
-
-        let remove = gmember._roles.filter(n => uhg.dc.cache.bw.ids.includes(n) && !upRole.filter(i => i.id == n).length)
-        let add = upRole.filter(n => !gmember._roles.includes(n.id))
-
-        for (let r_id of remove) {
-          await gmember.roles.remove(guild.roles.cache.get(r_id))
-          await uhg.delay(1000)
-        }
-        for (let aRole of add) {
-          await gmember.roles.add(aRole.role)
-          await uhg.delay(1000)
-        }
-
-        try { if (!gmember.nickname || gmember.nickname !== `[${Math.round(data[0].stats.bedwars.level)}☆] ${user.nickname}`) {await gmember.setNickname(`[${Math.floor(data[0].stats.bedwars.level)}☆] ${user.nickname}`)} } catch (e) {}
+        
+        await refresh.bw_refresh(uhg, gmember, data[0])
       }
 
 let unverified = guild.members.cache.filter(n => !ids.includes(n.id))

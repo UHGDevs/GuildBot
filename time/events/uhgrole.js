@@ -1,6 +1,8 @@
+const refresh = require('../../utils/serverroles.js')
+
 module.exports = {
-  name: "gmembers",
-  description: "Automatická aktualizace rolí na discordu",
+  name: "uhgrole",
+  description: "Automatická aktualizace rolí na UHG discordu",
   time: '30 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,
@@ -10,10 +12,8 @@ module.exports = {
       let dVerify = await uhg.mongo.run.get("general", "verify")
       uhg.data.verify = dVerify
       let dUhg = await uhg.mongo.run.get("general", "uhg")
-
-      // dUhg.filter(n => typeof n._id !== 'string').forEach(i => {
-      //   uhg.mongo.run.delete("general", "uhg", {_id: i._id})
-      // }
+      let membersData = await uhg.mongo.run.get("stats", "stats")
+      uhg.data.stats = membersData
 
       if (date.getHours() == 3 && date.getMinutes() == 0) {
         for (let verified of dVerify) {
@@ -49,6 +49,7 @@ module.exports = {
         else if (uMember[0].username != vMember[0].nickname) uhg.mongo.run.update("general", "uhg", {_id:uMember[0]._id, username: vMember[0].nickname })
       }
       dUhg.filter(n => !allUuids.includes(n.uuid)).forEach(notuhg => { uhg.mongo.run.delete("general", "uhg", {_id: notuhg._id})});
+      
       /* get UNVERIFIED members */
       unNames = []
       for (let uuid of unUuid) {
@@ -110,41 +111,26 @@ module.exports = {
       for (let member of membersUHG) {
         if (member[1].user.bot) continue;
         member = member[1]
-        let split_guild = uhg.dc.cache.splits.get('guild')
-        if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
-        else if (!member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && member._roles.includes(split_guild.id)) await member.roles.remove(split_guild.role)
-
-        let split_discord = uhg.dc.cache.splits.get('discord')
-        if (member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && !member._roles.includes(split_discord.id)) await member.roles.add(split_discord.role)
-        else if (!member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && member._roles.includes(split_discord.id)) await member.roles.remove(split_discord.role)
-
-        let split_badges = uhg.dc.cache.splits.get('badges')
-        if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
-        else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
-
-        let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
-        if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
-        else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
-
+        if (member.user.username !== 'DavidCzPdy') continue
+        
         let v = dUhg.filter(n => n._id==member.id)
-        let v2 = dVerify.filter(n => n._id==member.id)
+        let v2 = dVerify.filter(n => n._id==member.id) 
+        let data;
+        if (v2.length) data = membersData.filter(n => n.uuid == v2[0].uuid)
+        if (!data) data = [{username: v2.nickname||''}]
+        data = data[0]
         if (!v.length || !v2.length) {
-          for (let role of cache) {
-            if (role[0] == "🌙Default🌙") continue
-            if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
+          if (v2.length) await refresh.uhg_refresh(uhg, member, data, {})
+          else {
+            for (let role of cache) {
+              if (role[0] == "🌙Default🌙") continue
+              if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
+            }
           }
           continue;
         }
         v = v[0]
-        if (!member._roles.includes(cache.get('Guild Member').id)) member.roles.add(cache.get('Guild Member').role)
-        let grank = "Guild " + v.guildrank
-        if (grank == "Guild Guild Master") grank = "Guild Master"
-        for (let role of cache) {
-          if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
-          role = role[1]
-          if (member._roles.includes(role.id) && role.name!=grank) try { await member.roles.remove(role.role) } catch (e) {}
-          else if (!member._roles.includes(role.id) && role.name == grank) {try { await member.roles.add(role.role) } catch (e) {}}
-        }
+        await refresh.uhg_refresh(uhg, member, data, v)
       }
 
       return

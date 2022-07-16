@@ -122,3 +122,176 @@ exports.bw = async (uhg) => {
     console.log(e)
   }
 }
+
+
+exports.uhg_refresh = async (uhg, member, api, guilda) => {
+  let cache = uhg.dc.cache.uhgroles
+  let guild = member.guild
+  let user = member.user
+  let errors = ``
+  let grank = ''
+  if (guilda.guildrank) grank = ('Guild ' + guilda.guildrank).replace('Guild Guild', 'Guild')
+  else if (guilda.member) grank = ('Guild ' + guilda.member.rank).replace('Guild Guild', 'Guild')
+
+  /* -- Change username -- */
+  if (member.nickname && member.nickname !== api.username || member.nickname === null && user.username !== api.username) { try { await member.setNickname(api.username) } catch (e) {errors = errors + 'UHG - Change nickname\n'}}
+  
+  /* -- Default role -- */
+  if (!member._roles.includes("478816107222925322")) await member.roles.add(guild.roles.cache.get("478816107222925322"))
+
+  /* -- Guild role -- */
+  if (guilda.name === "UltimateHypixelGuild" || guilda.guildrank) {
+    if (!member._roles.includes(cache.get("Guild Member").id)) try { await member.roles.add(cache.get("Guild Member").role) } catch (e) {errors = errors + 'UHG - Guild Member role\n'}
+    for (let role of cache) {
+      if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
+      role = role[1]
+      if (member._roles.includes(role.id) && role.name!=grank) try { await member.roles.remove(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role removal\n`}
+      else if (!member._roles.includes(role.id) && role.name == grank) {try { await member.roles.add(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role add\n`}}
+    }
+  } else {
+    for (let role of cache) {
+      if (role[0] == "🌙Default🌙") continue
+      role = role[1]
+      if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role removal\n`}}
+    }
+  }
+
+  /* -- Badges -- */
+  if (api.stats) {
+    let upRole = [];
+    for (let stat in uhg.dc.cache.bRoles) {
+      if (stat.endsWith('_ids')) continue;
+
+      if (stat == 'SkyWars' || stat == 'Bedwars' || stat == 'UHC' || stat == 'SpeedUHC') {
+        let staty = api.stats[stat.toLowerCase()]
+        let level = Math.floor(staty.level)
+        let up = uhg.dc.cache.bRoles[stat].filter(n => {
+          if (!n.to && level >= n.from) return true
+          else if (n.to && level >= n.from && n.to >= level) return true
+          else return false
+        })[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'Duels' || stat == 'Arena' || stat == 'Walls' || stat == 'VampireZ') {
+        let staty = api.stats[stat.toLowerCase()]
+        let wins = staty.wins
+        if (wins === undefined) wins = staty.overall.wins || 0
+        let up = uhg.dc.cache.bRoles[stat].filter(n => {
+          if (!n.to && wins >= n.from) return true
+          else if (n.to && wins >= n.from && n.to > wins) return true
+          else return false
+        })[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'Quake' || stat == 'Paintball') {
+        let staty = api.stats[stat.toLowerCase()]
+        let kills = staty.kills
+        if (kills === undefined) kills = staty.overall.kills || 0
+        let up = uhg.dc.cache.bRoles[stat].filter(n => {
+          if (!n.to && kills >= n.from) return true
+          else if (n.to && kills >= n.from && n.to >= kills) return true
+          else return false
+        })[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'Blitz') {
+        let wins = api.stats.wins.minigames.blitz || 0
+        let up = uhg.dc.cache.bRoles[stat].filter(n => {
+          if (!n.to && wins >= n.from) return true
+          else if (n.to && wins >= n.from && n.to >= wins) return true
+          else return false
+        })[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'TKR') {
+        let wins = api.stats.tkr.gold || 0
+        let up = uhg.dc.cache.bRoles[stat].filter(n => {
+          if (!n.to && wins >= n.from) return true
+          else if (n.to && wins >= n.from && n.to >= wins) return true
+          else return false
+        })[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'bb') {
+        let title = api.stats.bb.title || "DAviD"
+        let up = uhg.dc.cache.bRoles.bb.filter(n => n.name.endsWith(title))[0]
+        if (up) upRole.push(up)
+      } else if (stat == 'CaC') {
+        let color = api.stats.cac.color || "dAvID"
+        let up = uhg.dc.cache.bRoles[stat].filter(n => n.name.endsWith(color + " Rank"))[0]
+        if (up) upRole.push(up)
+      }
+    }
+
+    let remove = member._roles.filter(n => uhg.dc.cache.split.badges.includes(n) && !upRole.filter(i => i.id == n).length)
+    let add = upRole.filter(n => !member._roles.includes(n.id))
+
+    for (let r_id of remove) {
+      await member.roles.remove(guild.roles.cache.get(r_id))
+      await uhg.delay(1000)
+    }
+    for (let aRole of add) {
+      await member.roles.add(aRole.role)
+      await uhg.delay(1000)
+    }
+  }
+
+
+  /* ---- Split role ---- */
+  try {
+    /* -- Guild Split -- */
+    let split_guild = uhg.dc.cache.splits.get('guild')
+    if (member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && !member._roles.includes(split_guild.id)) await member.roles.add(split_guild.role)
+    else if (!member._roles.some(n=>uhg.dc.cache.split.guild.includes(n)) && member._roles.includes(split_guild.id)) await member.roles.remove(split_guild.role)
+
+    /* -- Discord Split -- */
+    let split_discord = uhg.dc.cache.splits.get('discord')
+    if (member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && !member._roles.includes(split_discord.id)) await member.roles.add(split_discord.role)
+    else if (!member._roles.some(n=>uhg.dc.cache.split.discord.includes(n)) && member._roles.includes(split_discord.id)) await member.roles.remove(split_discord.role)
+
+    /* -- Badges Split -- */
+    let split_badges = uhg.dc.cache.splits.get('badges')
+    if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
+    else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
+
+    /* -- SbBadges Split -- */
+    let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
+    if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
+    else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
+
+  } catch (e) { errors = errors + 'UHG - Split roles error'}
+
+
+  
+
+}
+
+exports.bw_refresh = async (uhg, member, api) => {
+  let guild = member.guild
+  let user = member.user
+  let errors = ''
+
+  /* -- Change username -- */
+  let bwNick = `[${Math.floor(api.stats.bedwars.level)}☆] ${api.username}`
+  if (member.nickname && member.nickname !== bwNick || member.nickname === null && user.username !== bwNick) { try { await member.setNickname(bwNick) } catch (e) {errors = errors + 'BW - Change nickname\n'}}
+
+  /* -- Verify role -- */
+  if (!member._roles.includes("877239217795768340")) await member.roles.add(guild.roles.cache.get("877239217795768340"))
+
+  /* -- Stats role -- */
+  let upRole = [];
+  for (let stat in uhg.dc.cache.bw.roles) {
+    let staty = api.stats.bedwars[stat] || api.stats.bedwars.overall[stat]
+    let up = uhg.dc.cache.bw.roles[stat].filter(n => staty >= n.from )[0]
+    if (up) upRole.push(up)
+  }
+
+  let remove = member._roles.filter(n => uhg.dc.cache.bw.ids.includes(n) && !upRole.filter(i => i.id == n).length)
+  let add = upRole.filter(n => !member._roles.includes(n.id))
+
+  for (let r_id of remove) {
+    await member.roles.remove(guild.roles.cache.get(r_id))
+    await uhg.delay(1000)
+  }
+  for (let aRole of add) {
+    await member.roles.add(aRole.role)
+    await uhg.delay(1000)
+  }
+
+
+}
