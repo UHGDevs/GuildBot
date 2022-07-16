@@ -50,7 +50,7 @@ module.exports = {
         } catch (e) {}
         msgfrag.push(`\`•\` **${sorted[b].nickname}** - ${uhg.f(sorted[b].exp) + timing + timing1}`)
       }
-      let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za ${amount} dní:**\n\n${msgfrag.join("\n")}`).setFooter('Jen guild membeři, kteří jsou v guildě více jak 7 dní')
+      let embed = new MessageEmbed().setTitle(`unELITE MEMBERS`).setDescription(`**Nejméně GEXP za ${amount} dní:**\n\n${msgfrag.join("\n")}`).setFooter({ text:'Jen guild membeři, kteří jsou v guildě více jak 7 dní'})
       interaction.editReply({ embeds: [embed] })
       
     } catch (e) {

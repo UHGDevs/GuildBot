@@ -15,6 +15,9 @@ module.exports = {
         if (!user) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error**`).setColor('RED').setDescription(`${dcuser} není verifikovaný`)] })
         user = user.uuid
       }
+      let stats;
+      if (user.length > 15) stats = uhg.mongo.run.get("stats", "stats", {uuid: user})
+      else stats = uhg.mongo.run.get("stats", "stats", {username: user})
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
       if (api instanceof Object == false) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
 
@@ -79,10 +82,11 @@ module.exports = {
       }
 
       embed.addField('Verified', verify.length ? '✅':'🟥', true)
-
-      if (api.guild.name == 'UltimateHypixelGuild' || dUhg) {
-        embed.addField('UHG Database', dUhg ? '✅':'🟥' , true)
+      stats = await stats
+      if (api.guild.name == 'UltimateHypixelGuild' || dUhg || stats.length) {
+        embed.addField('UHG Database', (dUhg ? '✅':'🟥') + ' | ' +(stats.length ? `✅ - <t:${Math.round(stats[0].updated/1000)}:R>`: '🟥'), true)
       }
+      
 
 
       return interaction.editReply({ embeds: [embed] })
