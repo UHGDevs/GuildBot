@@ -30,7 +30,7 @@ exports.send = async (uhg, interaction) => {
             components: [
                 {
                     custom_id: 'modal_verfiy_language',
-                    label: 'Your language: (cz/sk/en)',
+                    label: 'Your language: (cz/sk/en) - not working yet',
                     max_length: 2,
                     min_length: 2,
                     placeholder: null,
@@ -100,7 +100,7 @@ exports.get = async (uhg, interaction) => {
     else if (custom) await interaction.editReply({ content: `Úspěšně jsi verifikoval ${user} na \`${username}\`!` });
     else await interaction.editReply({ content: `Změnil sis jméno z \`${verified[0].nickname}\` na \`${username}\`!` });
 
-   // if (language.match(/cz|sk/i)) uhg.mongo.run.post("stats", "stats", api.hypixel) // pridat potvrzeni do admin chatu - Farmans
+   /* if (language.match(/cz|sk/i)) */uhg.mongo.run.post("stats", "stats", api.hypixel) // pridat potvrzeni do admin chatu - Farmans
    
 
 }

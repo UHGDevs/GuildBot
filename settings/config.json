@@ -7,10 +7,9 @@
         "finder": true,
         "elites": true,
         "guildinfo": true,
-        "gmembers": true,
-        "sniper": true,
-        "badges": true,
-        "bwroles": false
+        "uhgrole": true,
+        "sniper": false,
+        "bwroles": true
     },
     "dev_mode": false
 }

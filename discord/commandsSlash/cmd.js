@@ -42,9 +42,11 @@ module.exports = {
   ],
   run: async (uhg, interaction, args) => {
     let ephemeral = !interaction.options.getBoolean('visibility')
-    await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
     try {
       let command = interaction.options.getString('command')
+      if (command == 'verify') return require(`../interactions/modal/verify.js`).send(uhg, interaction)
+
+      await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
 
       if (command == 'notmember') return interaction.editReply({ content: 'Připoj se do UHG, nebo si nějak jinak sežeň commandy!!' })
       else if (command == 'err') return interaction.editReply({ content: 'Počkej prosím chvíli (než se zapne bot)' })
