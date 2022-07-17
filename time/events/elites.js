@@ -11,15 +11,8 @@ module.exports = {
   run: async (uhg) => {
     let now = Number(new Date())
     try {
-      let {api, data} = 'David > ALL'
-     
-      api = await uhg.getApi("fb811b92561e434eb5b6ef04695cc49a", ["online"])
-      if (api instanceof Object == false) return
-      if (api.online.title === "Offline") {
-        let embed = new MessageEmbed().setTitle('NEJSEM ONLINE').setDescription('BOT není online na serveru, nastavte Elite Members za mě')
-        let channel = await uhg.dc.client.channels.cache.get('530496801782890527')
-        channel.send({ embeds: [embed] })
-      }
+      let api, data
+
       let updated = await guildrefresh(uhg, 'UltimateHypixelGuild')
       if (typeof updated !== 'object') {
         api = await uhg.getApi("64680ee95aeb48ce80eb7aa8626016c7", ["guild"])
@@ -83,19 +76,27 @@ module.exports = {
         remove.push(elites[r])
       }
 
-
       let error = []
+      let msgs = []
       for (let i=0; i<add.length; i++) {
         let mjg = await uhg.getApi(add[i], ["mojang"])
-        send(uhg, {send:`/g promote ${mjg.username}`})
+        let msg = `/g promote ${mjg.username}`
+        msgs.push(msg)
+        send(uhg, {send:msg})
         await uhg.delay(600)
       }
 
       for (let i=0; i<remove.length; i++) {
         let mjg = await uhg.getApi(remove[i], ["mojang"])
-        send(uhg, {send:`/g demote ${mjg.username}`})
+        let msg = `/g demote ${mjg.username}`
+        msgs.push(msg)
+        send(uhg, {send:msg})
         await uhg.delay(600)
       }
+
+      let embed2 = new MessageEmbed().setTitle('NEJSEM ONLINE').setDescription(`BOT není online na serveru, nastavte Elite Members za mě\n\n*${msgs.join("\n")}*`)
+      let channel2 = await uhg.dc.client.channels.cache.get('530496801782890527')
+      channel2.send({ embeds: [embed2] })
 
 
     return
