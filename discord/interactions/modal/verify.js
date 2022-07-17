@@ -53,7 +53,8 @@ exports.send = async (uhg, interaction) => {
 exports.get = async (uhg, interaction) => {
     let username = interaction.fields.getTextInputValue('modal_verfiy_username')
     let language = interaction.fields.getTextInputValue('modal_verfiy_language') || ''//.toLowerCase()
-    let custom = interaction.fields.getTextInputValue('modal_verfiy_custom')
+    let custom;
+    try {custom = interaction.fields.getTextInputValue('modal_verfiy_custom')} catch (e) {} 
     // console.log(username)
     // console.log(language)
     // console.log(custom)
