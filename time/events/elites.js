@@ -19,7 +19,6 @@ module.exports = {
         let embed = new MessageEmbed().setTitle('NEJSEM ONLINE').setDescription('BOT není online na serveru, nastavte Elite Members za mě')
         let channel = await uhg.dc.client.channels.cache.get('530496801782890527')
         channel.send({ embeds: [embed] })
-        return
       }
       let updated = await guildrefresh(uhg, 'UltimateHypixelGuild')
       if (typeof updated !== 'object') {
