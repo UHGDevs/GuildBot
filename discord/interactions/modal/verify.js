@@ -102,6 +102,8 @@ exports.get = async (uhg, interaction) => {
     else await interaction.editReply({ content: `Změnil sis jméno z \`${verified[0].nickname}\` na \`${username}\`!` });
 
    /* if (language.match(/cz|sk/i)) */uhg.mongo.run.post("stats", "stats", api.hypixel) // pridat potvrzeni do admin chatu - Farmans
+
+   uhg.dc.client.channels.cache.get('548772550386253824').send({ content: `${custom?'Custom ':''}Verify: ${user || username} - ${language} (temp msg)`, allowedMentions: { parse: [] } })
    
 
 }

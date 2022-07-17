@@ -15,11 +15,7 @@ module.exports = {
       uhg.data.stats = members
 
       let guild = uhg.dc.client.guilds.cache.get('874337528621191251')
-
-      verify = verify.filter(n => guild.members.cache.get(n._id))
-
       let gmembers = guild.members.cache
-let ids = []
       let whitelist = ['DavidCzPdy']
       for (let user of verify) {
         //if (!whitelist.includes(user.nickname)) continue;
@@ -28,18 +24,9 @@ let ids = []
         if (gmember.user.bot) continue;
         let data = members.filter(n => n.uuid == user.uuid)
         if (!data.length) continue;
-ids.push(user.id)
-        
         await refresh.bw_refresh(uhg, gmember, data[0])
       }
 
-let unverified = guild.members.cache.filter(n => !ids.includes(n.id))
-return
-      for (let member of unverified) {
-        member = member[1]
-
-      }
-      return
 
     } catch(e) {
         console.log(String(e.stack).bgRed)

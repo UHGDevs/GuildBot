@@ -3,6 +3,7 @@ const { Collection } = require('discord.js');
 exports.uhg = async (uhg) => {
   try {
     let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
+    await guild.members.fetch()
     uhg.dc.cache.uhgroles = new Collection()
 
     let vroles = ["478816107222925322", "530504032708460584", "537255964898754571", "530504766225383425", "537252847025127424", "475585340762226698", "530504567528620063"]
@@ -87,8 +88,9 @@ exports.bw = async (uhg) => {
     uhg.dc.cache.bw = {roles: [], ids: [], allroles: []}
     let guild = uhg.dc.client.guilds.cache.get('874337528621191251')
     if (!guild) return console.log('Nejsem na bw dc')
+    await guild.members.fetch()
 
-    let allroles = ["FKDR", "WLR", "BBLR", "wins", "Final Kills", "Beds Broken", "Prestige"] //"Challenges Completed"
+    let allroles = ["FKDR", "WLR", "BBLR", "wins", "Final Kills", "Beds Broken", "Prestige", "Challenges Completed"]
     let pres = ["Stone", "Iron", "Gold", "Diamond", "Emerald", "Sapphire", "Ruby", "Crystal", "Opal", "Amethyst", "Rainbow"]
     let roles = guild.roles.cache.filter(n => uhg.includesWithArray(n.name, allroles))
 
@@ -113,6 +115,7 @@ exports.bw = async (uhg) => {
 
       if (r.stat == 'finalkills') r.stat = r.stat.replace('finalkills', 'finalKills')
       else if (r.stat == 'bedsbroken') r.stat = r.stat.replace('bedsbroken', 'bedsBroken')
+      else if (r.stat == 'challengescompleted') r.stat = r.stat.replace('challengescompleted', 'uniquechallenges')
 
       if (!uhg.dc.cache.bw.roles[r.stat])uhg.dc.cache.bw.roles[r.stat] = []
       uhg.dc.cache.bw.roles[r.stat].push(r)
@@ -132,6 +135,9 @@ exports.uhg_refresh = async (uhg, member, api, guilda) => {
   let user = member.user
   let errors = ``
   let grank = ''
+
+  if (user.bot) return
+
   if (guilda.guildrank) grank = ('Guild ' + guilda.guildrank).replace('Guild Guild', 'Guild')
   else if (guilda.member) grank = ('Guild ' + guilda.member.rank).replace('Guild Guild', 'Guild')
 
@@ -156,6 +162,11 @@ exports.uhg_refresh = async (uhg, member, api, guilda) => {
       role = role[1]
       if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role removal\n`}}
     }
+  }
+
+  /* -- Get CZ/SK players wich are not in db -- (WIP)*/
+  if (!api.stats && String(api.language).match(/cz|sk/i)) {
+    console.log(api.username + ' je potřeba přidat do databáze!')
   }
 
   /* -- Badges -- */
@@ -268,6 +279,8 @@ exports.bw_refresh = async (uhg, member, api) => {
   let user = member.user
   let errors = ''
 
+  if (user.bot) return
+  
   /* -- Change username -- */
   let bwNick = `[${Math.floor(api.stats.bedwars.level)}☆] ${api.username}`
   if (member.nickname && member.nickname !== bwNick || member.nickname === null && user.username !== bwNick) { try { await member.setNickname(bwNick) } catch (e) {errors = errors + 'BW - Change nickname\n'}}
@@ -278,7 +291,7 @@ exports.bw_refresh = async (uhg, member, api) => {
   /* -- Stats role -- */
   let upRole = [];
   for (let stat in uhg.dc.cache.bw.roles) {
-    let staty = api.stats.bedwars[stat] || api.stats.bedwars.overall[stat]
+    let staty = api.stats.bedwars[stat] || api.stats.bedwars.overall[stat] || 0
     let up = uhg.dc.cache.bw.roles[stat].filter(n => staty >= n.from )[0]
     if (up) upRole.push(up)
   }

@@ -88,6 +88,7 @@ module.exports = {
       let cache = uhg.dc.cache.uhgroles
       let roleMembers = cache.get("Guild Member").role.members
 
+      /* get UNVERIFIED members with default role */
       dcUnVer = []
       let verifiedRole = uhg.dc.cache.uhgroles.get("🌙Default🌙").role.members
       for (let member of verifiedRole) {
@@ -105,8 +106,8 @@ module.exports = {
           }
         }
       }
-      //console.log(dcUnVer.length)
 
+      /* Refresh roles on uhg dc */
       let membersUHG = cache.get("Guild Member").role.guild.members.cache
       for (let member of membersUHG) {
         if (member[1].user.bot) continue;
@@ -115,9 +116,9 @@ module.exports = {
         
         let v = dUhg.filter(n => n._id==member.id)
         let v2 = dVerify.filter(n => n._id==member.id) 
-        let data;
+        let data = [];
         if (v2.length) data = membersData.filter(n => n.uuid == v2[0].uuid)
-        if (!data) data = [{username: v2.nickname||''}]
+        if (!data.length) data = [{username: v2[0] ? v2[0].nickname || '':'', language: v2[0] ? v2[0].language || '':''}]
         data = data[0]
         if (!v.length || !v2.length) {
           if (v2.length) await refresh.uhg_refresh(uhg, member, data, {})
