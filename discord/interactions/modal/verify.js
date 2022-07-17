@@ -77,7 +77,7 @@ exports.get = async (uhg, interaction) => {
     let api = await uhg.getApi(username, ["key", "hypixel", "mojang", "guild"])
     if (api instanceof Object == false) return interaction.editReply({ content: api })
     username = api.username
-    if (!custom && api.hypixel.links.DISCORD !== `${user.username}#${user.discriminator}`) {return interaction.editReply({ content: "Connect your discord wirth Hypixel" })}
+    if (!custom && api.hypixel.links.DISCORD !== `${user.username}#${user.discriminator}`) {return interaction.editReply({ content: "Link your Discord with Hypixel" })}
 
     let refresh = require('../../../utils/serverroles.js')
     let uhgMember = gUhg.members.cache.get(user.id)
@@ -95,13 +95,16 @@ exports.get = async (uhg, interaction) => {
     verified = verified.filter(n => n._id == user.id)
     if (verified.length && verified[0].nickname == username) {return interaction.editReply({ content: `Už ${custom ? 'je':'jsi'} verifikovaný` })}
 
+    let filtered = uhg.data.verify.filter(n => n.uuid == api.uuid)
+    if (filtered.length) uhg.mongo.run.delete("general", "verify", {_id:filtered[0]._id})
+
     let post = await uhg.mongo.run.post("general", "verify", { _id: user.id, uuid: api.uuid, nickname: username, names: api.hypixel.nicks })
     if (!post.acknowledged) {return interaction.editReply({ content: 'Nastala chyba v nahrávání informací do databáze!' })}
     if (!custom && !verified.length && post.insertedId==user.id) await interaction.editReply({ content: `Úspěšná verifikace jako \`${username}\`!` });
     else if (custom) await interaction.editReply({ content: `Úspěšně jsi verifikoval ${user} na \`${username}\`!` });
     else await interaction.editReply({ content: `Změnil sis jméno z \`${verified[0].nickname}\` na \`${username}\`!` });
 
-   /* if (language.match(/cz|sk/i)) */uhg.mongo.run.post("stats", "stats", api.hypixel) // pridat potvrzeni do admin chatu - Farmans
+   /* if (language.match(/cz|sk/i)) uhg.mongo.run.post("stats", "stats", api.hypixel)*/ // pridat potvrzeni do admin chatu - Farmans
 
    uhg.dc.client.channels.cache.get('548772550386253824').send({ content: `${custom?'Custom ':''}Verify: ${user || username} - ${language} (temp msg)`, allowedMentions: { parse: [] } })
    
