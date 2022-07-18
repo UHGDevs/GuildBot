@@ -4,9 +4,6 @@ module.exports = async (uhg) => {
   uhg.dc.client.user.setActivity(' Guild Chat', { type: 'WATCHING' });
 
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
-  guild.commands.set([])
-  await uhg.dc.client.application.commands.set([])
-  uhg.dc.client.guilds.cache.get("758650512827613195").commands.set([])
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
   let botSlashCmds = []
