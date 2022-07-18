@@ -25,17 +25,25 @@ module.exports = {
     if (interaction.user.id !== '378928808989949964') return interaction.update({ type: 6 })
     await interaction.deferReply({ ephemeral: true }).catch(() => {});
     try {
-      console.log(uhg.time)
-      let embed = new MessageEmbed().setTitle('**Time Events GUI**')
-          .setDescription(Object.keys(uhg.time.ready).join('\n'))
-          .setColor(5592575)
-          .setFooter({ text: `${Object.values(uhg.settings.time).filter(n => n).length}/${uhg.time.events.size} Time Events` })
+      if (!uhg.time.events.size || uhg.time.events.size !== Object.keys(uhg.settings.time).length) return await interaction.editReply({ embeds: [new MessageEmbed().setTitle('**Time Events GUI**').setColor(5592575).setFooter({ text: 'Made with love ❤️' }).setDescription('Loading, please wait')]})
+      let embed = new MessageEmbed().setTitle('**Time Events GUI**').setColor(5592575).setFooter({ text: `${Object.values(uhg.settings.time).filter(n => n).length}/${uhg.time.events.size} Time Events` })
 
+      let desc = []
+      for (let event of uhg.time.events) {
+        event = event[1]
+        let toggle = uhg.settings.time[event.name]
+        let message = (event.emoji ? (event.emoji + ' - ') : '') + (toggle ? ('**' + event.name + '**') : event.name)
+        console.log(event)
+        if (toggle && event.executedAt) message = message + `<t:${Math.round(Number(new Date(event.executedAt))/1000)}:R>`
+        desc.push( message )
+      }
+
+      embed.setDescription(desc.join('\n'))
       await interaction.editReply({ embeds: [embed], components: [] })
 
     } catch (e) {
       if (uhg.dc.cache.embeds) interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'TIME Slash Command')] })
-      console.log(String(e).bgRed + ' neni loaded')
+      else console.log(String(e).bgRed + ' neni loaded')
       return "Chyba v TIME slash commandu!"
     }
   }

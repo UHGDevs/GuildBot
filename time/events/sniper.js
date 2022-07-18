@@ -1,6 +1,7 @@
 module.exports = {
   name: "sniper",
   description: "Dont Ask",
+  emoji: '🏹',
   time: '*/5 * * * * *', //'*/10 * * * * *'
   ignore: '* * * * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: false,

@@ -3,6 +3,7 @@ const refresh = require('../../utils/serverroles.js')
 module.exports = {
   name: "uhgrole",
   description: "Automatická aktualizace rolí na UHG discordu",
+  emoji: '🌙',
   time: '30 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,

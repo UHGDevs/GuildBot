@@ -5,6 +5,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: "elites",
   description: "Automatičští elite members",
+  emoji: '👨‍🦼',
   time: '0 0 17 * * 0', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: false,

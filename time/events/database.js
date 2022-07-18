@@ -1,6 +1,7 @@
 module.exports = {
   name: "database",
   description: "Automatická aktualizace databáze",
+  emoji: '💻',
   time: '0 */5 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: false,

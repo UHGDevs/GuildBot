@@ -24,6 +24,14 @@ class Login extends Functions {
     await Promise.all([this.createMongo()]);
     require("../utils/client.js")(this)
     require('../utils/embeds.js')(this)
+    require("../time/handler.js")(this)
+
+    fs.watchFile('settings/config.json', (curr, prev) => this.reload(["settings"]));
+    fs.watchFile('settings/values/lootBoxes.js', (curr, prev) => this.reload(["loot"]));
+
+    console.log("Guild bot je připraven!".bold.brightGreen)
+
+    if (this.mc.client) require("../minecraft/handler.js") (this)
     this.emit("ready")
   }
 

@@ -3,11 +3,13 @@ const refresh = require('../../utils/serverroles.js')
 module.exports = {
   name: "bwroles",
   description: "Automatická aktualizace rolí na bedwars serveru",
+  emoji: '🛏️',
   time: '0 */7 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,
   run: async (uhg) => {
     let date = new Date()
+    uhg.time.events.get('bwroles').executedAt = date
     try {
       let members = await uhg.mongo.run.get("stats", "stats")
       let verify = await uhg.mongo.run.get('general', 'verify')

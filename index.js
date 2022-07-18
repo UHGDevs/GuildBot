@@ -14,18 +14,6 @@ let dc = new Client({
 let uhg = new Login(dc)
 exports.uhg = () => { return uhg }
 
-uhg.once("ready", () => {
-  require("./time/handler.js") (uhg)
-
-  fs.watchFile('settings/config.json', (curr, prev) => uhg.reload(["settings"]));
-  fs.watchFile('settings/values/lootBoxes.js', (curr, prev) => uhg.reload(["loot"]));
-
-  console.log("Guild bot je připraven!".bold.brightGreen)
-
-  if (uhg.mc.client) require("./minecraft/handler.js") (uhg)
-  return
-})
-
 require("./minecraft/commands.js") (uhg)
 require("./discord/handler.js") (uhg)
 let token = process.env.token

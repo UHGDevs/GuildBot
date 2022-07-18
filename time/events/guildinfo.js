@@ -4,6 +4,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
   name: "guildinfo",
   description: "Informace o guildě",
+  emoji: 'ℹ️',
   time: '0 */2 * * * *', //'*/10 * * * * *'
   ignore: '* * 0,1,2,3,23 * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: true,

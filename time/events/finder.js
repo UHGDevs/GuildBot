@@ -1,6 +1,7 @@
 module.exports = {
   name: "finder",
   description: "Find and play!",
+  emoji: '📄',
   time: '0 * * * * *', //'*/10 * * * * *'
   ignore: '* * * * * *', //'sec min hour den(mesic) mesic den(tyden)'
   onstart: false,
