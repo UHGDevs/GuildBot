@@ -11,6 +11,7 @@ const guildrefresh = require('../../utils/guildrefresh');
 module.exports = {
   name: 'gexp',
   description: 'guild experience command',
+  permissions: [],
   options: [
     {
       name: "period",
@@ -59,6 +60,7 @@ module.exports = {
       required: false
     }
   ],
+  type: 'slash',
   run: async (uhg, interaction, args) => {
     await interaction.deferReply({ ephemeral: false }).catch(() => {});
     try {

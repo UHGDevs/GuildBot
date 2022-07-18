@@ -5,6 +5,7 @@ const fs = require('fs');
 module.exports = {
   name: 'cmd',
   description: 'Cool commands (even some in-game commands)',
+  permissions: [],
   options: [
     {
       name: "command",
@@ -40,6 +41,7 @@ module.exports = {
       required: false
     }
   ],
+  type: 'slash',
   run: async (uhg, interaction, args) => {
     let ephemeral = !interaction.options.getBoolean('visibility')
     try {

@@ -1,25 +1,16 @@
-const { Collection } = require('discord.js');
+const { Collection, Permissions } = require('discord.js');
 module.exports = async (uhg) => {
   console.log(`Discord Bot is online! (${uhg.dc.client.user.tag})`.bold.brightGreen)
   uhg.dc.client.user.setActivity(' Guild Chat', { type: 'WATCHING' });
 
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
+  guild.commands.set([])
+  uhg.dc.client.guilds.cache.get("758650512827613195").commands.set([])
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
   let botSlashCmds = []
-  uhg.dc.slash.forEach(cmd => { if (cmd.name !== 'loot') botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
-  await uhg.dc.client.application.commands.set(botSlashCmds)
-  
-  let lootCmd = uhg.dc.slash.get('loot')
-  botSlashCmds.push({ name: lootCmd.name, description: lootCmd.description||"", options: lootCmd.options || [], permissions: lootCmd.permissions||[], type: lootCmd.type })
-  await uhg.dc.client.guilds.cache.get("758650512827613195").commands.set(botSlashCmds)
-
-  //let uhgSlashCmds = []
-  //let commands = [uhg.dc.slash.find(n => n.name == "gexp"), uhg.dc.slash.find(n => n.name == "lb")]
-  //commands.forEach(cmd => { uhgSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type }) });
-  //await guild.commands.set(uhgSlashCmds)
-
-  
+  uhg.dc.slash.forEach(cmd => { botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type, defaultPermission: cmd.permissions.length ? true:false }) });
+  let cmds = await uhg.dc.client.application.commands.set(botSlashCmds)
 
   uhg.dc.cache.channels = new Collection()
   if (uhg.settings.minecraft === true) {

@@ -11,6 +11,7 @@ const guildrefresh = require('../../utils/guildrefresh');
 module.exports = {
   name: 'lb',
   description: 'CZSK Players leaderboards',
+  permissions: [],
   options: [
     {
       name: "minigame",
@@ -75,6 +76,7 @@ module.exports = {
       autocomplete: true
     }
   ],
+  type: 'slash',
   run: async (uhg, interaction, args) => {
     await interaction.deferReply({ ephemeral: false }).catch(() => {});
     try {

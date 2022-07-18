@@ -1,10 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const { CommandInteraction, MessageEmbed, MessageButton, MessageActionRow, Permissions } = require('discord.js');
 const fs = require('fs');
 
 module.exports = {
   name: 'loot',
   description: 'Brand new GEXP LOOT BOXES',
+  permissions: [ { id: '378928808989949964', type: 'USER', permission: true} ],
   options: [
     {
       name: "command",
@@ -20,6 +21,7 @@ module.exports = {
       required: false
     }
   ],
+  type: 'slash',
   run: async (uhg, interaction, args) => {
     let ephemeral = !interaction.options.getBoolean('visibility')
     await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
