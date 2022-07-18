@@ -104,7 +104,25 @@ exports.get = async (uhg, interaction) => {
     else if (custom) await interaction.editReply({ content: `Úspěšně jsi verifikoval ${user} na \`${username}\`!` });
     else await interaction.editReply({ content: `Změnil sis jméno z \`${verified[0].nickname}\` na \`${username}\`!` });
 
-   /* if (language.match(/cz|sk/i)) uhg.mongo.run.post("stats", "stats", api.hypixel)*/ // pridat potvrzeni do admin chatu - Farmans
+    if (!uhg.data.stats.filter(n => n.uuid == api.uuid).length && !interaction.member.roles.cache.some(r => r.id == "985095284893814814")) {
+    let buttons = new MessageActionRow()
+        .addComponents(new MessageButton()
+            .setCustomId(`VERLANG_${api.hypixel.username}_${api.uuid}_accept`)
+            .setStyle("SUCCESS")
+            .setLabel("Přidat do databáze")
+        )
+        .addComponents(new MessageButton()
+            .setCustomId(`VERLANG_${api.hypixel.username}_${api.uuid}_reject`)
+            .setStyle("DANGER")
+            .setLabel("Nepřidávat do databáze")
+        );
+    let embed = new MessageEmbed()
+        .setTitle(`**${api.hypixel.username}**`)
+        .setDescription(`Jazyk: **${language.toUpperCase()}**`)
+        .setColor(5592575);
+    let channel = await uhg.dc.client.channels.cache.get('530496801782890527')
+    channel.send({ embeds: [embed], components: [buttons] })
+   }
 
    uhg.dc.client.channels.cache.get('548772550386253824').send({ content: `${custom?'Custom ':''}Verify: ${user || username} - ${language} (temp msg)`, allowedMentions: { parse: [] } })
    

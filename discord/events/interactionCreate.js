@@ -13,5 +13,6 @@ module.exports = async (uhg, interaction) => {
   else if (interaction.isButton() && interaction.customId.startsWith('uhg_rules_')) require('../interactions/uhg_rules')(uhg, interaction)
   else if (interaction.isButton() && interaction.customId.startsWith('create_modal_')) require(`../interactions/modal/${fs.readdirSync(`discord/interactions/modal`).filter(n => n == interaction.customId.split('_')[2]+'.js')[0]}`).send(uhg, interaction)
   else if (interaction.isModalSubmit() ) require(`../interactions/modal/${fs.readdirSync(`discord/interactions/modal`).filter(n => n == interaction.customId.split('_')[2]+'.js')[0]}`).get(uhg, interaction)
-
+  else if (interaction.isButton() && interaction.customId.startsWith('VERLANG')) require(`../interactions/verlang`)(uhg, interaction)
+  
 }
