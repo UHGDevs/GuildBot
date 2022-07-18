@@ -5,11 +5,12 @@ module.exports = async (uhg) => {
 
   let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
   guild.commands.set([])
+  await uhg.dc.client.application.commands.set([])
   uhg.dc.client.guilds.cache.get("758650512827613195").commands.set([])
   if (!guild) return console.log("\nBot není na UHG dc\n".bgRed)
 
   let botSlashCmds = []
-  uhg.dc.slash.forEach(cmd => { botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type, defaultPermission: cmd.permissions.length ? true:false }) });
+  uhg.dc.slash.forEach(cmd => { botSlashCmds.push({ name: cmd.name, description: cmd.description||"", options: cmd.options || [], permissions: cmd.permissions||[], type: cmd.type, defaultPermission: cmd.permissions.length ? false:true }) });
   let cmds = await uhg.dc.client.application.commands.set(botSlashCmds)
 
   uhg.dc.cache.channels = new Collection()
