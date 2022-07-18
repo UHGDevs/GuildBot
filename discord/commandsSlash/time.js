@@ -1,13 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { CommandInteraction, MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
+const { CommandInteraction, MessageEmbed, MessageButton, MessageActionRow, MessageSelectMenu } = require('discord.js');
 const fs = require('fs');
 
-const buttons = new MessageActionRow()
-  .addComponents(new MessageButton().setCustomId('LBFirst').setStyle('PRIMARY').setEmoji('⏮'))
-  .addComponents(new MessageButton().setCustomId('LBBack').setStyle('PRIMARY').setEmoji('◀'))
-  .addComponents(new MessageButton().setCustomId('LBNext').setStyle('PRIMARY').setEmoji('▶'))
-  .addComponents(new MessageButton().setCustomId('LBLast').setStyle('PRIMARY').setEmoji('⏭'));
-const guildrefresh = require('../../utils/guildrefresh');
 module.exports = {
   name: 'time',
   description: 'Time Event GUI',
@@ -22,6 +16,8 @@ module.exports = {
   ],
   type: 'slash',
   run: async (uhg, interaction, args) => {
+    Array.prototype.chunk = uhg.chunk
+
     if (interaction.user.id !== '378928808989949964') return interaction.update({ type: 6 })
     await interaction.deferReply({ ephemeral: true }).catch(() => {});
     try {
@@ -29,17 +25,23 @@ module.exports = {
       let embed = new MessageEmbed().setTitle('**Time Events GUI**').setColor(5592575).setFooter({ text: `${Object.values(uhg.settings.time).filter(n => n).length}/${uhg.time.events.size} Time Events` })
 
       let desc = []
+      let options = []
       for (let event of uhg.time.events) {
         event = event[1]
         let toggle = uhg.settings.time[event.name]
         let message = (event.emoji ? (event.emoji + ' - ') : '') + (toggle ? ('**' + event.name + '**') : event.name)
-        console.log(event)
+
         if (toggle && event.executedAt) message = message + `<t:${Math.round(Number(new Date(event.executedAt))/1000)}:R>`
+        if (event.onstart) message = message + ' 🕐'
         desc.push( message )
+        options.push([{label: event.emoji + ' ' + event.name, description: event.description, value: event.name}])
+        
       }
 
+      const menu = new MessageActionRow().addComponents(new MessageSelectMenu().setCustomId('TIME_menu').setPlaceholder('Choose one for more info').addOptions(options));
+
       embed.setDescription(desc.join('\n'))
-      await interaction.editReply({ embeds: [embed], components: [] })
+      await interaction.editReply({ embeds: [embed], components: [menu] })
 
     } catch (e) {
       if (uhg.dc.cache.embeds) interaction.editReply({ embeds: [uhg.dc.cache.embeds.error(e, 'TIME Slash Command')] })
@@ -48,3 +50,13 @@ module.exports = {
     }
   }
 }
+
+
+// až se mi nebude chtít vymýšlet nová funkce
+// components.push(new MessageButton().setCustomId('TIME_'+event.name).setStyle('PRIMARY').setEmoji(event.emoji))
+// for (let i = 0; i < Math.ceil(desc.length % 5); i++) {
+//   let button = new MessageActionRow()
+//   comp = components.filter((n, o) => (o > i*5 || i === 0 && o === 0) && (o < (i+1)*5))
+//   comp.forEach(n => { button.addComponents(n)});
+//   buttons.push(button)
+// }
