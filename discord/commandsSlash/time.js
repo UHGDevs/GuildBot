@@ -19,7 +19,7 @@ module.exports = {
     let ephemeral = !interaction.options.getBoolean('visibility')
 
     if (interaction.user.id == '378928808989949964') await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
-    else await interaction.deferReply({ ephemeral: true }).catch(() => {});
+    else await interaction.deferReply({ ephemeral: false }).catch(() => {});
 
     try {
       let auth = ['378928808989949964', '312861502073995265', '379640544143343618', '427198829935460353']
