@@ -26,8 +26,8 @@ module.exports = {
       let verify = await uhg.mongo.run.get("general", "verify")
       uhg.data.verify = verify
 
-      let embed = new MessageEmbed().setTitle(`**Profil hráče ${api.hypixel.username}**`).setURL(`https://plancke.io/hypixel/player/stats/${api.hypixel.username}`).addFields(
-          { name: `Username`, value: `${api.hypixel.username}`, inline: true },
+      let embed = new MessageEmbed().setTitle(`**Profil hráče ${uhg.dontFormat(api.hypixel.username)}**`).setURL(`https://plancke.io/hypixel/player/stats/${api.hypixel.username}`).addFields(
+          { name: `Username`, value: `${uhg.dontFormat(api.hypixel.username)}`, inline: true },
           { name: `UUID`, value: `${api.hypixel.uuid}`, inline: true },
           { name: `ㅤ`, value: `ㅤ`, inline: false},
           { name: `Level`, value: `${uhg.f(api.hypixel.level)}`, inline: true },
@@ -36,13 +36,13 @@ module.exports = {
       )
 
       if (api.hypixel.nicks.length > 1) {
-        embed.addField(`${api.hypixel.nicks.length} nicks`, api.hypixel.nicks.join(', '), false)
+        embed.addField(`${api.hypixel.nicks.length} nicks`, uhg.dontFormat(api.hypixel.nicks.join(', ')), false)
       }
 
       if (api.guild.guild) embed.addFields(
         { name: `ㅤ`, value: `ㅤ`, inline: false},
-        { name: `Guild`, value: `${api.guild.name}`, inline: true},
-        { name: `Guild Rank`, value: `${api.guild.member.rank}`, inline: true},
+        { name: `Guild`, value: `${uhg.dontFormat(api.guild.name)}`, inline: true},
+        { name: `Guild Rank`, value: `${uhg.dontFormat(api.guild.member.rank)}`, inline: true},
         { name: `Joined`, value: `<t:${Math.round(api.guild.member.joined/1000)}:R>`, inline: true}
       )
 
@@ -78,7 +78,7 @@ module.exports = {
       if (api.hypixel.links.DISCORD) {
         let member;
         if (verify.length || dUhg) member = interaction.guild.members.cache.get(verify[0]._id || dUhg._id)
-        embed.addField('Discord:', member ? `<@${member.id}>` : api.hypixel.links.DISCORD, true)
+        embed.addField('Discord:', uhg.dontFormat(member ? `<@${member.id}>` : api.hypixel.links.DISCORD), true)
       }
 
       embed.addField('Verified', verify.length ? '✅':'🟥', true)
