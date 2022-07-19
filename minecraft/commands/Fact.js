@@ -3,6 +3,9 @@ module.exports = {
     aliases: ["fact", "facts", "hypixelfact", "hypixelfacts", "funfact", "funfacts", "fakt", "fakty"],
     run: async (uhg, pmsg) => {
       try{
+        let args;
+        if (pmsg.args.length) args = pmsg.args.split(" ")
+
         let api = await uhg.getApi(pmsg.username, ["api", "skyblock", "hypixel", "mojang", "online", "gamecounts", "guild"])
         if (api instanceof Object == false) return api
 
@@ -31,9 +34,16 @@ module.exports = {
             `Fact #15 - Čím vyšší úroveň barvy pluska máte u MVP, tak zřejmě víte, že jste nejvíc nahoře v TABu, ale tohle platí i na SkyBlocku, kde to není zas tak jasné pro některé.`,
             `Fact #16 - Víte, že UHG byla založena dvakrát? Poprvé vydržela necelý den, když uni odešel do TKJK a napodruhé je ta, jak ji již známe dnes`
         ];
-        let randomNumber = Math.random() 
-        let index = Math.floor(randomNumber*facts.length)
-        let message = facts[index]
+        let message;
+        if (args && parseInt(args[0]) != NaN && facts.length > parseInt(args[0])) {// pokud si uživatel vybral konkrétní fakt
+          if (parseInt(args[0]) < 0) message = "Fact #??? - To má být pokus o vtip? Celkem neúspěšný" // pokud je číslo negativní
+          else message = facts[parseInt(args[0])]
+        }
+        else {
+          let randomNumber = Math.random() 
+          let index = Math.floor(randomNumber*facts.length)
+          message = facts[index]
+        }
         return message
       } catch (e) {
           console.log(String(e.stack).bgRed)
