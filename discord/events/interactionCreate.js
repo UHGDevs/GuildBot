@@ -15,4 +15,5 @@ module.exports = async (uhg, interaction) => {
   else if (interaction.isModalSubmit() ) require(`../interactions/modal/${fs.readdirSync(`discord/interactions/modal`).filter(n => n == interaction.customId.split('_')[2]+'.js')[0]}`).get(uhg, interaction)
   else if (interaction.isButton() && interaction.customId.startsWith('VERLANG')) require(`../interactions/verlang`)(uhg, interaction)
   else if (interaction.isSelectMenu() && interaction.customId == 'TIME_menu') require(`../interactions/time_gui`)(uhg, interaction)
+  else if (interaction.isButton() && interaction.customId.startsWith('TIME_RUN_')) require(`../interactions/time_run`)(uhg, interaction)
 }

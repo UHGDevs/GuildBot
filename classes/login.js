@@ -21,9 +21,9 @@ class Login extends Functions {
   async load() {
     delete this.ready
     this.reload(["settings", 'loot'])
+    require('../utils/embeds.js')(this)
     await Promise.all([this.createMongo()]);
     require("../utils/client.js")(this)
-    require('../utils/embeds.js')(this)
     require("../time/handler.js")(this)
 
     fs.watchFile('settings/config.json', (curr, prev) => this.reload(["settings"]));

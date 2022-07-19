@@ -1,7 +1,10 @@
 const refresh = require('../../utils/serverroles.js')
+const time = require('../../utils/timehandler.js')
+
+const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
 
 module.exports = {
-  name: "bwroles",
+  name: eventName,
   description: "Automatická aktualizace rolí na bedwars serveru",
   emoji: '🛏️',
   time: '0 */7 * * * *', //'*/10 * * * * *'
@@ -9,7 +12,8 @@ module.exports = {
   onstart: true,
   run: async (uhg) => {
     let date = new Date()
-    uhg.time.events.get('bwroles').executedAt = date
+    let event = time.start(uhg, eventName)
+
     try {
       let members = await uhg.mongo.run.get("stats", "stats")
       let verify = await uhg.mongo.run.get('general', 'verify')
@@ -29,10 +33,12 @@ module.exports = {
         await refresh.bw_refresh(uhg, gmember, data[0])
       }
 
-
+    
     } catch(e) {
-        console.log(String(e.stack).bgRed)
-        return "Chyba v refreshování rolí na BW dc!"
+      if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);
+      else console.log(String(e.stack).bgRed + 'Time error v2');
+    } finally {
+      time.end(uhg, eventName)
     }
   }
 }

@@ -1,7 +1,10 @@
 const refresh = require('../../utils/serverroles.js')
+const time = require('../../utils/timehandler.js')
+
+const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
 
 module.exports = {
-  name: "uhgrole",
+  name: eventName,
   description: "Automatická aktualizace rolí na UHG discordu",
   emoji: '🌙',
   time: '30 */5 * * * *', //'*/10 * * * * *'
@@ -9,6 +12,7 @@ module.exports = {
   onstart: true,
   run: async (uhg) => {
     let date = new Date()
+    let event = time.start(uhg, eventName)
     try {
       let dVerify = await uhg.mongo.run.get("general", "verify")
       uhg.data.verify = dVerify
@@ -135,11 +139,11 @@ module.exports = {
         await refresh.uhg_refresh(uhg, member, data, v)
       }
 
-      return
-
     } catch(e) {
-        console.log(String(e.stack).bgRed)
-        return "Chyba v refreshování rolí na UHG dc!"
+      if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);
+      else console.log(String(e.stack).bgRed + 'Time error v2');
+    } finally {
+      time.end(uhg, eventName)
     }
   }
 }

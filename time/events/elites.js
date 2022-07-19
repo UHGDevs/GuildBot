@@ -1,9 +1,12 @@
 const guildrefresh = require('../../utils/guildrefresh');
 const send = require('../../minecraft/send').send;
 const { MessageEmbed } = require('discord.js');
+const time = require('../../utils/timehandler.js')
+
+const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
 
 module.exports = {
-  name: "elites",
+  name: eventName,
   description: "Automatičští elite members",
   emoji: '👨‍🦼',
   time: '0 0 17 * * 0', //'*/10 * * * * *'
@@ -11,6 +14,7 @@ module.exports = {
   onstart: false,
   run: async (uhg) => {
     let now = Number(new Date())
+    let event = time.start(uhg, eventName)
     try {
       let api, data
 
@@ -99,12 +103,11 @@ module.exports = {
       let channel2 = await uhg.dc.client.channels.cache.get('530496801782890527')
       channel2.send({ embeds: [embed2] })
 
-
-    return
-
-    } catch(e) {
-        console.log(String(e.stack).bgRed)
-        return "Chyba v ELITES!"
-    }
+  } catch(e) {
+    if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);
+    else console.log(String(e.stack).bgRed + 'Time error v2');
+  } finally {
+    time.end(uhg, eventName)
+  }
   }
 }

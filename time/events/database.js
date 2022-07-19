@@ -1,5 +1,9 @@
+const time = require('../../utils/timehandler.js')
+
+const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
+
 module.exports = {
-  name: "database",
+  name: eventName,
   description: "Automatická aktualizace databáze",
   emoji: '💻',
   time: '0 */5 * * * *', //'*/10 * * * * *'
@@ -7,6 +11,7 @@ module.exports = {
   onstart: false,
   run: async (uhg) => {
     let now = Number(new Date())
+    let event = time.start(uhg, eventName)
     try {
       let data = await uhg.mongo.run.get("stats", "stats")
       uhg.data.stats = data
@@ -20,11 +25,12 @@ module.exports = {
       });
       //await uhg.delay(5000)
       //uhg.time.ready.database = true
-      return
 
     } catch(e) {
-        console.log(String(e.stack).bgRed)
-        return "Chyba v refreshování databáze!"
+      if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);
+      else console.log(String(e.stack).bgRed + 'Time error v2');
+    } finally {
+      time.end(uhg, eventName)
     }
   }
 }

@@ -1,8 +1,11 @@
 const guildrefresh = require('../../utils/guildrefresh');
 const { MessageEmbed } = require('discord.js');
+const time = require('../../utils/timehandler.js')
+
+const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
 
 module.exports = {
-  name: "guildinfo",
+  name: eventName,
   description: "Informace o guildě",
   emoji: 'ℹ️',
   time: '0 */2 * * * *', //'*/10 * * * * *'
@@ -10,6 +13,7 @@ module.exports = {
   onstart: true,
   run: async (uhg) => {
     let date = new Date()
+    let event = time.start(uhg, eventName)
     try {
       let names = false
       if (date.getHours() == 4 && date.getMinutes() == 2) names = true
@@ -134,10 +138,12 @@ module.exports = {
             .addField("Rozdíl:", `Celkový: ${Math.round(rozdil*10000)/10000}\nDen:${perday}`, false);
         channel.send({ embeds: [emsend] })
       }
-      return
+      
     } catch(e) {
-        console.log(String(e.stack).bgRed)
-        return "Chyba v guild informacích!"
+      if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);
+      else console.log(String(e.stack).bgRed + 'Time error v2');
+    } finally {
+      time.end(uhg, eventName)
     }
   }
 }

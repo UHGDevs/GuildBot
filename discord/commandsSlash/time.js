@@ -16,11 +16,16 @@ module.exports = {
   ],
   type: 'slash',
   run: async (uhg, interaction, args) => {
-    Array.prototype.chunk = uhg.chunk
+    let ephemeral = !interaction.options.getBoolean('visibility')
 
-    if (interaction.user.id !== '378928808989949964') return interaction.update({ type: 6 })
-    await interaction.deferReply({ ephemeral: true }).catch(() => {});
+    if (interaction.user.id == '378928808989949964') await interaction.deferReply({ ephemeral: ephemeral }).catch(() => {});
+    else await interaction.deferReply({ ephemeral: true }).catch(() => {});
+
     try {
+      let auth = ['378928808989949964', '312861502073995265', '379640544143343618', '427198829935460353']
+      if (!auth.includes(interaction.user.id)) return interaction.followUp({ embeds: [new MessageEmbed().setTitle(`**TIME EVENT UNVERIFIED**`).setColor('RED').setDescription(`Nejsi na whitelistu :/`)], ephemeral: true })
+
+      
       if (!uhg.time.events.size || uhg.time.events.size !== Object.keys(uhg.settings.time).length) return await interaction.editReply({ embeds: [new MessageEmbed().setTitle('**Time Events GUI**').setColor(5592575).setFooter({ text: 'Made with love ❤️' }).setDescription('Loading, please wait')]})
       let embed = new MessageEmbed().setTitle('**Time Events GUI**').setColor(5592575).setFooter({ text: `${Object.values(uhg.settings.time).filter(n => n).length}/${uhg.time.events.size} Time Events` })
 
@@ -34,7 +39,7 @@ module.exports = {
         if (toggle && event.executedAt) message = message + `<t:${Math.round(Number(new Date(event.executedAt))/1000)}:R>`
         if (event.onstart) message = message + ' 🕐'
         desc.push( message )
-        options.push([{label: event.emoji + ' ' + event.name, description: event.description, value: event.name}])
+        options.push([{label: event.emoji + ' ' + event.name + (toggle ? ' ✅':''), description: event.description, value: event.name}])
         
       }
 
