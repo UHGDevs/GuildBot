@@ -1,6 +1,6 @@
 const time = require('../../utils/timehandler.js')
 
-const eventName = module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0]
+const eventName = module.filename.includes('/') ? module.filename.split('/').filter(n => n.endsWith('.js'))[0].split('.')[0] : module.filename.split('\\').filter(n => n.endsWith('.js'))[0].split('.')[0]
 
 module.exports = {
   name: eventName,
