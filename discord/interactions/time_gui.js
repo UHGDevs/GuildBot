@@ -42,7 +42,7 @@ module.exports = async (uhg, interaction) => {
   let options = []
   for (let ev of uhg.time.events) {
     ev=ev[1]
-    options.push([{label: ev.emoji + ' ' + ev.name + (toggle ? ' ✅':''), description: ev.description, value: ev.name}])
+    options.push([{label: ev.emoji + ' ' + ev.name + (uhg.settings.time[ev.name] ? ' ✅':''), description: ev.description, value: ev.name}])
   }
   
   const menu = new MessageActionRow().addComponents(new MessageSelectMenu().setCustomId('TIME_menu').setPlaceholder(`${type} Time Event GUI`).addOptions(options));
