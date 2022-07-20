@@ -107,17 +107,17 @@ exports.get = async (uhg, interaction) => {
     if (!uhg.data.stats.filter(n => n.uuid == api.uuid).length && !interaction.member.roles.cache.some(r => r.id == "985095284893814814")) {
     let buttons = new MessageActionRow()
         .addComponents(new MessageButton()
-            .setCustomId(`VERLANG_${api.hypixel.username}_${api.uuid}_accept`)
+            .setCustomId(`VERLANG-${api.hypixel.username}-${api.uuid}-accept`)
             .setStyle("SUCCESS")
             .setLabel("Přidat do databáze")
         )
         .addComponents(new MessageButton()
-            .setCustomId(`VERLANG_${api.hypixel.username}_${api.uuid}_reject`)
+            .setCustomId(`VERLANG-${api.hypixel.username}-${api.uuid}-reject`)
             .setStyle("DANGER")
             .setLabel("Nepřidávat do databáze")
         );
     let embed = new MessageEmbed()
-        .setTitle(`**${api.hypixel.username}**`)
+        .setTitle(`**${uhg.dontFormat(api.hypixel.username)}**`)
         .setDescription(`Jazyk: **${language.toUpperCase()}**`)
         .setColor(5592575);
     let channel = await uhg.dc.client.channels.cache.get('530496801782890527')

@@ -27,7 +27,7 @@ module.exports = async (uhg, interaction) => {
     embed.addFields(
       { name: `ㅤ`, value: `**__Nerds Stats__**`, inline: false},
       { name: 'Count', value: `\`${event.count}\``, inline: true },
-      { name: 'Last Time', value: `\`${uhg.f(event.lastTime/1000)}m\``, inline: true },
+      { name: 'Last Time', value: `\`${uhg.f(event.lastTime/1000)}s\``, inline: true },
       { name: 'Average Time', value: `\`${uhg.f(event.averageTime/1000)}s\``, inline: true },
       { name: `Max Time [${event.times.indexOf(Math.max(...event.times)) + 1}]`, value: `\`${Math.round(Math.max(...event.times)/100)/10}s\``, inline: true },
       { name: `Min Time [${event.times.indexOf(Math.min(...event.times)) + 1}]`, value: `\`${Math.round(Math.min(...event.times)/100)/10}s\``, inline: true },

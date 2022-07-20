@@ -636,9 +636,6 @@ module.exports = class Functions extends EventEmitter {
       .replace("speed", "Speed")
       .replace("tank", "Defence")
       .replace("slowing", "Slowing")
-      .replace("none", "No")
-      .replace("no", "No")
-      .replace("SNowball", "Snowball")
   }
 
   renameHypixelGames(game){
@@ -737,7 +734,19 @@ module.exports = class Functions extends EventEmitter {
         .replace(/murder_hardcore/g, "Murder Mystery Hardcore")
         .replace(/murder_assassins/g, "Murder Mystery Assassins")
 
-        .replace(/_/g, " ")
+        .replaceAll(/_/g, " ")
+  }
+
+  /* ANTI DISCORD CHAT FORMATTING */
+  dontFormat(text) {
+    if (!text) return
+    return text
+      .replaceAll("*", "\\*")
+      .replaceAll("_", "\\_")
+      .replaceAll("~", "\\~")
+      .replaceAll(">", "\\>")
+      .replaceAll("`", "\\`")
+      .replaceAll("|", "\\|")
   }
 
   chunk(size) {

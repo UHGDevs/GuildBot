@@ -4,7 +4,7 @@ let reject =  new MessageActionRow().addComponents(new MessageButton().setCustom
 let accept =  new MessageActionRow().addComponents(new MessageButton().setCustomId('verlang_accept').setLabel('Přidán do databáze').setStyle('SUCCESS').setDisabled(true))
 
 module.exports = async (uhg, interaction) => {
-  let customId = interaction.customId.split("_")
+  let customId = uhg.dontFormat(interaction.customId).split("-")
   await interaction.update({ type:6 })
 
   let api = await uhg.getApi(customId[2], ["hypixel"])
