@@ -1396,7 +1396,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
         let quests = ["NONE"];
         let kuudras = 0;
         let dojo = 0;
-        let faction = "žádná";
+        let faction = "Žádná";
         let reputation = 0;
         let trophies = 0;
         if (netherdata) {
@@ -1405,10 +1405,10 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
             kuudras += netherdata.kuudra_completed_tiers[i]
           }
           for (let i in netherdata.dojo) {
-            if (i.includes("points")) dojo++
-            else continue
+            if (i.includes("points")) dojo += netherdata.dojo[i]
+            continue
           }
-          faction = netherdata.selected_faction || "žádná"
+          faction = netherdata.selected_faction || "Žádná"
           if (faction == "barbarians") reputation = netherdata.barbarians_reputation || 0
           else if (faction == "mages") reputation = netherdata.mages_reputation || 0
         }
