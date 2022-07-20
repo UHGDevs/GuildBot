@@ -37,7 +37,7 @@ module.exports = {
       if (scatha == 1) scathanoun = ""
 
       let profil = mining[profile]
-      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier}, ${f(nucleus)} Nucleus Run${nucleusnoun}, ${f(scatha)} Scatha Kill${scathanoun}, ${f(comms)} Comission${commnoun}, ${f(mithril)} Mithril Powder, ${f(gemstone)} Gemstone Powder`
+      let message = `Mining: **${api.username}** - HOTM Tier ${hotmtier} | ${f(nucleus)} Nucleus Run${nucleusnoun} | ${f(scatha)} Scatha Kill${scathanoun} | ${f(comms)} Comission${commnoun} | ${f(mithril)} Mithril Powder | ${f(gemstone)} Gemstone Powder`
       return message
     } catch (e) {
         console.log(String(e.stack).bgRed)
