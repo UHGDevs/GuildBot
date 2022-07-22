@@ -11,8 +11,13 @@ module.exports = {
         if (api instanceof Object == false) return api
 
         let embed = new MessageEmbed().setTitle(`**Kolikrát bylo API použito?**`).addFields(
-            { name: "**Celkem**", value: `${api.key.totaluses}`, inline: false},
-            { name: "**Za minutu**", value: `${api.key.uses}`, inline: false }
+            { name: "**Celkem**", value: `**API Key 1:** ${uhg.f(api.key.totaluses)}`, inline: true},
+            { name: "ㅤ", value: "ㅤ", inline: true},
+            { name: "ㅤ", value: `**API Key 2:** ${uhg.f(api.key.totaluses2)}`, inline: true },
+            { name: "**Za minutu**", value: `**API Key 1:** ${uhg.f(api.key.uses)}`, inline: true },
+            { name: "ㅤ", value: "ㅤ", inline: true},
+            { name: "ㅤ", value: `**API Key 2:** ${uhg.f(api.key.uses2)}`, inline: true }
+
         )
 
         message.channel.send({ embeds: [embed] })

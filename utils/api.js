@@ -75,12 +75,15 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
 
   if (call.includes("key"||"api")) {
     var keylimit = await fetch(`https://api.hypixel.net/key?key=${api_key}`).then(api => api.json())
+    var keylimit2 = await fetch(`https://api.hypixel.net/key?key=${api_key_2}`).then(api => api.json())
     if (keylimit.success == true) var apiuses = keylimit.record.queriesInPastMin
     else return `Chyba v API (${keylimit.cause || "key"})`;
     if (apiuses > 100) return `Přetížené API, počkej prosím chvíli! (${apiuses})`
     api.key = {
       uses: apiuses,
-      totaluses: keylimit.record.totalQueries
+      totaluses: keylimit.record.totalQueries,
+      uses2: keylimit2.record.queriesInPastMin,
+      totaluses2: keylimit2.record.totalQueries
     }
   }
 
