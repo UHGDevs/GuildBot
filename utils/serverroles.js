@@ -292,7 +292,7 @@ exports.bw_refresh = async (uhg, member, api) => {
   let upRole = [];
   for (let stat in uhg.dc.cache.bw.roles) {
     let staty = api.stats.bedwars[stat] || api.stats.bedwars.overall[stat] || 0
-    if (!uhg.dc.cache.bw.roles[stat]) {console.log(stat.bgRed); continue;}
+    if (!uhg.dc.cache.bw.roles[stat].length) {console.log(stat.bgRed); continue;}
     let up = uhg.dc.cache.bw.roles[stat].filter(n => staty >= n.from )[0]
     if (up) upRole.push(up)
   }
