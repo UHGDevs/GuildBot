@@ -158,7 +158,7 @@ exports.uhg_refresh = async (uhg, member, api, guilda) => {
     }
   } else {
     for (let role of cache) {
-      if (role[1].id == "🌙Default🌙") continue
+      if (role[1].id == "478816107222925322") continue
       role = role[1]
       if (member._roles.includes(role.id)) {try { await member.roles.remove(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role removal\n`}}
     }
