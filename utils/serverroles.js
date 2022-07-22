@@ -151,7 +151,7 @@ exports.uhg_refresh = async (uhg, member, api, guilda) => {
   if (guilda.name === "UltimateHypixelGuild" || guilda.guildrank) {
     if (!member._roles.includes(cache.get("Guild Member").id)) try { await member.roles.add(cache.get("Guild Member").role) } catch (e) {errors = errors + 'UHG - Guild Member role\n'}
     for (let role of cache) {
-      if (role[0] == "Guild Member" || role[0] == "🌙Default🌙") continue
+      if (role[1].id == "530504032708460584" || role[1].id == "478816107222925322") continue
       role = role[1]
       if (member._roles.includes(role.id) && role.name!=grank) try { await member.roles.remove(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role removal\n`}
       else if (!member._roles.includes(role.id) && role.name == grank) {try { await member.roles.add(role.role) } catch (e) {errors = errors + `UHG - ${role.name} role add\n`}}

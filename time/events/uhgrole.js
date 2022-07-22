@@ -91,11 +91,11 @@ module.exports = {
       uhg.data.uhg = dUhg
 
       let cache = uhg.dc.cache.uhgroles
-      let roleMembers = cache.find(role => role.id == "530504032708460584").role.members // 530504032708460584 => Guild Member role
+      let roleMembers = cache.find(role => role.id == "530504032708460584").role.members // Guild Member
 
       /* get UNVERIFIED members with default role */
       dcUnVer = []
-      let verifiedRole = uhg.dc.cache.uhgroles.find(role => role.id == "478816107222925322").role.members // 478816107222925322 => Default role
+      let verifiedRole = uhg.dc.cache.uhgroles.find(role => role.id == "478816107222925322").role.members // Default
       for (let member of verifiedRole) {
         let v = dVerify.filter(n => n._id==member[0])
         let uVer = dUhg.filter(n => n._id == member._id)
@@ -106,14 +106,14 @@ module.exports = {
         v = v[0]
         if (member._roles.includes("530504032708460584") && !uVer) {
           for (let role of cache) {
-            if (role[0].id == "478816107222925322") continue // 478816107222925322 => Default role
+            if (role[1].id == "478816107222925322") continue // Default
             if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
           }
         }
       }
 
       /* Refresh roles on uhg dc */
-      let membersUHG = cache.find(role => role.id == "530504032708460584").role.guild.members.cache // 530504032708460584 => Guild Member role
+      let membersUHG = cache.find(role => role.id == "530504032708460584").role.guild.members.cache // Guild Member
       for (let member of membersUHG) {
         if (member[1].user.bot) continue;
         member = member[1]
@@ -129,7 +129,7 @@ module.exports = {
           if (v2.length) await refresh.uhg_refresh(uhg, member, data, {})
           else {
             for (let role of cache) {
-              if (role[0].id == "478816107222925322") continue // 478816107222925322 => Default role
+              if (role[1].id == "478816107222925322") continue // Default
               if (member._roles.includes(role[1].id)) try { await member.roles.remove(role[1].role) } catch (e) {}
             }
           }
