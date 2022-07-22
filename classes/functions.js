@@ -387,92 +387,94 @@ module.exports = class Functions extends EventEmitter {
   }
 
   getCrimson(quests = []) {
-    let fancyquests = []
-    for (let i in quests) {
-      let quest = quests[i].split("_")
-      let quantity = 1
-      let rarity = (quest[quest.length-1]).toUpperCase()
-      if (quest[2] == "kill") {
-        let boss;
-        if (rarity == "A") quantity = 2
-        else if (rarity == "S") quantity = 3
-        switch (quest[3]) {
-          case "ashfang":
-            boss = "Ashfang"
-            break
-          case "bladesoul":
-            boss = "Bladesoul"
-            break
-          case "magma":
-            boss = "Magma Boss"
-            break
-          case "barbarian":
-            boss = "Barbarian Duke X"
-            break
-          case "mage":
-            boss = "Mage Outlaw"
-            break
+    if (quests.length) {
+      let fancyquests = []
+      for (let i in quests) {
+        let quest = quests[i].split("_")
+        let quantity = 1
+        let rarity = (quest[quest.length-1]).toUpperCase()
+        if (quest[2] == "kill") {
+          let boss;
+          if (rarity == "A") quantity = 2
+          else if (rarity == "S") quantity = 3
+          switch (quest[3]) {
+            case "ashfang":
+              boss = "Ashfang"
+              break
+            case "bladesoul":
+              boss = "Bladesoul"
+              break
+            case "magma":
+              boss = "Magma Boss"
+              break
+            case "barbarian":
+              boss = "Barbarian Duke X"
+              break
+            case "mage":
+              boss = "Mage Outlaw"
+              break
+          }
+          fancyquests.push(`(${rarity}) ${quantity}x ${boss}`)
         }
-        fancyquests.push(`(${rarity}) ${quantity}x ${boss}`)
-      }
-      else if (quest[2] == "fight") {
-        let type;
-        switch (quest[4]) {
-          default:
-            type = "Basic"
-            break
-          case "hot":
-            type = "Hot"
-            break
-          case "burning":
-            type = "Burning"
-            break
-          case "fiery":
-            type = "Fiery"
-          case "infernal":
-            type = "Infernal"
+        else if (quest[2] == "fight") {
+          let type;
+          switch (quest[4]) {
+            default:
+              type = "Basic"
+              break
+            case "hot":
+              type = "Hot"
+              break
+            case "burning":
+              type = "Burning"
+              break
+            case "fiery":
+              type = "Fiery"
+            case "infernal":
+              type = "Infernal"
+          }
+          fancyquests.push(`(${rarity}) ${type} Kuudra`)
         }
-        fancyquests.push(`(${rarity}) ${type} Kuudra`)
-      }
-      else if (quest[2] == "dojo") {
-        let type;
-        let difficulty = (quest[quest.length-2])[0].toUpperCase()
-        switch (quest[5]) {
-          case "snake":
-            type = "Swiftness"
-            break
-          case "archer":
-            type = "Mastery"
-            break
-          case "sword":
-            type = "Discipline"
-            break
-          case "wall":
-            type = "Stamina"
-            break
-          case "mob":
-            type = "Force"
-            break
-          case "fireball":
-            type = "Tenacity"
-            break
-          default:
-            type = "Control"
-            break
+        else if (quest[2] == "dojo") {
+          let type;
+          let difficulty = (quest[quest.length-2])[0].toUpperCase()
+          switch (quest[5]) {
+            case "snake":
+              type = "Swiftness"
+              break
+            case "archer":
+              type = "Mastery"
+              break
+            case "sword":
+              type = "Discipline"
+              break
+            case "wall":
+              type = "Stamina"
+              break
+            case "mob":
+              type = "Force"
+              break
+            case "fireball":
+              type = "Tenacity"
+              break
+            default:
+              type = "Control"
+              break
+          }
+          fancyquests.push(`(${rarity}) ${type} Rank ${difficulty}`)
         }
-        fancyquests.push(`(${rarity}) ${type} Rank ${difficulty}`)
+        else if (quest[2] == "rescue") fancyquests.push(`(${rarity}) Rescue Mission`)
+        else if (quest[2] == "fetch") {
+          let material = quest[3].charAt(0).toUpperCase() + quest[3].slice(1)
+          //WIP
+          fancyquests.push(`(${rarity}) undefinedx ${material}`)
+        }
+        else if (quest[2]) {
+          fancyquests.push(`(${rarity}) undefinedx ${quest[2].charAt(0).toUpperCase() + quest[2].slice(1)}`)
+        } //WIP
       }
-      else if (quest[2] == "rescue") fancyquests.push(`(${rarity}) Rescue Mission`)
-      else if (quest[2] == "fetch") {
-        let material = quest[3].charAt(0).toUpperCase() + quest[3].slice(1)
-        //WIP
-        fancyquests.push(`(${rarity}) undefinedx ${material}`)
-      }
-      else if (quest[2]) {
-        fancyquests.push(`(${rarity}) undefinedx ${quest[2].charAt(0).toUpperCase() + quest[2].slice(1)}`)
-      } //WIP
-    }
-    return fancyquests
+      return fancyquests
+    } return "None"
   }
 
   getRank(json) {
