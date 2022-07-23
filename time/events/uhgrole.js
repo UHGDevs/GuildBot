@@ -58,9 +58,8 @@ module.exports = {
 
       let cache = uhg.dc.cache.uhgroles
 
-      /* get UNVERIFIED members with default/guild role */
       dcUnVer = []
-
+      verIds = []
       /* Refresh roles on uhg dc */
       let guild = uhg.dc.client.guilds.cache.get("455751845319802880")
       let discordMembers =  await guild.members.fetch()
@@ -73,7 +72,6 @@ module.exports = {
         let uhgD = dUhg.find(n => n._id == member.id) || {}
        // let loot = dLoot.find(n => n._id == member._id)
         
-
         if (!verify) {
           if (member.roles.cache.get('478816107222925322')) dcUnVer.push(member.nickname||member.user.username)
           for (let role of cache) {
@@ -86,15 +84,24 @@ module.exports = {
         let data = await uhg.mongo.run.get('stats', 'stats', { uuid: verify.uuid })
         if (data.length) {
           data = data[0]
-          if (data.username !== verify.nickname) uhg.mongo.run.update("general", "verify", {_id:verify._id, nickname: data.username, names: data.nicks })
+          if (data.username !== verify.nickname || !(verify.nicks && data.nicks.length === verify.names.length)) uhg.mongo.run.update("general", "verify", {_id:verify._id, nickname: data.username, names: data.nicks })
           if (uhgD && data.username !== uhgD.username) uhg.mongo.run.update("general", "uhg", {_id:verify._id, username: data.username })
         } else {
           let user = await uhg.mongo.run.get('general', 'verify', { uuid: verify.uuid })
           data = { username: user[0].nickname }
         }
 
+        verIds.push(member.id)
         await refresh.uhg_refresh(uhg, member, data, uhgD)
       }
+
+      let notInDb = []
+      dVerify.filter(n => verIds.includes(n._id)).forEach( async (n) => {
+        let data = await uhg.mongo.run.get('stats', 'stats', { uuid: n.uuid })
+        if (!data.length) return notInDb.push(n) 
+        if (n.nickname !== data[0].username || !(n.names && n.names.length === data[0].nicks.length)) console.log(n.nickname)
+        if (n.nickname !== data[0].username || !(n.names && n.names.length === data[0].nicks.length)) uhg.mongo.run.update("general", "verify", {_id:n._id, nickname: data[0].username, names: data[0].nicks })
+      })
 
     } catch(e) {
       if (uhg.dc.cache.embeds) uhg.dc.cache.embeds.timeError(e, eventName);

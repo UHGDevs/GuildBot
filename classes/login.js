@@ -61,9 +61,14 @@ class Login extends Functions {
     }
 
     if (reload.includes("guild") || reload.includes("mongo") || !reload.length) {
-      this.data.guild = await this.mongo.run.get("stats", "guild")
-      this.members = []
-      this.data.guild[0].members.forEach(member =>{ this.members.push(member.name) })
+      if (!this.data.guild) this.data.guild = []
+      guild(this)
+      async function guild(uhg) {
+        let guild = await uhg.mongo.run.get("stats", "guild")
+        uhg.data.guild = guild
+        uhg.members = []
+        uhg.data.guild[0].members.forEach(member =>{ uhg.members.push(member.name) })
+      }
     }
 
     if (reload.includes("verify") || reload.includes("mongo") || !reload.length) {
@@ -71,14 +76,19 @@ class Login extends Functions {
     }
 
     if (reload.includes("stats") || reload.includes("mongo")  || !reload.length) {
-      this.data.stats = await this.mongo.run.get("stats", "stats")
+      if (!this.data.stats) this.data.stats = []
+      stats(this)
+      async function stats(uhg) {
+        let stat = await uhg.mongo.run.get("stats", "stats")
+        uhg.data.stats = stat
+      }
     }
 
     if (reload.includes("uhg") || reload.includes("mongo") || !reload.length ) {
       this.data.uhg = await this.mongo.run.get("general", "uhg")
     }
 
-    if (reload.includes("loot") || !reload.length ) {
+    if (reload.includes("loot") || reload.includes("mongo") || !reload.length ) {
       let req = Object.keys(require.cache).filter(n => n == require.main.path+'/settings/values/lootBoxes.js')
       if (req.length) delete require.cache[req[0]]
       let lootData = require('../settings/values/lootBoxes')

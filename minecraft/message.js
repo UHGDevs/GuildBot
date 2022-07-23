@@ -111,22 +111,17 @@ module.exports = async (uhg, packet) => {
   if (!pmsg.channel || pmsg.username==uhg.mc.client.username) return pmsg
   //console.log(pmsg)
 
-  let data = uhg.data.guild || await uhg.mongo.run.get("stats", "guild")
-  if (pmsg.username && data.length) {
-    data = data.filter(uhg => uhg.name=="UltimateHypixelGuild")[0]
-    for (let i=0;i<data.members.length;i++) {
-      if (pmsg.username==data.members[i].name) {
-        pmsg.uuid = data.members[i].uuid
-        let verified = /*uhg.data.uhg || */await uhg.mongo.run.get("general", "uhg")
-        verified = verified.filter(ver=>ver.username==pmsg.username)
-        if (!verified.length) break
-        verified = verified[0]
-        pmsg.verify = true
-        pmsg.grank = verified.guildrank
-        pmsg.id = verified._id
-        pmsg.verify_data = verified
-      }
+  let verify = uhg.data.verify ? uhg.data.verify.filter(n => n.nickname == pmsg.username) : await uhg.mongo.run.get("general", "verify", { nickname: pmsg.username })
+  if (verify.length) {
+    verify = verify[0]
+    pmsg.uuid = verify.uuid
+    let uhgDb = uhg.data.uhg ? uhg.data.uhg.filter(n => n.username == pmsg.username) : await uhg.mongo.run.get("general", "uhg", { username: pmsg.username })
+    if (uhgDb.length) {
+      pmsg.grank = uhgDb[0].guildrank
+      pmsg.verify = true
+      pmsg.verify_data = uhgDb[0]
     }
+      pmsg.id = verify._id
   }
 
   if (pmsg.rank && pmsg.rank == "[MVP++]") pmsg.pluscolor = pmsg.non.split("++")[0].slice(-2)
