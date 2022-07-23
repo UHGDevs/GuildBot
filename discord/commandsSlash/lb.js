@@ -85,7 +85,7 @@ module.exports = {
       let stat = interaction.options.getString('stat') || 'level'
       let gamemode = interaction.options.getString('gamemode') || 'overall'
 
-      let data = uhg.data.stats || await uhg.mongo.run.get("stats", "stats")
+      let data = uhg.data.stats.length ? uhg.data.stats : await uhg.mongo.run.get("stats", "stats")
 
       if ((game == 'duels' || game == 'arena' || game == 'quake' || game == 'murder' || game == 'bb') && stat == 'level') stat = 'wins'
       else if (game == 'tkr' && stat == 'level') stat = 'gold'
