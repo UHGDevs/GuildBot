@@ -211,6 +211,7 @@ module.exports = async (input, call=["mojang", "key", "hypixel"], skyblocki=[]) 
       aps: hypixel.achievementPoints || 0,
       nicks: hypixel.knownAliases || {},
       links: hypixel.socialMedia ? hypixel.socialMedia.links || {} : {},
+      userLanguage: hypixel.userLanguage || "ENGLISH",
       fishing: {
         fish: achievements.general_master_lure || 0,
         junk: achievements.general_trashiest_diver || 0,

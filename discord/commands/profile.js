@@ -10,6 +10,9 @@ module.exports = {
         let args = content.split(" ").filter(n => n)
         let args1 = args[0] || message.author.username
 
+        let stats;
+        if (args1.length > 15) stats = uhg.mongo.run.get("stats", "stats", {uuid: args1})
+        else stats = uhg.mongo.run.get("stats", "stats", {username: args1})
         let api = await uhg.getApi(args1, ["api", "hypixel", "mojang", "guild"])
         if (api instanceof Object == false) return api
 
@@ -23,7 +26,8 @@ module.exports = {
           { name: `ㅤ`, value: `ㅤ`, inline: false},
           { name: `Level`, value: `${uhg.f(api.hypixel.level)}`, inline: true },
           { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
-          { name: `Last login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`, inline: true}
+          { name: `Last Login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`, inline: true},
+          { name: `User Language`, value: `${api.hypixel.userLanguage}`, inline: true }
       )
 
       if (api.hypixel.nicks.length > 1) {
@@ -48,9 +52,9 @@ module.exports = {
       }
 
       embed.addField('Verified', verify.length ? '✅':'🟥', true)
-
-      if (api.guild.name == 'UltimateHypixelGuild' || dUhg) {
-        embed.addField('UHG Database', dUhg ? '✅':'🟥' , true)
+      stats = await stats
+      if (api.guild.name == 'UltimateHypixelGuild' || dUhg || stats.length) {
+        embed.addField('UHG Database', (dUhg ? '✅':'🟥') + ' | ' +(stats.length ? `✅ - <t:${Math.round(stats[0].updated/1000)}:R>`: '🟥'), true)
       }
         message.channel.send({ embeds: [embed] })
 
