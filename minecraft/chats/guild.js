@@ -17,8 +17,8 @@ module.exports = async (uhg, pmsg) => {
   if (command) res = await command.run(uhg, pmsg);
 
 
-  pmsg.send = res
-  await bridge.send(uhg, pmsg.send)
+  pmsg.send = res.mc || res
+  await bridge.send(uhg, res)
 
   await chat.send(uhg, pmsg)
 }

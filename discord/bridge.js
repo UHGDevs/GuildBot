@@ -2,7 +2,7 @@ const banned = ["vape", "liquidbounce", "wurst", "sigma", "huzuni", ".org", ".ne
 module.exports = async (uhg, message) => {
   let user = uhg.data.verify.filter(n=>n._id==message.author.id)[0]
   if (!user) return message.reply(`Nejsi verifikovaný, zpráva nebyla odeslána.\nVerifikuj se pomocí ${uhg.settings.prefix}verify *\`nick\`*`)
-  if ((message.channel.id==uhg.getDiscordIds().channels.officer || message.channel.id==uhg.getDiscordIds().channels.guild) && message.content == " ") return message.reply("Zpráva nelze odeslat")
+  if ((message.channel.id==uhg.getDiscordIds().channels.officer || message.channel.id==uhg.getDiscordIds().channels.guild) && message.content == "") return message.reply("Zpráva nelze odeslat")
   if ((message.channel.id==uhg.getDiscordIds().channels.officer || message.channel.id==uhg.getDiscordIds().channels.guild) && message.content.length>245) message.reply({ content: "Zpráva byla useknuta" })
 
   for (let i = 0; i < banned.length; i++) {

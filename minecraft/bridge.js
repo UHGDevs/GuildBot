@@ -33,7 +33,8 @@ exports.send = async function (uhg, msg, chnl="Guild") {
   if (chnl==="Officer") channel = uhg.dc.cache.channels.get("officer")
   else channel = uhg.dc.cache.channels.get("guild")
   if (!channel) return console.log("Nenašel se kanál (bridge.js)")
-  await channel.send(semoji + msg)
+  if (typeof msg == 'object') channel.send({ embeds: [msg.dc] })
+  else channel.send({ content: semoji + msg })
   return
 }
 

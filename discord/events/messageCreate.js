@@ -23,8 +23,6 @@ module.exports = async (uhg, message) => {
   else if (message.content.trim().startsWith("!") && mcchat) content = message.content.trim().replace("!", "").trim()
   if (!content) return
 
-  if (content.startsWith("test") && message.author.id == "378928808989949964") return require("../../time/events/gmembers.js").run(uhg)
-
   let command = uhg.dc.commands.get(content.split(" ")[0]);
   if (!command) command = uhg.dc.commands.get(content.split(" ")[0].toLowerCase());
   if (!command) command = uhg.dc.commands.get(uhg.dc.aliases.get(content.split(" ")[0].toLowerCase()));
@@ -41,9 +39,12 @@ module.exports = async (uhg, message) => {
     if (mcchat) {
       let mcchannel = "/go "
       if (message.channel.id == uhg.getDiscordIds().channels.guild) mcchannel = "/gc "
-      require("../../minecraft/send").send(uhg, {send: mcchannel+msg})
+      require("../../minecraft/send").send(uhg, {send: mcchannel + (typeof msg == 'object' ? msg.mc:msg) })
     }
-    return await message.reply(msg)
+
+    if (typeof msg == 'object') message.reply({ embeds: [msg.dc] })
+    else message.reply({ content: msg })
+    return
   }
 
 
