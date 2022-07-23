@@ -8,7 +8,8 @@ module.exports = {
   queue: { name: 'Profile', value: 'profile', sort: 2 },
   run: async (uhg, interaction) => {
     try {
-      let user = interaction.options.getString('player') || interaction.member.nickname || interaction.user.username
+      let verUser = (uhg.data.verify.length ? uhg.data.verify.filter(n => n._id == interaction.user.id) : await uhg.mongo.run.get("general", "verify", { _id: interaction.user.id}))[0]
+      let user = interaction.options.getString('player') || verUser ? verUser.nickname : null || interaction.member.nickname || interaction.user.username || '___bc__f_ar'
       let dcuser = interaction.options.getUser('user')
       if (dcuser) {
         user = uhg.data.verify.find(n => n._id == dcuser.id)
@@ -31,7 +32,7 @@ module.exports = {
           { name: `Level`, value: `${uhg.f(api.hypixel.level)}`, inline: true },
           { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
           { name: `Last Login`, value: api.hypixel.lastLogin>0 ? `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`: '\`api off\`', inline: true},
-          { name: `ㅤ`, value: `ㅤ`, inline: true},
+         // { name: `ㅤ`, value: `ㅤ`, inline: true},
           { name: `User Language`, value: `${api.hypixel.userLanguage}`, inline: true }
       )
 
