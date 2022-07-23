@@ -21,12 +21,6 @@ exports.uhg = async (uhg) => {
     uhg.dc.cache.badges = guild.roles.cache.filter(n => uhg.startsWithArray(n.name, minigames) || uhg.endsWithArray(n.name, minigames))
     uhg.dc.cache.badges.forEach(n => {uhg.dc.cache.split.badges.push(n.id)});
 
-    let skyblock = ['Skill Avarage', 'Catacombs', 'Slayer Average', 'Networth', 'Weight)']
-    uhg.dc.cache.badges_sb = guild.roles.cache.filter(n => uhg.startsWithArray(n.name, skyblock) || uhg.endsWithArray(n.name, skyblock))
-    uhg.dc.cache.split.badges_sb = []
-    uhg.dc.cache.badges_sb.forEach(n => {uhg.dc.cache.split.badges_sb.push(n.id)});
-
-
     uhg.dc.cache.splits = new Collection()
 
     let guild_split = guild.roles.cache.get('973907328942358558')
@@ -37,9 +31,6 @@ exports.uhg = async (uhg) => {
 
     let badges_split = guild.roles.cache.get('927943516305387590')
     uhg.dc.cache.splits.set('badges', {name: badges_split.name, id: badges_split.id, color: badges_split.color, role: badges_split})
-
-    let badges_sb_split = guild.roles.cache.get('973948440881025034')
-    uhg.dc.cache.splits.set('badges_sb', {name: badges_sb_split.name, id: badges_sb_split.id, color: badges_sb_split.color, role: badges_sb_split})
 
     uhg.dc.cache.bRoles = {}
      for (let role of uhg.dc.cache.badges) {
@@ -262,11 +253,6 @@ exports.uhg_refresh = async (uhg, member, api, guilda) => {
     if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
     else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
 
-    /* -- SbBadges Split -- */
-    let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
-    if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
-    else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
-
   } catch (e) { errors = errors + 'UHG - Split roles error'}
 
 
@@ -321,7 +307,6 @@ exports.unverify = async (uhg, user) => {
     if (uMember.nickname) {try { await uMember.setNickname(null) } catch (e) {}}
     for (let role of uhg.dc.cache.uhgroles) { if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1].role) } catch (e) {}}}
     for (let role of uhg.dc.cache.badges) {if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1]) } catch (e) {}}}
-    for (let role of uhg.dc.cache.badges_sb) { if (uMember._roles.includes(role[1].id)) {try { await uMember.roles.remove(role[1]) } catch (e) {}}}
   }
 
   if (bwMember) {
@@ -347,12 +332,7 @@ exports.unverify = async (uhg, user) => {
       let split_badges = uhg.dc.cache.splits.get('badges')
       if (member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && !member._roles.includes(split_badges.id)) await member.roles.add(split_badges.role)
       else if (!member._roles.some(n=>uhg.dc.cache.split.badges.includes(n)) && member._roles.includes(split_badges.id)) await member.roles.remove(split_badges.role)
-  
-      /* -- SbBadges Split -- */
-      let split_badges_sb = uhg.dc.cache.splits.get('badges_sb')
-      if (member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && !member._roles.includes(split_badges_sb.id)) await member.roles.add(split_badges_sb.role)
-      else if (!member._roles.some(n=>uhg.dc.cache.split.badges_sb.includes(n)) && member._roles.includes(split_badges_sb.id)) await member.roles.remove(split_badges_sb.role)
-  
+
     } catch (e) {}
   
 }
