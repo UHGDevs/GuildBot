@@ -4,7 +4,6 @@ module.exports = {
   aliases: ["help"],
   run: async (uhg, pmsg) => {
     try{
-      console.log(pmsg)
       let message = `[!help] | Ahoj, já jsem UHG Guild BOT, všechny dostupné příkazy najdeš v !commands`
       let embed = new MessageEmbed()
         .setTitle("**Help**")
