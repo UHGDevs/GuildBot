@@ -24,6 +24,8 @@ module.exports = async (uhg, pmsg) => {
 
   let command = uhg.mc.commands.get(pmsg.command)
   if(!command) command = uhg.mc.commands.get(uhg.mc.aliases.get(pmsg.command.toLowerCase()));
-  if (command) pmsg.send = await command.run(uhg, pmsg) || "random error (napis davidovi)"
+  let res = {}
+  if (command) res = await command.run(uhg, pmsg)
+  if (res) pmsg.send = res.mc || res
   if (pmsg.send) await chat.send(uhg, pmsg)
 }
