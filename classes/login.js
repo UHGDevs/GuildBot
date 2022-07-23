@@ -29,6 +29,10 @@ class Login extends Functions {
     fs.watchFile('settings/config.json', (curr, prev) => this.reload(["settings"]));
     fs.watchFile('settings/values/lootBoxes.js', (curr, prev) => this.reload(["loot"]));
 
+    setInterval(() => {
+      this.reload(["mongo"])
+    }, 120000);
+
     console.log("Guild bot je připraven!".bold.brightGreen)
 
     if (this.mc.client) require("../minecraft/handler.js") (this)
@@ -72,7 +76,9 @@ class Login extends Functions {
     }
 
     if (reload.includes("verify") || reload.includes("mongo") || !reload.length) {
-      this.data.verify = await this.mongo.run.get("general", "verify")
+      if (!this.data.verify) this.data.verify = []
+      let ver = await this.mongo.run.get("general", "verify")
+      this.data.verify = ver
     }
 
     if (reload.includes("stats") || reload.includes("mongo")  || !reload.length) {
@@ -85,10 +91,12 @@ class Login extends Functions {
     }
 
     if (reload.includes("uhg") || reload.includes("mongo") || !reload.length ) {
-      this.data.uhg = await this.mongo.run.get("general", "uhg")
+      if (!this.data.uhg) this.data.uhg = []
+      let uh = await this.mongo.run.get("general", "uhg")
+      this.data.uhg = uh
     }
 
-    if (reload.includes("loot") || reload.includes("mongo") || !reload.length ) {
+    if (reload.includes("loot") || !reload.length ) {
       let req = Object.keys(require.cache).filter(n => n == require.main.path+'/settings/values/lootBoxes.js')
       if (req.length) delete require.cache[req[0]]
       let lootData = require('../settings/values/lootBoxes')

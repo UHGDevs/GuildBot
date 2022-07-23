@@ -15,16 +15,14 @@ module.exports = {
         if (!user) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error**`).setColor('RED').setDescription(`${dcuser} není verifikovaný`)] })
         user = user.uuid
       }
-      let stats;
-      if (user.length > 15) stats = uhg.mongo.run.get("stats", "stats", {uuid: user})
-      else stats = uhg.mongo.run.get("stats", "stats", {username: user})
+      
       let api = await uhg.getApi(user, ["api", "hypixel", "mojang", 'guild'])
       if (api instanceof Object == false) return interaction.editReply({ embeds: [new MessageEmbed().setTitle(`**Error v api**`).setColor('RED').setDescription(api)] })
 
+      let stats = uhg.mongo.run.get("stats", "stats", { uuid: api.uuid })
       let dUhg = uhg.mongo.run.get("general", "uhg", {uuid: api.uuid})
-      let dGuilds = uhg.mongo.run.get("stats", "guild")
-      let verify = await uhg.mongo.run.get("general", "verify")
-      uhg.data.verify = verify
+      let dGuilds = uhg.mongo.run.get("stats", "guild", {name: api.guild.name})
+      let verify = uhg.data.verify.length ? uhg.data.verify.filter(n => n.nickname == api.username) : await uhg.mongo.run.get("general", "verify", {nickname: api.username})
 
       let embed = new MessageEmbed().setTitle(`**Profil hráče ${uhg.dontFormat(api.hypixel.username)}**`).setURL(`https://plancke.io/hypixel/player/stats/${api.hypixel.username}`).addFields(
           { name: `Username`, value: `${uhg.dontFormat(api.hypixel.username)}`, inline: true },
@@ -32,7 +30,7 @@ module.exports = {
           { name: `ㅤ`, value: `ㅤ`, inline: false},
           { name: `Level`, value: `${uhg.f(api.hypixel.level)}`, inline: true },
           { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
-          { name: `Last Login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`, inline: true},
+          { name: `Last Login`, value: api.hypixel.lastLogin>0 ? `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`: '\`api off\`', inline: true},
           { name: `User Language`, value: `${api.hypixel.userLanguage}`, inline: true }
       )
 
@@ -46,11 +44,10 @@ module.exports = {
         { name: `Guild Rank`, value: `${uhg.dontFormat(api.guild.member.rank)}`, inline: true},
         { name: `Joined`, value: `<t:${Math.round(api.guild.member.joined/1000)}:R>`, inline: true}
       )
-
+      
       dGuilds = await dGuilds
-      uhg.data.guild = dGuilds
       if (api.guild.name == 'UltimateHypixelGuild' || api.guild.name == 'TKJK' || api.guild.name == 'Czech Team') {
-        let pGuild = dGuilds.filter(n => n.name == api.guild.name)[0]
+        let pGuild = dGuilds[0]
         let member = pGuild.members.filter(n => n.uuid == api.uuid)
         if (member.length) {
           member = member[0]
@@ -74,12 +71,11 @@ module.exports = {
       dUhg = await dUhg
       dUhg = dUhg[0]
 
-      verify = verify.filter(n => n.uuid == api.uuid)
       embed.addField('ㅤ', 'ㅤ', false)
       if (api.hypixel.links.DISCORD) {
         let member;
         if (verify.length || dUhg) member = interaction.guild.members.cache.get(verify[0]._id || dUhg._id)
-        embed.addField('Discord:', uhg.dontFormat(member ? `<@${member.id}>` : api.hypixel.links.DISCORD), true)
+        embed.addField('Discord:', member ? `<@${member.id}>` :  uhg.dontFormat(api.hypixel.links.DISCORD), true)
       }
 
       embed.addField('Verified', verify.length ? '✅':'🟥', true)
@@ -87,8 +83,6 @@ module.exports = {
       if (api.guild.name == 'UltimateHypixelGuild' || dUhg || stats.length) {
         embed.addField('UHG Database', (dUhg ? '✅':'🟥') + ' | ' +(stats.length ? `✅ - <t:${Math.round(stats[0].updated/1000)}:R>`: '🟥'), true)
       }
-      
-
 
       return interaction.editReply({ embeds: [embed] })
     } catch (e) {
