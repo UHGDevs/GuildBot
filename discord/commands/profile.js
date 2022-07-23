@@ -27,6 +27,7 @@ module.exports = {
           { name: `Level`, value: `${uhg.f(api.hypixel.level)}`, inline: true },
           { name: `Rank`, value: `${api.hypixel.rank}`, inline: true},
           { name: `Last Login`, value: `<t:${Math.round(api.hypixel.lastLogin/1000)}:R>`, inline: true},
+          { name: `ㅤ`, value: `ㅤ`, inline: true},
           { name: `User Language`, value: `${api.hypixel.userLanguage}`, inline: true }
       )
 
